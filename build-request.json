@@ -1,0 +1,56 @@
+{
+  "kind": "build_request",
+  "title": "Update Info page with expanded Hebrew studio content (RTL)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Replace the current studio description content on the Info page with the user-provided expanded Hebrew content, while keeping the existing page layout and styling conventions (same container/section structure and Tailwind class patterns) consistent with the rest of the site.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Please update the content of the 'info' page. I want to replace the current text about the studio with the following expanded version. Make sure to keep the HTML structure (like <h2>, <p>, or <div> classes) consistent with the rest of the site... Here is the new content to insert:\n\n<h2>אולפן הקלטות והפקה מוזיקלית – deVee</h2>\n<p><b>ברוכים הבאים ל-deVee.</b> יצרנו עבורכם <b>אולפן הקלטות</b> יוצא דופן..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigating to /info shows the new Hebrew heading and three expanded paragraphs (replacing the previous shorter text).",
+        "The overall layout remains consistent with the current Info page structure (Header, main container spacing, max width wrapper, section spacing, and typography classes remain in the same style).",
+        "No English studio-description section/content is introduced on the Info page."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Ensure the updated Info page renders Hebrew correctly with right-to-left (RTL) support, including correct text alignment, directionality, and bold styling consistent with the codebase’s existing HTML/JSX conventions.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "...ensure the Hebrew text is rendered correctly with RTL support."
+        ]
+      },
+      "acceptanceCriteria": [
+        "The Hebrew content on /info is rendered RTL (e.g., the content container has RTL direction and right alignment).",
+        "Bold emphasis in the provided content is preserved and rendered correctly (using the project’s existing JSX/HTML conventions for emphasis).",
+        "There are no malformed/invalid tags introduced from the pasted HTML (e.g., no broken <p> tags or stray line breaks that break rendering)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify any files under frontend/src/components/ui.",
+    "Keep the app’s existing routing behavior (/info renders the Info page) unchanged."
+  ],
+  "nonGoals": [
+    "Adding new pages, navigation items, or admin content editing features.",
+    "Backend changes (no Motoko changes required).",
+    "Design/theme refresh beyond keeping the existing site styling consistent."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

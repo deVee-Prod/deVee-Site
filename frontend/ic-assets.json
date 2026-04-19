@@ -1,0 +1,14 @@
+[
+  {
+    "match": ".well-known",
+    "ignore": false
+  },
+  {
+    "match": ".well-known/**",
+    "ignore": false,
+    "headers": {
+      "Content-Type": "text/plain",
+      "Access-Control-Allow-Origin": "*"
+    }
+  }
+]

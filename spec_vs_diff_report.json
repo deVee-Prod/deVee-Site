@@ -1,0 +1,29 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T21:49:47.609Z",
+  "summary": "InfoPage updated to show an RTL Hebrew section with a new heading and three expanded paragraphs using existing Tailwind styling patterns; routing/components appear unchanged. Two metadata/state files were also modified without being requested.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Modified project_state.json tracking new_feature_requests/status metadata unrelated to the Info page content/RTL requirements.",
+      "reason": "BuildRequest only asks to update the Info page content and RTL rendering, with constraints about routing and not touching frontend/src/components/ui; it does not request changes to project tracking/state files.",
+      "evidence": [
+        "project_state.json"
+      ]
+    },
+    {
+      "description": "Updated frontend-file-summaries.txt (project documentation/summary) content.",
+      "reason": "BuildRequest does not request regenerating or editing file summary documentation; only the Info page content/RTL behavior is in scope.",
+      "evidence": [
+        "frontend-file-summaries.txt"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/pages/InfoPage.tsx",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Update Info page Hebrew studio content with RTL rendering",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Replace the Info page studio description with the provided expanded Hebrew content while preserving the existing layout and Tailwind styling patterns.",
+      "acceptanceCriteria": [
+        "Navigating to /info shows the new Hebrew heading and three expanded paragraphs (replacing the previous shorter text).",
+        "The overall layout remains consistent with the current Info page structure (Header, main container spacing, max width wrapper, section spacing, and typography classes remain in the same style).",
+        "No English studio-description section/content is introduced on the Info page."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/InfoPage.tsx",
+          "operation": "modify",
+          "description": "Update the Hebrew studio section copy to match the user-provided expanded content, keeping the current page scaffold (Header/Footer, main container paddings, max-width wrapper) and the existing typography/spacing Tailwind class patterns. Ensure the content includes the new heading plus three paragraphs, and remove the prior shorter studio text without adding any English studio-description content."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Ensure the updated Hebrew content on the Info page renders correctly in RTL with proper alignment and bold emphasis using valid JSX.",
+      "acceptanceCriteria": [
+        "The Hebrew content on /info is rendered RTL (e.g., the content container has RTL direction and right alignment).",
+        "Bold emphasis in the provided content is preserved and rendered correctly (using the project’s existing JSX/HTML conventions for emphasis).",
+        "There are no malformed/invalid tags introduced from the pasted HTML (e.g., no broken <p> tags or stray line breaks that break rendering)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/InfoPage.tsx",
+          "operation": "modify",
+          "description": "Preserve/enforce RTL rendering on the Hebrew section (e.g., keep dir=\"rtl\" and right-aligned layout conventions) and ensure emphasis from the provided HTML (<b>) is represented using valid JSX emphasis (e.g., <strong>) consistent with the existing codebase. Do not paste raw HTML; translate it into well-formed JSX (<h1>/<h2> as already used by the page, plus <p> blocks) to avoid malformed tags."
+        }
+      ]
+    }
+  ]
+}
