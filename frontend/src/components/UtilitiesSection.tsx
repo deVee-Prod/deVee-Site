@@ -16,26 +16,27 @@ export function UtilitiesSection() {
     <section className="py-24 bg-black" id="utilities">
       <div className="container mx-auto px-4">
         
-        {/* כותרת התמונה - שיניתי ל-PNG וטיפלתי ברווחים */}
-        <div className="flex justify-center mb-20">
+        {/* כותרת */}
+        <div className="flex justify-center mb-16">
           <img 
             src="/tools%20for%20artists.png" 
             alt="Tools for Artists" 
-            className="max-w-[300px] md:max-w-[400px] h-auto object-contain"
+            className="max-w-[250px] md:max-w-[400px] h-auto object-contain"
           />
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-10 md:gap-12">
+        {/* רשימת הכלים - גלילה אופקית במובייל, גריד במחשב */}
+        <div className="flex overflow-x-auto no-scrollbar md:grid md:grid-cols-8 gap-8 pb-8 justify-start md:justify-center">
           {utilities.map((tool, index) => (
             <a 
               key={index} 
               href={tool.link} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="group flex flex-col items-center"
+              className="flex-shrink-0 group flex flex-col items-center w-[100px] md:w-auto"
             >
-              {/* לוגו עגול PNG */}
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 group-hover:scale-110 group-hover:border-orange-500/50">
+              {/* הלוגו העגול */}
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 group-hover:scale-110 group-hover:border-orange-500/50 shadow-2xl">
                 <img 
                   src={tool.img} 
                   alt={tool.name} 
@@ -43,7 +44,8 @@ export function UtilitiesSection() {
                 />
               </div>
               
-              <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 group-hover:text-orange-500 transition-colors font-bold uppercase text-center">
+              {/* שם הכלי */}
+              <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 group-hover:text-orange-500 transition-colors font-bold uppercase text-center whitespace-nowrap">
                 {tool.name}
               </span>
             </a>
