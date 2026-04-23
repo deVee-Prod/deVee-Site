@@ -2,14 +2,14 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const utilities = [
-  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png" },
-  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png" },
-  { name: "Storm Form", link: "https://form-storm.vercel.app", img: "/stormformicon.png" },
-  { name: "BPM Calculator", link: "https://de-vee-bpm-calculator.vercel.app/", img: "/bpmcalculatorlogo.png" },
-  { name: "File Converter", link: "https://de-vee-tools.vercel.app", img: "/fileconverterlogo.png" },
-  { name: "PDF Killer", link: "https://pdf-killer-ten.vercel.app/", img: "/pdfkillerlogo.png" },
-  { name: "Flash Juice", link: "https://flash-juice-3aya.vercel.app/", img: "/flashjuicelogo.png" },
-  { name: "Release Ready", link: "https://release-ready-seven.vercel.app", img: "/Release%20ready%20icon.png" },
+  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: "rgba(168, 85, 247, 0.6)" }, // סגול
+  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: "rgba(180, 83, 9, 0.6)" },   // חום/כתום
+  { name: "Storm Form", link: "https://form-storm.vercel.app", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.6)" },      // כחול
+  { name: "BPM Calculator", link: "https://de-vee-bpm-calculator.vercel.app/", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.6)" }, // ורוד
+  { name: "File Converter", link: "https://de-vee-tools.vercel.app", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.6)" }, // אדום
+  { name: "PDF Killer", link: "https://pdf-killer-ten.vercel.app/", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.6)" },    // ירוק
+  { name: "Flash Juice", link: "https://flash-juice-3aya.vercel.app/", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.6)" },  // כתום
+  { name: "Release Ready", link: "https://release-ready-seven.vercel.app", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" }, // צהוב
 ];
 
 export function UtilitiesSection() {
@@ -43,7 +43,17 @@ export function UtilitiesSection() {
                 rel="noopener noreferrer" 
                 className="flex-shrink-0 snap-center group flex flex-col items-center w-[105px] md:w-auto"
               >
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 group-hover:scale-110 group-hover:border-orange-500/50 shadow-2xl">
+                <div 
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 shadow-2xl grayscale hover:grayscale-0"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `0 0 20px ${tool.color}`;
+                    e.currentTarget.style.borderColor = tool.color;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                  }}
+                >
                   <img 
                     src={tool.img} 
                     alt={tool.name} 
@@ -51,8 +61,7 @@ export function UtilitiesSection() {
                   />
                 </div>
                 
-                {/* טקסט נשאר בלבן/אפור ללא שינוי צבע ב-Hover */}
-                <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 font-bold uppercase text-center whitespace-nowrap transition-opacity duration-300">
+                <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 font-bold uppercase text-center whitespace-nowrap transition-opacity duration-300 group-hover:text-white/60">
                   {tool.name}
                 </span>
               </a>
