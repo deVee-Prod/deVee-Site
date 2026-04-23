@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChevronRight } from 'lucide-react'; // וודא שהספרייה מותקנת, אם לא נשתמש ב-svg פשוט
 
 const utilities = [
   { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png" },
@@ -16,17 +17,24 @@ export function UtilitiesSection() {
     <section className="py-24 bg-black" id="utilities">
       <div className="container mx-auto px-4">
         
-        <div className="flex justify-center mb-16 px-4">
+        {/* כותרת */}
+        <div className="flex flex-col items-center mb-12">
           <img 
             src="/tools%20for%20artists.png" 
             alt="Tools for Artists" 
             className="max-w-[250px] md:max-w-[400px] h-auto object-contain"
           />
+          
+          {/* חץ רמז לגלילה - מופיע רק במובייל */}
+          <div className="flex items-center gap-2 mt-4 md:hidden animate-pulse">
+            <span className="text-[10px] tracking-[0.2em] text-white/30 uppercase font-bold">Scroll</span>
+            <ChevronRight className="w-4 h-4 text-orange-500 animate-bounce-x" />
+          </div>
         </div>
 
-        {/* Container עם גלילה - הוספנו snap-x לתחושת גלילה חלקה */}
+        {/* רשימת הכלים */}
         <div className="relative group">
-          <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-10 px-4 md:px-0 scroll-smooth">
+          <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-4 px-4 md:px-0 scroll-smooth">
             {utilities.map((tool, index) => (
               <a 
                 key={index} 
@@ -49,21 +57,22 @@ export function UtilitiesSection() {
               </a>
             ))}
             
-            {/* אלמנט ריק בסוף כדי לאפשר לעיגול האחרון להגיע למרכז */}
-            <div className="flex-shrink-0 w-4 md:hidden"></div>
+            {/* מרווח סופי למובייל */}
+            <div className="flex-shrink-0 w-8 md:hidden"></div>
           </div>
-
-          {/* רמז ויזואלי - צל עדין בצדדים במובייל בלבד */}
-          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black to-transparent pointer-events-none md:hidden" />
-        </div>
-
-        {/* חיווי גלילה למובייל בלבד */}
-        <div className="flex justify-center gap-1.5 md:hidden mt-2">
-          <div className="w-8 h-[1px] bg-orange-500/50 rounded-full"></div>
-          <div className="w-2 h-[1px] bg-white/10 rounded-full"></div>
-          <div className="w-2 h-[1px] bg-white/10 rounded-full"></div>
         </div>
       </div>
+
+      {/* הוספת אנימציה מותאמת אישית לחץ בתוך ה-style או ב-index.css */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes bounce-x {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(5px); }
+        }
+        .animate-bounce-x {
+          animation: bounce-x 1s infinite;
+        }
+      `}} />
     </section>
   );
 }
