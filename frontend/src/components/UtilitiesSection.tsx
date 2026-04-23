@@ -16,8 +16,7 @@ export function UtilitiesSection() {
     <section className="py-24 bg-black" id="utilities">
       <div className="container mx-auto px-4">
         
-        {/* כותרת */}
-        <div className="flex justify-center mb-16">
+        <div className="flex justify-center mb-16 px-4">
           <img 
             src="/tools%20for%20artists.png" 
             alt="Tools for Artists" 
@@ -25,31 +24,44 @@ export function UtilitiesSection() {
           />
         </div>
 
-        {/* רשימת הכלים - גלילה אופקית במובייל, גריד במחשב */}
-        <div className="flex overflow-x-auto no-scrollbar md:grid md:grid-cols-8 gap-8 pb-8 justify-start md:justify-center">
-          {utilities.map((tool, index) => (
-            <a 
-              key={index} 
-              href={tool.link} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex-shrink-0 group flex flex-col items-center w-[100px] md:w-auto"
-            >
-              {/* הלוגו העגול */}
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 group-hover:scale-110 group-hover:border-orange-500/50 shadow-2xl">
-                <img 
-                  src={tool.img} 
-                  alt={tool.name} 
-                  className="w-full h-full object-cover" 
-                />
-              </div>
-              
-              {/* שם הכלי */}
-              <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 group-hover:text-orange-500 transition-colors font-bold uppercase text-center whitespace-nowrap">
-                {tool.name}
-              </span>
-            </a>
-          ))}
+        {/* Container עם גלילה - הוספנו snap-x לתחושת גלילה חלקה */}
+        <div className="relative group">
+          <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-10 px-4 md:px-0 scroll-smooth">
+            {utilities.map((tool, index) => (
+              <a 
+                key={index} 
+                href={tool.link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex-shrink-0 snap-center group flex flex-col items-center w-[105px] md:w-auto"
+              >
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/5 transition-all duration-500 group-hover:scale-110 group-hover:border-orange-500/50 shadow-2xl">
+                  <img 
+                    src={tool.img} 
+                    alt={tool.name} 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+                
+                <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/20 group-hover:text-orange-500 transition-colors font-bold uppercase text-center whitespace-nowrap">
+                  {tool.name}
+                </span>
+              </a>
+            ))}
+            
+            {/* אלמנט ריק בסוף כדי לאפשר לעיגול האחרון להגיע למרכז */}
+            <div className="flex-shrink-0 w-4 md:hidden"></div>
+          </div>
+
+          {/* רמז ויזואלי - צל עדין בצדדים במובייל בלבד */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black to-transparent pointer-events-none md:hidden" />
+        </div>
+
+        {/* חיווי גלילה למובייל בלבד */}
+        <div className="flex justify-center gap-1.5 md:hidden mt-2">
+          <div className="w-8 h-[1px] bg-orange-500/50 rounded-full"></div>
+          <div className="w-2 h-[1px] bg-white/10 rounded-full"></div>
+          <div className="w-2 h-[1px] bg-white/10 rounded-full"></div>
         </div>
       </div>
     </section>
