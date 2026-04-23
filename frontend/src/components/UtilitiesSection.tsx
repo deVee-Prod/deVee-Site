@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight } from 'lucide-react'; // וודא שהספרייה מותקנת, אם לא נשתמש ב-svg פשוט
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const utilities = [
   { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png" },
@@ -17,7 +17,7 @@ export function UtilitiesSection() {
     <section className="py-24 bg-black" id="utilities">
       <div className="container mx-auto px-4">
         
-        {/* כותרת */}
+        {/* כותרת ורמז גלילה */}
         <div className="flex flex-col items-center mb-12">
           <img 
             src="/tools%20for%20artists.png" 
@@ -25,16 +25,18 @@ export function UtilitiesSection() {
             className="max-w-[250px] md:max-w-[400px] h-auto object-contain"
           />
           
-          {/* חץ רמז לגלילה - מופיע רק במובייל */}
-          <div className="flex items-center gap-2 mt-4 md:hidden animate-pulse">
-            <span className="text-[10px] tracking-[0.2em] text-white/30 uppercase font-bold">Scroll</span>
-            <ChevronRight className="w-4 h-4 text-orange-500 animate-bounce-x" />
+          {/* חצים משני הצדדים - מופיע רק במובייל */}
+          <div className="flex items-center gap-3 mt-6 md:hidden">
+            <ChevronLeft className="w-4 h-4 text-orange-500/50 animate-pulse" />
+            <span className="text-[9px] tracking-[0.3em] text-white/40 uppercase font-bold">Scroll</span>
+            <ChevronRight className="w-4 h-4 text-orange-500/50 animate-pulse" />
           </div>
         </div>
 
         {/* רשימת הכלים */}
         <div className="relative group">
-          <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-4 px-4 md:px-0 scroll-smooth">
+          {/* כאן הוספתי את הקלאס hide-scrollbar */}
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-4 px-4 md:px-0 scroll-smooth">
             {utilities.map((tool, index) => (
               <a 
                 key={index} 
@@ -56,21 +58,20 @@ export function UtilitiesSection() {
                 </span>
               </a>
             ))}
-            
-            {/* מרווח סופי למובייל */}
             <div className="flex-shrink-0 w-8 md:hidden"></div>
           </div>
         </div>
       </div>
 
-      {/* הוספת אנימציה מותאמת אישית לחץ בתוך ה-style או ב-index.css */}
+      {/* ה-CSS שמוריד את הפס הלבן ומפעיל את האנימציה */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes bounce-x {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(5px); }
+        /* הסתרת פס גלילה לכל הדפדפנים */
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
         }
-        .animate-bounce-x {
-          animation: bounce-x 1s infinite;
+        .hide-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
         }
       `}} />
     </section>
