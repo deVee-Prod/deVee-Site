@@ -34,12 +34,12 @@ export function VideoSection() {
   return (
     <section className="relative pt-4 sm:pt-6 pb-5 px-4 sm:px-6 bg-gradient-to-b from-black via-zinc-950 to-black z-20">
       <div className="container mx-auto max-w-6xl">
-        {/* Latest Releases Header Image */}
+        {/* Latest Releases Header Image - Added margin-left for perfect centering */}
         <div className="flex justify-center mb-5">
           <img 
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png" 
             alt="Latest Releases"
-            className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain"
+            className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain ml-[10px] sm:ml-[15px]"
           />
         </div>
 
