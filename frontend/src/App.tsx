@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { VideoSection } from './components/VideoSection';
+import { UtilitiesSection } from './components/UtilitiesSection'; // <-- ייבוא
 import { SocialSection } from './components/SocialSection';
 import { Footer } from './components/Footer';
 
@@ -12,6 +13,7 @@ function App() {
       <main>
         <HeroSection />
         <VideoSection />
+        <UtilitiesSection /> {/* <-- כאן זה יופיע מתחת לוידאו */}
         <SocialSection />
       </main>
       <Footer />
