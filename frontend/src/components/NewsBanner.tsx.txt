@@ -3,11 +3,11 @@ import React from 'react';
 export const NewsBanner = () => {
   return (
     <section className="w-full flex justify-center py-12 bg-black">
-      <div className="w-[95%] max-w-[1200px] border border-neutral-800 shadow-[0_0_40px_rgba(188,255,0,0.05)] overflow-hidden">
+      <div className="w-[95%] max-w-[1200px] border border-white/10 overflow-hidden shadow-2xl">
         <img
           src="/assets/news-may.jpeg"
-          alt="Devee Music News"
-          className="w-full h-auto block hover:scale-[1.02] transition-transform duration-500 ease-in-out"
+          alt="deVee News May 2026"
+          className="w-full h-auto block transition-transform duration-700 hover:scale-[1.03]"
         />
       </div>
     </section>
