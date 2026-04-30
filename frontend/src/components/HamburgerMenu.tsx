@@ -70,6 +70,17 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     }
   };
 
+  // פונקציית התנתקות חדשה
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      onClose(); // סגירת התפריט לאחר התנתקות
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <>
       <button
@@ -92,16 +103,24 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* השינוי כאן: justify-start במקום justify-center ופדינג עליון pt-24 */}
         <nav className="flex flex-col items-center justify-start h-full space-y-8 pt-24">
           
           <div className="flex flex-col items-center mb-4">
             {user ? (
-              <img 
-                src={user.user_metadata.avatar_url} 
-                alt="Profile" 
-                className="w-16 h-16 rounded-full border border-white/20 shadow-lg"
-              />
+              <div className="flex flex-col items-center space-y-4">
+                <img 
+                  src={user.user_metadata.avatar_url} 
+                  alt="Profile" 
+                  className="w-16 h-16 rounded-full border border-white/20 shadow-lg"
+                />
+                {/* כפתור Logout נוסף כאן */}
+                <button
+                  onClick={handleLogout}
+                  className="text-[10px] text-white/40 hover:text-red-500 transition-colors duration-300 uppercase tracking-tighter"
+                >
+                  Logout
+                </button>
+              </div>
             ) : (
               <button
                 onClick={handleLogin}
