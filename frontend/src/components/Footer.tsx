@@ -42,9 +42,17 @@ export function Footer() {
               caffeine.ai
             </a>
           </p>
+          {/* הלינק עבור גוגל - שקוף כמעט ולא משנה את העיצוב */}
+          <div className="mt-2">
+            <a 
+              href="/privacy.html" 
+              className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
+            >
+              Privacy Policy
+            </a>
+          </div>
         </div>
       </div>
     </footer>
   );
 }
-
