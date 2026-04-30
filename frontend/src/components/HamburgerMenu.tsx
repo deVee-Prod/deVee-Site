@@ -52,7 +52,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     onClose();
   };
 
-  // פונקציית התחברות מעודכנת עם טיפול בשגיאות ופרמטרים נכונים
   const handleLogin = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -93,7 +92,8 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <nav className="flex flex-col items-center justify-center h-full space-y-8">
+        {/* השינוי כאן: justify-start במקום justify-center ופדינג עליון pt-24 */}
+        <nav className="flex flex-col items-center justify-start h-full space-y-8 pt-24">
           
           <div className="flex flex-col items-center mb-4">
             {user ? (
