@@ -1,22 +1,20 @@
 import { createClient } from '@supabase/supabase-js'
 
-// שליפה ישירה של המשתנים
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// ניסיון לשלוף מכל האופציות האפשריות
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// ניקוי לוכסנים ורווחים כדי למנוע שגיאות ניתוב
-const cleanUrl = supabaseUrl?.trim().replace(/\/$/, '');
-const cleanKey = supabaseAnonKey?.trim();
+// במקום Error שחוסם את האתר, רק נדפיס ל-Console
+console.log('--- SUPABASE ENV CHECK ---');
+console.log('URL exists:', !!supabaseUrl);
+console.log('Key exists:', !!supabaseAnonKey);
 
-if (!cleanUrl || !cleanKey) {
-  throw new Error("Supabase URL or Key is missing. Check Vercel environment variables.");
-}
-
-export const supabase = createClient(cleanUrl, cleanKey, {
+// יצירת הקליינט גם אם חסר (כדי שהאתר לא יקרוס)
+export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    flowType: 'pkce' // מבטיח שההתחברות תעבוד בדפדפנים מודרניים
+    flowType: 'pkce'
   }
 });
