@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, Menu } from 'lucide-react';
 import { navigateTo } from '../router';
-import { supabase } from '../supabaseClient'; // חיבור למנוע שיצרת
+import { supabase } from '../supabaseClient'; 
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -10,10 +10,8 @@ interface HamburgerMenuProps {
 }
 
 export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps) {
-  // מצב ששומר אם המשתמש מחובר או לא
   const [user, setUser] = useState<any>(null);
 
-  // בדיקת סטטוס המשתמש ברגע שהתפריט עולה
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -21,7 +19,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     };
     checkUser();
 
-    // מאזין לשינויים בזמן אמת (התחברות/התנתקות)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -29,7 +26,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     return () => subscription.unsubscribe();
   }, []);
 
-  // Handle Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -40,7 +36,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -57,32 +52,35 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     onClose();
   };
 
-  // פונקציה שמפעילה את ההתחברות לגוגל
+  // פונקציית התחברות מעודכנת עם טיפול בשגיאות ופרמטרים נכונים
   const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin
-      }
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'select_account',
+          },
+        }
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Authentication error:', error);
+    }
   };
 
   return (
     <>
-      {/* Hamburger Icon Button */}
       <button
         onClick={onToggle}
         className="relative z-50 p-2 text-white hover:text-primary transition-colors duration-300"
         aria-label="Toggle menu"
       >
-        {isOpen ? (
-          <X className="w-7 h-7" />
-        ) : (
-          <Menu className="w-7 h-7" />
-        )}
+        {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
       </button>
 
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
@@ -90,7 +88,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
         />
       )}
 
-      {/* Menu Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-black border-l border-primary/20 z-40 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -98,17 +95,14 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
       >
         <nav className="flex flex-col items-center justify-center h-full space-y-8">
           
-          {/* הוספת אזור המשתמש - מעל כפתור ה-Home */}
           <div className="flex flex-col items-center mb-4">
             {user ? (
-              // אם יש משתמש - מציג את תמונת הפרופיל שלו
               <img 
                 src={user.user_metadata.avatar_url} 
                 alt="Profile" 
                 className="w-16 h-16 rounded-full border border-white/20 shadow-lg"
               />
             ) : (
-              // אם אין משתמש - מציג כפתור התחברות נקי שמתאים לעיצוב
               <button
                 onClick={handleLogin}
                 className="px-6 py-2 border border-white/20 text-white/70 hover:text-white hover:border-white transition-all duration-300 text-xs font-bold uppercase tracking-widest"
