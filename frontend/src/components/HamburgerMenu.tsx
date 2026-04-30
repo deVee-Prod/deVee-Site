@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X, Menu } from 'lucide-react';
 import { navigateTo } from '../router';
+import { supabase } from '../supabaseClient'; // חיבור למנוע שיצרת
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -9,6 +10,25 @@ interface HamburgerMenuProps {
 }
 
 export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps) {
+  // מצב ששומר אם המשתמש מחובר או לא
+  const [user, setUser] = useState<any>(null);
+
+  // בדיקת סטטוס המשתמש ברגע שהתפריט עולה
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+    checkUser();
+
+    // מאזין לשינויים בזמן אמת (התחברות/התנתקות)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   // Handle Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -35,6 +55,16 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
   const handleNavigation = (path: string) => {
     navigateTo(path);
     onClose();
+  };
+
+  // פונקציה שמפעילה את ההתחברות לגוגל
+  const handleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
   };
 
   return (
@@ -67,6 +97,27 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
         }`}
       >
         <nav className="flex flex-col items-center justify-center h-full space-y-8">
+          
+          {/* הוספת אזור המשתמש - מעל כפתור ה-Home */}
+          <div className="flex flex-col items-center mb-4">
+            {user ? (
+              // אם יש משתמש - מציג את תמונת הפרופיל שלו
+              <img 
+                src={user.user_metadata.avatar_url} 
+                alt="Profile" 
+                className="w-16 h-16 rounded-full border border-white/20 shadow-lg"
+              />
+            ) : (
+              // אם אין משתמש - מציג כפתור התחברות נקי שמתאים לעיצוב
+              <button
+                onClick={handleLogin}
+                className="px-6 py-2 border border-white/20 text-white/70 hover:text-white hover:border-white transition-all duration-300 text-xs font-bold uppercase tracking-widest"
+              >
+                Sign up with Google
+              </button>
+            )}
+          </div>
+
           <button
             onClick={() => handleNavigation('/')}
             className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
