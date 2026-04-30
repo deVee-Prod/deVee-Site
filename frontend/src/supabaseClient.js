@@ -1,20 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
-// ניסיון לשלוף מכל האופציות האפשריות
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// ניסיון שליפה מכל מקום אפשרי
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
-// במקום Error שחוסם את האתר, רק נדפיס ל-Console
-console.log('--- SUPABASE ENV CHECK ---');
-console.log('URL exists:', !!supabaseUrl);
-console.log('Key exists:', !!supabaseAnonKey);
+console.log('--- FINAL DEBUG ---');
+console.log('Final URL Check:', !!supabaseUrl);
 
-// יצירת הקליינט גם אם חסר (כדי שהאתר לא יקרוס)
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-    flowType: 'pkce'
-  }
-});
+// יצירת קליינט עם בדיקה שמונעת את ה-Uncaught Error
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("Credentials still missing! Try adding them directly to the code to test.");
+}
+
+export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder');
