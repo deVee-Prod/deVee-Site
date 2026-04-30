@@ -1,15 +1,17 @@
 import { createClient } from '@supabase/supabase-js'
 
-// ניסיון שליפה מכל מקום אפשרי
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+// העתק את הכתובת והמפתח ישירות מה-Dashboard של Supabase (Settings -> API)
+const supabaseUrl = 'https://plndftoilwwgvilkwsun.supabase.co/rest/v1/'; // הכתובת שלך
+const supabaseAnonKey = 'sb_publishable_QmTMGt6DaboaiwwdUrUPDg_REcZ9pj4'; // המפתח הארוך שמתחיל ב-eyJ
 
-console.log('--- FINAL DEBUG ---');
-console.log('Final URL Check:', !!supabaseUrl);
+console.log('--- PRODUCTION DEBUG ---');
+console.log('Using Hardcoded Credentials');
 
-// יצירת קליינט עם בדיקה שמונעת את ה-Uncaught Error
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("Credentials still missing! Try adding them directly to the code to test.");
-}
-
-export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder');
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    flowType: 'pkce'
+  }
+});
