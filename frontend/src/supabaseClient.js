@@ -1,15 +1,17 @@
 import { createClient } from '@supabase/supabase-js'
 
-// שימוש ב-import.meta.env - הדרך היחידה ש-Vite מכיר
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// שיטה חסינת תקלות למציאת המשתנים ב-Vite
+const env = import.meta.env;
 
-// הדפסה ל-Console כדי שנדע בדיוק מה הגיע (אל דאגה, זה רק ב-Console)
-console.log('Supabase URL status:', supabaseUrl ? 'Found' : 'Missing');
+const supabaseUrl = env.VITE_SUPABASE_URL || env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+// הדפסה לדיאגנוסטיקה
+console.log('Environment keys found:', Object.keys(env).filter(k => k.includes('SUPABASE')));
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  // אם אנחנו כאן, סימן ש-Vite עדיין חוסם את הגישה למשתנים
-  throw new Error("Supabase URL or Key is missing. Check Vercel Environment Variables.");
+  console.error('Missing Supabase Config. Available Env Keys:', Object.keys(env));
+  throw new Error("Supabase URL or Key is missing.");
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
