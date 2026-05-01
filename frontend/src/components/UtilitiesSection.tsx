@@ -48,7 +48,7 @@ function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
 
 export function UtilitiesSection() {
   return (
-    <section className="py-24 bg-black" id="utilities">
+    <section className="py-24 bg-black overflow-x-hidden md:overflow-x-visible" id="utilities">
       <div className="container mx-auto px-4">
 
         {/* Title */}
@@ -66,7 +66,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Premium Tools */}
-        <div style={{ marginBottom: '4rem', overflow: 'visible' }}>
+        <div className="mb-16">
           {/* Premium label */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
@@ -76,10 +76,17 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
-          {/* Premium tools row — decorative box is absolute so it never clips the glow */}
-          <div className="flex justify-center" style={{ overflow: 'visible' }}>
+          {/* Mobile: simple horizontal scroll — same pattern as regular tools */}
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-8 justify-start">
+            {premiumTools.map((tool, index) => (
+              <ToolIcon key={index} tool={tool} />
+            ))}
+            <div className="flex-shrink-0 w-8" />
+          </div>
+
+          {/* Desktop: decorative golden box — overflow:visible so glows aren't clipped */}
+          <div className="hidden md:flex justify-center" style={{ overflow: 'visible' }}>
             <div style={{ position: 'relative', overflow: 'visible', padding: '2.5rem 4rem' }}>
-              {/* Decorative golden border — purely visual, does not affect layout or clipping */}
               <div style={{
                 position: 'absolute',
                 inset: 0,
@@ -89,15 +96,13 @@ export function UtilitiesSection() {
                 boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)',
                 pointerEvents: 'none',
               }} />
-              {/* Icons sit above the decorative box, free to glow in any direction */}
               <div
-                className="flex hide-scrollbar gap-10 md:gap-16"
+                className="flex hide-scrollbar gap-16"
                 style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible', padding: '30px', margin: '-30px' }}
               >
                 {premiumTools.map((tool, index) => (
                   <ToolIcon key={index} tool={tool} />
                 ))}
-                <div className="flex-shrink-0 w-8 md:hidden" />
               </div>
             </div>
           </div>
