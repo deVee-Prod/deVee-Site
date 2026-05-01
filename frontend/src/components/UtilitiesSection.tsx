@@ -132,7 +132,7 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/30" />
           </div>
 
-          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-6 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
+          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:justify-center gap-6 md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
             <div className="flex-shrink-0 w-8 md:hidden" />
             {utilities.map((tool, index) => (
               <ToolIcon key={index} tool={tool} />
