@@ -92,7 +92,7 @@ export function UtilitiesSection() {
               {/* Icons sit above the decorative box, free to glow in any direction */}
               <div
                 className="flex hide-scrollbar gap-10 md:gap-16"
-                style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible' }}
+                style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible', padding: '30px', margin: '-30px' }}
               >
                 {premiumTools.map((tool, index) => (
                   <ToolIcon key={index} tool={tool} />
