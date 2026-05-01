@@ -66,7 +66,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Premium Tools */}
-        <div className="mb-16">
+        <div style={{ marginBottom: '4rem', overflow: 'visible' }}>
           {/* Premium label */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
@@ -76,16 +76,27 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
-          {/* Premium tools row — overflow:visible so glow isn't clipped */}
-          <div
-            className="relative rounded-2xl border border-yellow-500/20 bg-gradient-to-b from-yellow-500/5 to-transparent px-8"
-            style={{ boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)', padding: '2.5rem 2rem', overflow: 'visible' }}
-          >
-            <div className="flex hide-scrollbar snap-x snap-mandatory md:flex md:justify-center gap-10 md:gap-20" style={{ overflowX: 'auto', overflowY: 'visible' }}>
-              {premiumTools.map((tool, index) => (
-                <ToolIcon key={index} tool={tool} />
-              ))}
-              <div className="flex-shrink-0 w-8 md:hidden" />
+          {/* Premium tools row — inline box hugging the icons */}
+          <div className="flex justify-center" style={{ overflow: 'visible' }}>
+            <div
+              className="rounded-2xl bg-gradient-to-b from-yellow-500/5 to-transparent"
+              style={{
+                outline: '1px solid rgba(234, 179, 8, 0.2)',
+                boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)',
+                padding: '1.75rem 3rem',
+                overflow: 'visible',
+                display: 'inline-flex',
+              }}
+            >
+              <div
+                className="flex hide-scrollbar gap-10 md:gap-16"
+                style={{ overflowX: 'auto', overflowY: 'visible' }}
+              >
+                {premiumTools.map((tool, index) => (
+                  <ToolIcon key={index} tool={tool} />
+                ))}
+                <div className="flex-shrink-0 w-8 md:hidden" />
+              </div>
             </div>
           </div>
         </div>
