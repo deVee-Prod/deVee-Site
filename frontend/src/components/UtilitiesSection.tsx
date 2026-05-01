@@ -78,7 +78,7 @@ export function UtilitiesSection() {
 
           {/* Premium tools row — decorative box is absolute so it never clips the glow */}
           <div className="flex justify-center" style={{ overflow: 'visible' }}>
-            <div style={{ position: 'relative', overflow: 'visible', padding: '2rem 3rem' }}>
+            <div style={{ position: 'relative', overflow: 'visible', padding: '2.5rem 4rem' }}>
               {/* Decorative golden border — purely visual, does not affect layout or clipping */}
               <div style={{
                 position: 'absolute',
