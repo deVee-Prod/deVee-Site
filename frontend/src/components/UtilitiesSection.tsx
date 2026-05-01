@@ -1,9 +1,13 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+const premiumTools = [
+  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: "rgba(168, 85, 247, 0.8)" },
+  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: "rgba(180, 83, 9, 0.8)" },
+  { name: "Reels Motion", link: "https://reels-motion.vercel.app/", img: "/reels-motion-icon.png", color: "rgba(255, 200, 50, 0.8)" },
+];
+
 const utilities = [
-  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: "rgba(168, 85, 247, 0.6)" },
-  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: "rgba(180, 83, 9, 0.6)" },
   { name: "Storm Form", link: "https://form-storm.vercel.app", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.6)" },
   { name: "BPM Calculator", link: "https://de-vee-bpm-calculator.vercel.app/", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.6)" },
   { name: "File Converter", link: "https://de-vee-tools.vercel.app", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.6)" },
@@ -12,18 +16,46 @@ const utilities = [
   { name: "Release Ready", link: "https://release-ready-seven.vercel.app", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" },
 ];
 
+function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
+  return (
+    <a
+      href={tool.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex-shrink-0 snap-center group flex flex-col items-center w-[105px] md:w-auto"
+    >
+      <div
+        className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl"
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
+          e.currentTarget.style.borderColor = tool.color;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = 'none';
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        }}
+      >
+        <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
+      </div>
+      <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white">
+        {tool.name}
+      </span>
+    </a>
+  );
+}
+
 export function UtilitiesSection() {
   return (
     <section className="py-24 bg-black" id="utilities">
       <div className="container mx-auto px-4">
-        
+
+        {/* Title */}
         <div className="flex flex-col items-center mb-12">
-          <img 
-            src="/tools%20for%20artists.png" 
-            alt="Tools for Artists" 
+          <img
+            src="/tools%20for%20artists.png"
+            alt="Tools for Artists"
             className="max-w-[250px] md:max-w-[400px] h-auto object-contain"
           />
-          
           <div className="flex items-center gap-3 mt-6 md:hidden">
             <ChevronLeft className="w-4 h-4 text-orange-500/50 animate-pulse" />
             <span className="text-[9px] tracking-[0.3em] text-white/40 uppercase font-bold">Scroll</span>
@@ -31,54 +63,46 @@ export function UtilitiesSection() {
           </div>
         </div>
 
-        <div className="relative group">
-          {/* הוספתי py-10 כדי לתת מקום להילה למעלה ולמטה שלא תיחתך */}
-          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-8 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
-            {utilities.map((tool, index) => (
-              <a 
-                key={index} 
-                href={tool.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="flex-shrink-0 snap-center group flex flex-col items-center w-[105px] md:w-auto"
-              >
-                <div 
-                  /* הסרתי את ה-grayscale, והוספתי transition חלק */
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl"
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
-                    e.currentTarget.style.borderColor = tool.color;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = 'none';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                  }}
-                >
-                  <img 
-                    src={tool.img} 
-                    alt={tool.name} 
-                    className="w-full h-full object-cover" 
-                  />
-                </div>
-                
-                <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white">
-                  {tool.name}
-                </span>
-              </a>
-            ))}
-            <div className="flex-shrink-0 w-8 md:hidden"></div>
+        {/* Premium Tools */}
+        <div className="mb-16">
+          {/* Premium label */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
+            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">
+              ★ Premium Tools ★
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
+          </div>
+
+          {/* Premium tools row */}
+          <div
+            className="relative rounded-2xl border border-yellow-500/20 bg-gradient-to-b from-yellow-500/5 to-transparent px-8 py-10"
+            style={{ boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)' }}
+          >
+            <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:flex md:justify-center gap-10 md:gap-20 scroll-smooth">
+              {premiumTools.map((tool, index) => (
+                <ToolIcon key={index} tool={tool} />
+              ))}
+              <div className="flex-shrink-0 w-8 md:hidden" />
+            </div>
           </div>
         </div>
+
+        {/* Regular Tools */}
+        <div className="relative group">
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-6 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
+            {utilities.map((tool, index) => (
+              <ToolIcon key={index} tool={tool} />
+            ))}
+            <div className="flex-shrink-0 w-8 md:hidden" />
+          </div>
+        </div>
+
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}} />
     </section>
   );
