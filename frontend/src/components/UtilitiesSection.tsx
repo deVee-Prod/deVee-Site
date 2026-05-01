@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const GOLD = "rgba(234, 179, 8, 0.85)";
@@ -47,6 +47,18 @@ function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
 }
 
 export function UtilitiesSection() {
+  const premiumScrollRef = useRef<HTMLDivElement>(null);
+  const freeScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    [premiumScrollRef, freeScrollRef].forEach(ref => {
+      if (ref.current) {
+        const el = ref.current;
+        el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+      }
+    });
+  }, []);
+
   return (
     <section className="py-24 bg-black overflow-x-hidden md:overflow-x-visible" id="utilities">
       <div className="container mx-auto px-4">
@@ -77,7 +89,8 @@ export function UtilitiesSection() {
           </div>
 
           {/* Mobile: simple horizontal scroll — same pattern as regular tools */}
-          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-8 justify-start">
+          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-8">
+            <div className="flex-shrink-0 w-8" />
             {premiumTools.map((tool, index) => (
               <ToolIcon key={index} tool={tool} />
             ))}
@@ -110,7 +123,17 @@ export function UtilitiesSection() {
 
         {/* Regular Tools */}
         <div className="relative group">
-          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-6 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
+          {/* Free Tools label — mobile only */}
+          <div className="flex items-center justify-center gap-4 mb-8 md:hidden">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/20" />
+            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white/45">
+              Free Tools
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/20" />
+          </div>
+
+          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-6 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
+            <div className="flex-shrink-0 w-8 md:hidden" />
             {utilities.map((tool, index) => (
               <ToolIcon key={index} tool={tool} />
             ))}
