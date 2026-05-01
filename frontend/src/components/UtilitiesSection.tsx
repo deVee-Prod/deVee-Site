@@ -123,13 +123,13 @@ export function UtilitiesSection() {
 
         {/* Regular Tools */}
         <div className="relative group">
-          {/* Free Tools label — mobile only */}
-          <div className="flex items-center justify-center gap-4 mb-8 md:hidden">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/20" />
-            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white/45">
+          {/* Free Tools label */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/30" />
+            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white/75" style={{ textShadow: '0 0 12px rgba(255,255,255,0.4)' }}>
               Free Tools
             </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/20" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/30" />
           </div>
 
           <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:grid md:grid-cols-6 gap-6 md:gap-12 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
