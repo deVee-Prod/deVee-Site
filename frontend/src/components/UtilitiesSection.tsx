@@ -76,21 +76,23 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
-          {/* Premium tools row — inline box hugging the icons */}
+          {/* Premium tools row — decorative box is absolute so it never clips the glow */}
           <div className="flex justify-center" style={{ overflow: 'visible' }}>
-            <div
-              className="rounded-2xl bg-gradient-to-b from-yellow-500/5 to-transparent"
-              style={{
-                outline: '1px solid rgba(234, 179, 8, 0.2)',
+            <div style={{ position: 'relative', overflow: 'visible', padding: '2rem 3rem' }}>
+              {/* Decorative golden border — purely visual, does not affect layout or clipping */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '1rem',
+                border: '1px solid rgba(234, 179, 8, 0.25)',
+                background: 'linear-gradient(to bottom, rgba(234,179,8,0.05), transparent)',
                 boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)',
-                padding: '1.75rem 3rem',
-                overflow: 'visible',
-                display: 'inline-flex',
-              }}
-            >
+                pointerEvents: 'none',
+              }} />
+              {/* Icons sit above the decorative box, free to glow in any direction */}
               <div
                 className="flex hide-scrollbar gap-10 md:gap-16"
-                style={{ overflowX: 'auto', overflowY: 'visible' }}
+                style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible' }}
               >
                 {premiumTools.map((tool, index) => (
                   <ToolIcon key={index} tool={tool} />
