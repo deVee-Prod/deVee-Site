@@ -1,10 +1,12 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+const GOLD = "rgba(234, 179, 8, 0.85)";
+
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: "rgba(168, 85, 247, 0.8)" },
-  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: "rgba(180, 83, 9, 0.8)" },
-  { name: "Reels Motion", link: "https://reels-motion.vercel.app/", img: "/reels-motion-icon.png", color: "rgba(255, 200, 50, 0.8)" },
+  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: GOLD },
+  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: GOLD },
+  { name: "Reels Motion", link: "https://reels-motion.vercel.app/", img: "/reels-motion-icon.png", color: GOLD },
 ];
 
 const utilities = [
@@ -74,12 +76,12 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
-          {/* Premium tools row */}
+          {/* Premium tools row — overflow:visible so glow isn't clipped */}
           <div
-            className="relative rounded-2xl border border-yellow-500/20 bg-gradient-to-b from-yellow-500/5 to-transparent px-8 py-10"
-            style={{ boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)' }}
+            className="relative rounded-2xl border border-yellow-500/20 bg-gradient-to-b from-yellow-500/5 to-transparent px-8"
+            style={{ boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)', padding: '2.5rem 2rem', overflow: 'visible' }}
           >
-            <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:flex md:justify-center gap-10 md:gap-20 scroll-smooth">
+            <div className="flex hide-scrollbar snap-x snap-mandatory md:flex md:justify-center gap-10 md:gap-20" style={{ overflowX: 'auto', overflowY: 'visible' }}>
               {premiumTools.map((tool, index) => (
                 <ToolIcon key={index} tool={tool} />
               ))}
