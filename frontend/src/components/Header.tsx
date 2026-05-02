@@ -1,21 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { HamburgerMenu } from './HamburgerMenu';
 import { SiWhatsapp } from 'react-icons/si';
+import { supabase } from '../supabaseClient';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <header className="bg-black relative z-30">
       {/* sm: ומטה (מובייל) — container mx-auto כמו קודם */}
       {/* md: ומעלה (דסקטופ) — w-full כדי להתפרס לקצוות */}
       <div className="container mx-auto md:max-w-none px-4 sm:px-6 pt-4 sm:pt-6 pb-1 sm:pb-2 flex justify-between items-center">
-        {/* Logo - Left Side (Made slightly smaller on mobile for balance) */}
-        <img 
-          src="/deVee Sign Transperent-1.png" 
-          alt="deVee Logo"
-          className="h-10 sm:h-12 w-auto object-contain"
-        />
+        {/* Left Side - Avatar + Logo */}
+        <div className="flex items-center gap-3">
+          {avatarUrl && (
+            <img
+              src={avatarUrl}
+              alt="Profile"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/20 object-cover flex-shrink-0"
+            />
+          )}
+          <img
+            src="/deVee Sign Transperent-1.png"
+            alt="deVee Logo"
+            className="h-10 sm:h-12 w-auto object-contain"
+          />
+        </div>
 
         {/* Right Side Actions - WhatsApp and Menu pinned together */}
         <div className="flex items-center gap-2 sm:gap-3">
