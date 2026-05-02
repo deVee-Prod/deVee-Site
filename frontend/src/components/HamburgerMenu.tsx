@@ -19,11 +19,8 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     };
     checkUser();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if ((_event === 'SIGNED_IN' || _event === 'INITIAL_SESSION') && session?.user) {
-        await supabase.from('user_access').upsert({ user_id: session.user.id }).catch(() => {});
-      }
     });
 
     return () => subscription.unsubscribe();
@@ -75,9 +72,6 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
 
   // פונקציית התנתקות חדשה
   const handleLogout = async () => {
-    if (user) {
-      await supabase.from('user_access').delete().eq('user_id', user.id).catch(() => {});
-    }
     await supabase.auth.signOut({ scope: 'global' }).catch(() => {});
     onClose();
   };
