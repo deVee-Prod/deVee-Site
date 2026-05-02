@@ -73,7 +73,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
   // פונקציית התנתקות חדשה
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut({ scope: 'global' });
       if (error) throw error;
       onClose(); // סגירת התפריט לאחר התנתקות
     } catch (error) {
