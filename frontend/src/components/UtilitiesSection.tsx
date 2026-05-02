@@ -78,11 +78,11 @@ export function UtilitiesSection() {
         <div className="mb-16">
           {/* Premium label */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
-            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white" style={{ textShadow: '0 0 16px rgba(255,255,255,0.6)' }}>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
+            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">
               ★ Premium Tools ★
             </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
           {/* Mobile: simple horizontal scroll — same pattern as regular tools */}
@@ -122,11 +122,11 @@ export function UtilitiesSection() {
         <div className="relative group">
           {/* Free Tools label */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/15" />
-            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white/40">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
+            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white" style={{ textShadow: '0 0 16px rgba(255,255,255,0.6)' }}>
               Free Tools
             </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/15" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
           </div>
 
           <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:justify-center gap-6 md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
