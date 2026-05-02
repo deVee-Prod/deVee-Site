@@ -51,13 +51,17 @@ export function UtilitiesSection() {
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Premium: center on middle item (index 1 of 3) — children: [spacer, item0, item1, item2, spacer]
     if (premiumScrollRef.current) {
       const el = premiumScrollRef.current;
-      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+      const mid = el.children[2] as HTMLElement;
+      if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
+    // Free: center on middle item (index 2 of 6) — children: [spacer, item0, item1, item2, ...]
     if (freeScrollRef.current) {
       const el = freeScrollRef.current;
-      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+      const mid = el.children[3] as HTMLElement;
+      if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
   }, []);
 
