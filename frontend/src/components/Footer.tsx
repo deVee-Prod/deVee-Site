@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react';
+import { SiInstagram } from 'react-icons/si';
 
 export function Footer() {
   return (
@@ -9,6 +10,18 @@ export function Footer() {
           <p className="text-white text-base font-montserrat">
             Let's Do Music.
           </p>
+        </div>
+
+        {/* Instagram */}
+        <div className="text-center mb-4">
+          <a
+            href="https://www.instagram.com/devee_prod?igsh=aGNzODI5eXp6YjFq&utm_source=qr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
+          >
+            <SiInstagram className="w-5 h-5" />
+          </a>
         </div>
 
         {/* SoundBetter Badge */}
