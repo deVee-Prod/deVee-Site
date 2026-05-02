@@ -51,7 +51,10 @@ export function UtilitiesSection() {
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (premiumScrollRef.current) premiumScrollRef.current.scrollLeft = 0;
+    if (premiumScrollRef.current) {
+      const el = premiumScrollRef.current;
+      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+    }
     if (freeScrollRef.current) {
       const el = freeScrollRef.current;
       el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
