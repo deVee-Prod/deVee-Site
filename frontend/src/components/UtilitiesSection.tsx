@@ -51,9 +51,11 @@ export function UtilitiesSection() {
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    [premiumScrollRef, freeScrollRef].forEach(ref => {
-      if (ref.current) ref.current.scrollLeft = 0;
-    });
+    if (premiumScrollRef.current) premiumScrollRef.current.scrollLeft = 0;
+    if (freeScrollRef.current) {
+      const el = freeScrollRef.current;
+      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+    }
   }, []);
 
   return (
@@ -119,7 +121,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Regular Tools */}
-        <div className="relative group">
+        <div className="relative">
           {/* Free Tools label */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
