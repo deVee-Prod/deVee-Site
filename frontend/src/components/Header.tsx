@@ -22,21 +22,20 @@ export function Header() {
       {/* sm: ומטה (מובייל) — container mx-auto כמו קודם */}
       {/* md: ומעלה (דסקטופ) — w-full כדי להתפרס לקצוות */}
       <div className="container mx-auto md:max-w-none px-4 sm:px-6 pt-4 sm:pt-6 pb-1 sm:pb-2 flex justify-between items-center">
-        {/* Left Side - Avatar + Logo */}
-        <div className="flex items-center gap-3">
-          {avatarUrl && (
-            <img
-              src={avatarUrl}
-              alt="Profile"
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/20 object-cover flex-shrink-0"
-            />
-          )}
+        {/* Left Side - Avatar (when signed in) or Logo (when signed out) */}
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt="Profile"
+            className="w-10 h-10 sm:h-12 sm:w-12 rounded-full border border-white/20 object-cover flex-shrink-0"
+          />
+        ) : (
           <img
             src="/deVee Sign Transperent-1.png"
             alt="deVee Logo"
             className="h-10 sm:h-12 w-auto object-contain"
           />
-        </div>
+        )}
 
         {/* Right Side Actions - WhatsApp and Menu pinned together */}
         <div className="flex items-center gap-2 sm:gap-3">
