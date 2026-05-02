@@ -77,7 +77,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
   const handleLogout = async () => {
     try {
       if (user) {
-        await supabase.from('user_access').delete().eq('user_id', user.id);
+        await supabase.from('user_access').delete().eq('user_id', user.id).catch(() => {});
       }
       const { error } = await supabase.auth.signOut({ scope: 'global' });
       if (error) throw error;
