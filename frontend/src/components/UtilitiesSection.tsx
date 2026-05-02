@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.vercel.app/", img: "/reelsdubberlogo.png", color: GOLD },
-  { name: "Reels Cutter", link: "https://reels-cutter.vercel.app/", img: "/reelscutterlogo.png", color: GOLD },
-  { name: "Reels Motion", link: "https://reels-motion.vercel.app/", img: "/reels-motion-icon.png", color: GOLD },
+  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD },
+  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD },
+  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD },
 ];
 
 const utilities = [
