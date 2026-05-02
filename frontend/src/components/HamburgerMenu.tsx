@@ -132,6 +132,18 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
           >
             Home
           </button>
+          <button
+            onClick={() => {
+              navigateTo('/');
+              onClose();
+              setTimeout(() => {
+                document.getElementById('utilities')?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
+            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+          >
+            deVee Tools
+          </button>
           <a
             href="https://www.instagram.com/devee_prod?igsh=aGNzODI5eXp6YjFq&utm_source=qr"
             target="_blank"
