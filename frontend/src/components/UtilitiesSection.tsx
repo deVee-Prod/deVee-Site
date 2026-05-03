@@ -80,11 +80,6 @@ export function UtilitiesSection() {
             alt="Tools for Artists"
             className="max-w-[250px] md:max-w-[400px] h-auto object-contain"
           />
-          <div className="flex items-center gap-3 mt-6 md:hidden">
-            <ChevronLeft className="w-4 h-4 text-orange-500/50 animate-pulse" />
-            <span className="text-[9px] tracking-[0.3em] text-white/40 uppercase font-bold">Scroll</span>
-            <ChevronRight className="w-4 h-4 text-orange-500/50 animate-pulse" />
-          </div>
         </div>
 
         {/* Premium Tools */}
@@ -152,6 +147,13 @@ export function UtilitiesSection() {
               ))}
             </div>
           </div>
+
+          {/* Scroll hint — mobile only */}
+          <div className="flex items-center justify-center gap-3 mt-2 md:hidden">
+            <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
+            <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
+            <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
+          </div>
         </div>
 
       </div>
@@ -159,6 +161,16 @@ export function UtilitiesSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes nudge-left {
+          0%, 100% { transform: translateX(0); opacity: 0.2; }
+          50% { transform: translateX(-4px); opacity: 0.5; }
+        }
+        @keyframes nudge-right {
+          0%, 100% { transform: translateX(0); opacity: 0.2; }
+          50% { transform: translateX(4px); opacity: 0.5; }
+        }
+        .scroll-hint-left { animation: nudge-left 1.8s ease-in-out infinite; }
+        .scroll-hint-right { animation: nudge-right 1.8s ease-in-out infinite; animation-delay: 0.9s; }
       `}} />
     </section>
   );
