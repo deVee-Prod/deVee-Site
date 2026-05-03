@@ -18,16 +18,16 @@ const utilities = [
   { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" },
 ];
 
-function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
+function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compact?: boolean }) {
   return (
     <a
       href={tool.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex-shrink-0 snap-center group flex flex-col items-center w-[105px] md:w-auto"
+      className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[82px] md:w-auto snap-start' : 'w-[105px] md:w-auto snap-center'}`}
     >
       <div
-        className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl"
+        className={`${compact ? 'w-14 h-14 md:w-20 md:h-20' : 'w-16 h-16 md:w-20 md:h-20'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
           e.currentTarget.style.borderColor = tool.color;
@@ -39,7 +39,7 @@ function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
       >
         <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
       </div>
-      <span className="mt-4 text-[7px] md:text-[8px] tracking-[0.2em] text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white">
+      <span className={`mt-3 ${compact ? 'text-[6px] md:text-[8px] tracking-[0.12em] md:tracking-[0.2em]' : 'text-[7px] md:text-[8px] tracking-[0.2em]'} text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white`}>
         {tool.name}
       </span>
     </a>
@@ -57,11 +57,9 @@ export function UtilitiesSection() {
       const mid = el.children[2] as HTMLElement;
       if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
-    // Free: center on middle item (index 2 of 6) — children: [spacer, item0, item1, item2, ...]
+    // Free: start from the left to show first 4 tools
     if (freeScrollRef.current) {
-      const el = freeScrollRef.current;
-      const mid = el.children[3] as HTMLElement;
-      if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
+      freeScrollRef.current.scrollLeft = 0;
     }
   }, []);
 
@@ -94,13 +92,13 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
           </div>
 
-          {/* Mobile: simple horizontal scroll — same pattern as regular tools */}
-          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-8">
-            <div className="flex-shrink-0 w-8" />
+          {/* Mobile: simple horizontal scroll */}
+          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-4">
+            <div className="flex-shrink-0 w-4" />
             {premiumTools.map((tool, index) => (
               <ToolIcon key={index} tool={tool} />
             ))}
-            <div className="flex-shrink-0 w-8" />
+            <div className="flex-shrink-0 w-4" />
           </div>
 
           {/* Desktop: decorative golden box — overflow:visible so glows aren't clipped */}
@@ -138,12 +136,11 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
           </div>
 
-          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:justify-center gap-6 md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
-            <div className="flex-shrink-0 w-8 md:hidden" />
+          {/* Mobile: 4 tools visible + swipe for more. Desktop: centered row */}
+          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar md:justify-center gap-[10px] md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
             {utilities.map((tool, index) => (
-              <ToolIcon key={index} tool={tool} />
+              <ToolIcon key={index} tool={tool} compact={true} />
             ))}
-            <div className="flex-shrink-0 w-8 md:hidden" />
           </div>
         </div>
 
