@@ -57,9 +57,10 @@ export function UtilitiesSection() {
       const mid = el.children[2] as HTMLElement;
       if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
-    // Free: start from the left to show first 4 tools
+    // Free: center so items peek on both sides
     if (freeScrollRef.current) {
-      freeScrollRef.current.scrollLeft = 0;
+      const el = freeScrollRef.current;
+      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
     }
   }, []);
 
@@ -93,7 +94,7 @@ export function UtilitiesSection() {
           </div>
 
           {/* Mobile: simple horizontal scroll */}
-          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-4">
+          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-3">
             <div className="flex-shrink-0 w-4" />
             {premiumTools.map((tool, index) => (
               <ToolIcon key={index} tool={tool} />
