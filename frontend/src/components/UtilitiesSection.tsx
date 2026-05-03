@@ -137,6 +137,13 @@ export function UtilitiesSection() {
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
           </div>
 
+          {/* Scroll hint — mobile only */}
+          <div className="flex items-center justify-center gap-3 mb-4 md:hidden">
+            <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
+            <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
+            <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
+          </div>
+
           {/* Mobile: 4 tools visible + swipe for more. Desktop: centered row */}
           <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10 md:hidden" />
@@ -146,13 +153,6 @@ export function UtilitiesSection() {
                 <ToolIcon key={index} tool={tool} compact={true} />
               ))}
             </div>
-          </div>
-
-          {/* Scroll hint — mobile only */}
-          <div className="flex items-center justify-center gap-3 mt-2 md:hidden">
-            <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
-            <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
-            <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
           </div>
         </div>
 
