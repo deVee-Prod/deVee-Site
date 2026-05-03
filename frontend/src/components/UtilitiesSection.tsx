@@ -10,12 +10,12 @@ const premiumTools = [
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://form-storm.vercel.app", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.6)" },
-  { name: "BPM Calculator", link: "https://de-vee-bpm-calculator.vercel.app/", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.6)" },
-  { name: "File Converter", link: "https://de-vee-tools.vercel.app", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.6)" },
-  { name: "PDF Killer", link: "https://pdf-killer-ten.vercel.app/", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.6)" },
-  { name: "Flash Juice", link: "https://flash-juice-3aya.vercel.app/", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.6)" },
-  { name: "Release Ready", link: "https://release-ready-seven.vercel.app", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" },
+  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.6)" },
+  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.6)" },
+  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.6)" },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.6)" },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.6)" },
+  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" },
 ];
 
 function ToolIcon({ tool }: { tool: typeof utilities[0] }) {
