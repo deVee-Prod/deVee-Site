@@ -5,7 +5,6 @@ import { HeroSection } from './components/HeroSection';
 import { NewsBanner } from './components/NewsBanner';
 import { VideoSection } from './components/VideoSection';
 import { UtilitiesSection } from './components/UtilitiesSection';
-import { SpotifySection } from './components/SpotifySection';
 import { SocialSection } from './components/SocialSection';
 import { Footer } from './components/Footer';
 import { InfoPage } from './pages/InfoPage';
@@ -29,8 +28,7 @@ function App() {
         <NewsBanner />
         <VideoSection />
         <UtilitiesSection />
-        <SpotifySection />
-        <SocialSection />
+<SocialSection />
       </main>
       <Footer />
     </div>
