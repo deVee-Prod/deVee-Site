@@ -57,10 +57,15 @@ export function UtilitiesSection() {
       const mid = el.children[2] as HTMLElement;
       if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
-    // Free: center so items peek on both sides
+    // Free: center so items peek on both sides, then nudge to hint scrollability
     if (freeScrollRef.current) {
       const el = freeScrollRef.current;
-      el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+      const center = (el.scrollWidth - el.clientWidth) / 2;
+      el.scrollLeft = center;
+      setTimeout(() => {
+        el.scrollBy({ left: 28, behavior: 'smooth' });
+        setTimeout(() => el.scrollTo({ left: center, behavior: 'smooth' }), 450);
+      }, 700);
     }
   }, []);
 
@@ -138,10 +143,14 @@ export function UtilitiesSection() {
           </div>
 
           {/* Mobile: 4 tools visible + swipe for more. Desktop: centered row */}
-          <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar md:justify-center gap-[10px] md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
-            {utilities.map((tool, index) => (
-              <ToolIcon key={index} tool={tool} compact={true} />
-            ))}
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10 md:hidden" />
+            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent pointer-events-none z-10 md:hidden" />
+            <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar md:justify-center gap-[10px] md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
+              {utilities.map((tool, index) => (
+                <ToolIcon key={index} tool={tool} compact={true} />
+              ))}
+            </div>
           </div>
         </div>
 
