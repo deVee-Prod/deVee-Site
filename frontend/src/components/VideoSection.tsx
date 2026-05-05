@@ -1,5 +1,3 @@
-import { SiApplemusic } from 'react-icons/si';
-
 export function VideoSection() {
   const tracks = [
     {
@@ -26,7 +24,8 @@ export function VideoSection() {
 
   const getEmbedUrl = (url: string) => {
     const videoId = url.split('v=')[1]?.split('&')[0];
-    return `https://www.youtube.com/embed/${videoId}`;
+    // rel=0 → no related videos, modestbranding=1 → smaller YouTube logo
+    return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
   };
 
   return (
@@ -59,29 +58,17 @@ export function VideoSection() {
           ))}
         </div>
 
-        {/* Playlist Players */}
-        <div className="mt-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
-          {/* Spotify Embed */}
+        {/* Spotify Playlist - open/expanded view */}
+        <div className="mt-6 flex justify-center">
           <iframe
             src="https://open.spotify.com/embed/playlist/6GfqHUQdZN4TrTbsaPpqxU?utm_source=generator&theme=0"
             width="100%"
-            height="80"
+            height="352"
             frameBorder="0"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
-            className="rounded-xl max-w-sm"
+            className="rounded-2xl max-w-2xl"
           />
-
-          {/* Apple Music Button */}
-          <a
-            href="https://music.apple.com/il/playlist/prod-by-devee/pl.u-BNA6YjJT1gApr1W"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
-          >
-            <SiApplemusic className="w-5 h-5 text-orange-500" />
-            <span className="text-white/80 text-sm font-medium">Apple Music Playlist</span>
-          </a>
         </div>
 
       </div>
