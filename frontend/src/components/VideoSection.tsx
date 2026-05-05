@@ -22,6 +22,13 @@ export function VideoSection() {
       title: 'Gondola - Ariella Eve ft. deVee',
       spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
       appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295'
+    },
+    {
+      id: 'track4',
+      videoUrl: 'https://www.youtube.com/watch?v=RO1LiMKFBwA',
+      title: 'קאש (Prod. by deVee)',
+      spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
+      appleMusic: 'https://music.apple.com/il/album/%D7%A7%D7%90%D7%A9/1895594252?i=6764002846'
     }
   ];
 
