@@ -27,7 +27,7 @@ export function Header() {
           <img
             src={avatarUrl}
             alt="Profile"
-            className="w-10 h-10 sm:h-12 sm:w-12 rounded-full border border-white/20 object-cover flex-shrink-0"
+            className="w-8 h-8 sm:h-10 sm:w-10 rounded-full border border-white/20 object-cover flex-shrink-0"
           />
         ) : (
           <img
