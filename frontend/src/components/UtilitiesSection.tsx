@@ -188,7 +188,6 @@ function SolarSystem() {
         <div style={{ position: 'absolute', top: CY - OUTER_RY - 90, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(234,179,8,0.7)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           ★ Premium Tools ★
         </div>
-        {/* הורדנו את הכותרת הזו למטה ל-80 כדי שיהיה סימטרי ל-90 שלמעלה */}
         <div style={{ position: 'absolute', top: CY + OUTER_RY + 80, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           Free Tools
         </div>
@@ -368,17 +367,11 @@ export function UtilitiesSection() {
           <div className="relative z-10 mt-12">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
+            {/* Scroll Hint (הכותרת מתחתיו הוסרה לחלוטין) */}
             <div className="flex items-center justify-center gap-3 mt-1 mb-3">
               <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
               <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
               <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
-            </div>
-
-            {/* כאן הוספתי mt-6 כדי לדחוף את הכותרת של המובייל למטה */}
-            <div className="flex items-center justify-center gap-4 mt-6 mb-2">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
-              <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
             </div>
           </div>
         </div>
