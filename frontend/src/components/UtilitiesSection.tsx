@@ -304,12 +304,13 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile - הגדלנו מעט את הגובה הכללי כדי לאפשר מרווחים נכונים */}
+        {/* Mobile */}
         <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-4">
           
-          {/* השמש - טיפ טיפה יותר למעלה כדי שתשב בול באמצע הוויזואלי */}
-          <div className="absolute left-1/2 top-[47%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-            <svg width="220" height="220" viewBox="0 0 250 250">
+          {/* השמש + מסלולי מובייל שנוספו עכשיו! */}
+          <div className="absolute left-1/2 top-[52%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+            {/* הרחבתי את ה-SVG כדי שיכיל את המסלולים לכל רוחב המסך */}
+            <svg width="800" height="400" viewBox="0 0 800 400">
               <defs>
                 <filter id="mobileStarGlow" x="-100%" y="-100%" width="300%" height="300%">
                   <feGaussianBlur stdDeviation="15" result="blur" />
@@ -320,19 +321,41 @@ export function UtilitiesSection() {
                   <stop offset="30%" stopColor="#f97316" />
                   <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
                 </radialGradient>
+                {/* מעברי צבע זהים לדסקטופ עבור המסלולים במובייל */}
+                <linearGradient id="mobOrbitOuter" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(234,179,8,0)" />
+                  <stop offset="20%" stopColor="rgba(234,179,8,0.4)" />
+                  <stop offset="50%" stopColor="rgba(234,179,8,0.6)" />
+                  <stop offset="80%" stopColor="rgba(234,179,8,0.4)" />
+                  <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+                </linearGradient>
+                <linearGradient id="mobOrbitInner" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+                  <stop offset="20%" stopColor="rgba(255,255,255,0.15)" />
+                  <stop offset="50%" stopColor="rgba(255,255,255,0.3)" />
+                  <stop offset="80%" stopColor="rgba(255,255,255,0.15)" />
+                  <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                </linearGradient>
               </defs>
+
+              {/* מסלול Premium (חיצוני, זהוב וקצת מקווקו) */}
+              <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="url(#mobOrbitOuter)" strokeWidth="1" strokeDasharray="4 6" />
+              <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="rgba(234,179,8,0.05)" strokeWidth="1.5" />
+              
+              {/* מסלול Free Tools (פנימי, כסוף וקצת מקווקו) */}
+              <ellipse cx="400" cy="200" rx="190" ry="60" fill="none" stroke="url(#mobOrbitInner)" strokeWidth="1" strokeDasharray="3 5" />
+
               <g filter="url(#mobileStarGlow)">
-                <circle cx="125" cy="125" r="50" fill="rgba(249, 115, 22, 0.12)">
+                <circle cx="400" cy="200" r="50" fill="rgba(249, 115, 22, 0.12)">
                   <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
                   <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite" />
                 </circle>
-                <circle cx="125" cy="125" r="15" fill="url(#mobileSunGradient)" />
+                <circle cx="400" cy="200" r="15" fill="url(#mobileSunGradient)" />
               </g>
             </svg>
           </div>
 
-          {/* Premium Tools - נדחפו קצת למעלה כדי לאזן את המרחק */}
-          <div className="relative z-10 mb-4">
+          <div className="relative z-10">
             <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">★ Premium ★</span>
@@ -341,7 +364,6 @@ export function UtilitiesSection() {
             <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} />
           </div>
 
-          {/* Free Tools - נדחפו למטה כדי לאזן מול השמש */}
           <div className="relative z-10 mt-12">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
