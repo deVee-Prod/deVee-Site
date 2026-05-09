@@ -185,11 +185,11 @@ function SolarSystem() {
           );
         })}
 
-        {/* שים לב למיקום האנכי כאן: CY - OUTER_RY - 90 במקום 55 כדי להרים את זה למעלה */}
         <div style={{ position: 'absolute', top: CY - OUTER_RY - 90, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(234,179,8,0.7)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           ★ Premium Tools ★
         </div>
-        <div style={{ position: 'absolute', top: CY + OUTER_RY + 45, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        {/* הורדנו את הכותרת הזו למטה ל-80 כדי שיהיה סימטרי ל-90 שלמעלה */}
+        <div style={{ position: 'absolute', top: CY + OUTER_RY + 80, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           Free Tools
         </div>
       </div>
@@ -374,7 +374,8 @@ export function UtilitiesSection() {
               <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
             </div>
 
-            <div className="flex items-center justify-center gap-4 mb-2">
+            {/* כאן הוספתי mt-6 כדי לדחוף את הכותרת של המובייל למטה */}
+            <div className="flex items-center justify-center gap-4 mt-6 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
