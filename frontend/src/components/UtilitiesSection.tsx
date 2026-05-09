@@ -55,19 +55,15 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
 function SolarSystem() {
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
   const animRef = useRef<number>(0);
-  const angleRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
-  // Orbit config
-  // Outer ellipse: premium (3 tools, evenly spaced 120° apart)
-  // Inner ellipse: free (6 tools, evenly spaced 60° apart)
-  const OUTER_RX = 340; // horizontal radius
-  const OUTER_RY = 90;  // vertical radius (perspective tilt)
-  const INNER_RX = 210;
-  const INNER_RY = 56;
-  const SPEED = 0.018; // degrees per ms
-  const W = 760;
-  const H = 420;
+  const OUTER_RX = 420;
+  const OUTER_RY = 112;
+  const INNER_RX = 260;
+  const INNER_RY = 70;
+  const SPEED = 0.018;
+  const W = 960;
+  const H = 460;
   const CX = W / 2;
   const CY = H / 2 + 10;
 
@@ -130,12 +126,12 @@ function SolarSystem() {
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     // Slightly scale based on Y position for depth
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? 44 : 38;
-    return base + sinVal * 5;
+    const base = orbit === 'outer' ? 58 : 50;
+    return base + sinVal * 7;
   };
 
   return (
-    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%' }}>
+    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%', margin: '0 auto' }}>
       <svg
         width={W}
         height={H}
@@ -184,24 +180,24 @@ function SolarSystem() {
         <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY}
           fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
 
-        {/* Central star glow halo */}
-        <circle cx={CX} cy={CY} r="55" fill="rgba(234,179,8,0.04)" />
-        <circle cx={CX} cy={CY} r="35" fill="rgba(234,179,8,0.08)" />
-        <circle cx={CX} cy={CY} r="18" fill="rgba(234,179,8,0.18)" />
+        {/* Central glow — subtle, single halo */}
+        <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
+        <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
 
-        {/* Central star (8-pointed) */}
+        {/* Central star — 4 main rays + 4 shorter diagonal rays */}
         <g filter="url(#starGlow)">
-          {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5].map((rot, i) => (
+          {/* 4 main rays */}
+          {[0, 90, 45, 135].map((rot, i) => (
             <line
               key={i}
-              x1={CX} y1={CY - (i % 2 === 0 ? 22 : 14)}
-              x2={CX} y2={CY + (i % 2 === 0 ? 22 : 14)}
-              stroke={i % 2 === 0 ? "rgba(234,179,8,0.9)" : "rgba(234,179,8,0.5)"}
-              strokeWidth={i % 2 === 0 ? "2.5" : "1.5"}
+              x1={CX} y1={CY - (i < 2 ? 28 : 18)}
+              x2={CX} y2={CY + (i < 2 ? 28 : 18)}
+              stroke={i < 2 ? "rgba(234,179,8,0.95)" : "rgba(234,179,8,0.55)"}
+              strokeWidth={i < 2 ? "2" : "1.2"}
               transform={`rotate(${rot} ${CX} ${CY})`}
             />
           ))}
-          <circle cx={CX} cy={CY} r="6" fill="rgba(234,179,8,0.95)" />
+          <circle cx={CX} cy={CY} r="5" fill="rgba(255,220,80,0.95)" />
         </g>
       </svg>
 
@@ -334,11 +330,11 @@ export function UtilitiesSection() {
   }, []);
 
   return (
-    <section className="py-24 bg-black overflow-x-hidden" id="utilities">
+    <section className="py-12 bg-black overflow-x-hidden" id="utilities">
       <div className="container mx-auto px-4">
 
         {/* Title */}
-        <div className="flex flex-col items-center mb-12">
+        <div className="flex flex-col items-center mb-4">
           <img
             src="/tools%20for%20artists.png"
             alt="Tools for Artists"
