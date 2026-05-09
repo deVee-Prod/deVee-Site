@@ -307,8 +307,7 @@ export function UtilitiesSection() {
         {/* Mobile */}
         <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-4">
           
-          {/* השמש + מסלולי מובייל חלקים בדיוק כמו בדסקטופ! */}
-          <div className="absolute left-1/2 top-[52%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+          <div className="absolute left-1/2 top-[47%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
             <svg width="800" height="400" viewBox="0 0 800 400">
               <defs>
                 <filter id="mobileStarGlow" x="-100%" y="-100%" width="300%" height="300%">
@@ -320,26 +319,34 @@ export function UtilitiesSection() {
                   <stop offset="30%" stopColor="#f97316" />
                   <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
                 </radialGradient>
-                {/* מעברי צבע זהים לחלוטין לדסקטופ */}
+                
+                {/* תיקון הגרדיאנטים:
+                  ה-Opacity הופחת משמעותית (המקסימום הוא רק 0.12 לזהב ו-0.08 לכסף)
+                  והם דוהים לאפס מוחלט ב-20% וב-80% כדי שלא ייחתכו בקצוות המסך!
+                */}
                 <linearGradient id="mobOrbitOuter" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-                  <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
-                  <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
+                  <stop offset="20%" stopColor="rgba(234,179,8,0)" />
+                  <stop offset="40%" stopColor="rgba(234,179,8,0.08)" />
+                  <stop offset="50%" stopColor="rgba(234,179,8,0.12)" />
+                  <stop offset="60%" stopColor="rgba(234,179,8,0.08)" />
+                  <stop offset="80%" stopColor="rgba(234,179,8,0)" />
                   <stop offset="100%" stopColor="rgba(234,179,8,0)" />
                 </linearGradient>
+
                 <linearGradient id="mobOrbitInner" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-                  <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
-                  <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
-                  <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+                  <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+                  <stop offset="15%" stopColor="rgba(255,255,255,0)" />
+                  <stop offset="35%" stopColor="rgba(255,255,255,0.04)" />
+                  <stop offset="50%" stopColor="rgba(255,255,255,0.08)" />
+                  <stop offset="65%" stopColor="rgba(255,255,255,0.04)" />
+                  <stop offset="85%" stopColor="rgba(255,255,255,0)" />
+                  <stop offset="100%" stopColor="rgba(255,255,255,0)" />
                 </linearGradient>
               </defs>
 
-              {/* מסלול Premium (חיצוני, חלק) */}
+              {/* הוסרו הקווים הקשיחים (solid), נשארנו רק עם המעברים החלקים והעדינים */}
               <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="url(#mobOrbitOuter)" strokeWidth="1" />
-              <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
-              
-              {/* מסלול Free Tools (פנימי, חלק) */}
               <ellipse cx="400" cy="200" rx="190" ry="60" fill="none" stroke="url(#mobOrbitInner)" strokeWidth="1" />
 
               <g filter="url(#mobileStarGlow)">
@@ -352,6 +359,7 @@ export function UtilitiesSection() {
             </svg>
           </div>
 
+          {/* Premium Tools */}
           <div className="relative z-10 mb-4">
             <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
@@ -361,6 +369,7 @@ export function UtilitiesSection() {
             <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} />
           </div>
 
+          {/* Free Tools */}
           <div className="relative z-10 mt-12">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
