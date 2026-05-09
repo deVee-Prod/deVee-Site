@@ -262,11 +262,10 @@ export function UtilitiesSection() {
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // פונקציה למרכוז מדויק של שתי הקרוסלות
     const centerCarousels = () => {
       if (premiumScrollRef.current) {
         const el = premiumScrollRef.current;
-        const mid = el.children[1] as HTMLElement; // הלוגו האמצעי מתוך ה-3
+        const mid = el.children[1] as HTMLElement; 
         if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
       }
       if (freeScrollRef.current) {
@@ -280,7 +279,6 @@ export function UtilitiesSection() {
     setTimeout(centerCarousels, 150);
     setTimeout(centerCarousels, 400);
 
-    // אנימציית רמיזת הגלילה
     setTimeout(() => {
       if (freeScrollRef.current) {
         const el = freeScrollRef.current;
@@ -306,10 +304,10 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile */}
-        <div className="md:hidden relative min-h-[480px] flex flex-col justify-center gap-2 -mt-4">
+        {/* Mobile - מרווח ה-gap הוגדל כדי לפזר את האלמנטים בצורה שווה יותר */}
+        <div className="md:hidden relative min-h-[500px] flex flex-col justify-center gap-6 -mt-4">
           
-          {/* השמש במרכז בין השורות */}
+          {/* השמש במרכז התיבה */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
             <svg width="220" height="220" viewBox="0 0 250 250">
               <defs>
@@ -343,18 +341,16 @@ export function UtilitiesSection() {
             <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} />
           </div>
 
-          {/* Free Tools - קשת יורדת (חיוך) להכלת השמש */}
-          <div className="relative z-10 mt-3">
+          {/* Free Tools - קשת יורדת. התווסף mt-8 כדי להוריד את הקשת ולהרחיק מהשמש */}
+          <div className="relative z-10 mt-8">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
-            {/* חיווי הגלילה הועבר מעל הכותרת */}
             <div className="flex items-center justify-center gap-3 mt-1 mb-3">
               <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
               <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
               <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
             </div>
 
-            {/* כותרת Free Tools */}
             <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
