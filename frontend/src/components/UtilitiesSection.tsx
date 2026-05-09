@@ -271,19 +271,16 @@ export function UtilitiesSection() {
       }
       if (freeScrollRef.current) {
         const el = freeScrollRef.current;
-        // שינוי כאן: מתמרכז בול על האייקון השלישי כדי שיופיעו 3 סימטריים
         const mid = el.children[2] as HTMLElement; 
         if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
       }
     };
 
-    // אנחנו מריצים את הפונקציה גם מיד, וגם אחרי עיכוב קל כדי לוודא ששום טעינה
-    // של תמונות או פונטים לא "זורקת" את המרכוז הצידה.
     centerCarousels();
     setTimeout(centerCarousels, 150);
     setTimeout(centerCarousels, 400);
 
-    // אנימציית רמיזת הגלילה - מופעלת רק אחרי שהכל סודר באמצע
+    // אנימציית רמיזת הגלילה
     setTimeout(() => {
       if (freeScrollRef.current) {
         const el = freeScrollRef.current;
@@ -347,11 +344,18 @@ export function UtilitiesSection() {
           </div>
 
           {/* Free Tools - קשת יורדת (חיוך) להכלת השמש */}
-          {/* הוספתי פה את ה mt-3 כדי להוריד את הכל טיפ-טיפה למטה מהשמש */}
           <div className="relative z-10 mt-3">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
-            <div className="flex items-center justify-center gap-4 mt-4 mb-2">
+            {/* חיווי הגלילה הועבר מעל הכותרת */}
+            <div className="flex items-center justify-center gap-3 mt-1 mb-3">
+              <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
+              <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
+              <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
+            </div>
+
+            {/* כותרת Free Tools */}
+            <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
@@ -363,6 +367,16 @@ export function UtilitiesSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes nudge-left {
+          0%, 100% { transform: translateX(0); opacity: 0.2; }
+          50% { transform: translateX(-4px); opacity: 0.5; }
+        }
+        @keyframes nudge-right {
+          0%, 100% { transform: translateX(0); opacity: 0.2; }
+          50% { transform: translateX(4px); opacity: 0.5; }
+        }
+        .scroll-hint-left { animation: nudge-left 1.8s ease-in-out infinite; }
+        .scroll-hint-right { animation: nudge-right 1.8s ease-in-out infinite; animation-delay: 0.9s; }
       `}} />
     </section>
   );
