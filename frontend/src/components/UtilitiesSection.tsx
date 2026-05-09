@@ -304,11 +304,11 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile - מרווח ה-gap הוגדל כדי לפזר את האלמנטים בצורה שווה יותר */}
-        <div className="md:hidden relative min-h-[500px] flex flex-col justify-center gap-6 -mt-4">
+        {/* Mobile - הגדלנו מעט את הגובה הכללי כדי לאפשר מרווחים נכונים */}
+        <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-4">
           
-          {/* השמש במרכז התיבה */}
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+          {/* השמש - טיפ טיפה יותר למעלה כדי שתשב בול באמצע הוויזואלי */}
+          <div className="absolute left-1/2 top-[47%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
             <svg width="220" height="220" viewBox="0 0 250 250">
               <defs>
                 <filter id="mobileStarGlow" x="-100%" y="-100%" width="300%" height="300%">
@@ -331,8 +331,8 @@ export function UtilitiesSection() {
             </svg>
           </div>
 
-          {/* Premium Tools - קשת עולה */}
-          <div className="relative z-10">
+          {/* Premium Tools - נדחפו קצת למעלה כדי לאזן את המרחק */}
+          <div className="relative z-10 mb-4">
             <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">★ Premium ★</span>
@@ -341,8 +341,8 @@ export function UtilitiesSection() {
             <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} />
           </div>
 
-          {/* Free Tools - קשת יורדת. התווסף mt-8 כדי להוריד את הקשת ולהרחיק מהשמש */}
-          <div className="relative z-10 mt-8">
+          {/* Free Tools - נדחפו למטה כדי לאזן מול השמש */}
+          <div className="relative z-10 mt-12">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
             <div className="flex items-center justify-center gap-3 mt-1 mb-3">
