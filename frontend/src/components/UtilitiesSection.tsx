@@ -274,8 +274,8 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile */}
-        <div className="md:hidden relative min-h-[600px] flex flex-col justify-between">
+        {/* Mobile - שיניתי את הריווח הכללי כאן כדי לסגור את הפערים */}
+        <div className="md:hidden relative min-h-[550px] flex flex-col justify-center gap-2">
           
           {/* השמש במרכז בין השורות */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
@@ -302,7 +302,7 @@ export function UtilitiesSection() {
           </div>
 
           {/* Premium Tools - קשת עולה */}
-          <div className="relative z-10 pt-4">
+          <div className="relative z-10">
             <div className="flex items-center justify-center gap-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">★ Premium ★</span>
@@ -312,13 +312,15 @@ export function UtilitiesSection() {
           </div>
 
           {/* Free Tools - קשת יורדת (חיוך) להכלת השמש */}
-          <div className="relative z-10 pb-8">
-            <div className="flex items-center justify-center gap-4 mb-2">
+          <div className="relative z-10">
+            <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
+            
+            {/* הכותרת הועברה למטה מתחת לאייקונים */}
+            <div className="flex items-center justify-center gap-4 mt-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
             </div>
-            <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
           </div>
         </div>
       </div>
