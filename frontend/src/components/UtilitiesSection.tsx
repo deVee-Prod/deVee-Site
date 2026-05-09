@@ -271,8 +271,9 @@ export function UtilitiesSection() {
       }
       if (freeScrollRef.current) {
         const el = freeScrollRef.current;
-        const center = (el.scrollWidth - el.clientWidth) / 2;
-        el.scrollLeft = center;
+        // שינוי כאן: מתמרכז בול על האייקון השלישי כדי שיופיעו 3 סימטריים
+        const mid = el.children[2] as HTMLElement; 
+        if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
       }
     };
 
@@ -286,7 +287,8 @@ export function UtilitiesSection() {
     setTimeout(() => {
       if (freeScrollRef.current) {
         const el = freeScrollRef.current;
-        const center = (el.scrollWidth - el.clientWidth) / 2;
+        const mid = el.children[2] as HTMLElement;
+        const center = mid ? mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2) : 0;
         el.scrollBy({ left: 30, behavior: 'smooth' });
         setTimeout(() => el.scrollTo({ left: center, behavior: 'smooth' }), 450);
       }
@@ -297,7 +299,7 @@ export function UtilitiesSection() {
     <section className="py-12 bg-black overflow-x-hidden" id="utilities">
       <div className="container mx-auto px-4">
         
-        {/* Title - הוסר ה-mb-4 כדי לקרב לכותרת */}
+        {/* Title */}
         <div className="flex flex-col items-center relative z-10">
           <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="max-w-[250px] md:max-w-[400px] h-auto object-contain" />
         </div>
@@ -307,7 +309,7 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile - גובה צומצם ל-480, והוסף -mt-4 כדי להיצמד ממש לכותרת */}
+        {/* Mobile */}
         <div className="md:hidden relative min-h-[480px] flex flex-col justify-center gap-2 -mt-4">
           
           {/* השמש במרכז בין השורות */}
@@ -345,7 +347,8 @@ export function UtilitiesSection() {
           </div>
 
           {/* Free Tools - קשת יורדת (חיוך) להכלת השמש */}
-          <div className="relative z-10">
+          {/* הוספתי פה את ה mt-3 כדי להוריד את הכל טיפ-טיפה למטה מהשמש */}
+          <div className="relative z-10 mt-3">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
             <div className="flex items-center justify-center gap-4 mt-4 mb-2">
