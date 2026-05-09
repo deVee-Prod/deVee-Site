@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const GOLD = "rgba(234, 179, 8, 0.85)";
@@ -10,14 +10,17 @@ const premiumTools = [
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.6)" },
-  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.6)" },
-  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.6)" },
-  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.6)" },
-  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.6)" },
-  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.6)" },
+  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)" },
+  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)" },
+  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)" },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)" },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)" },
+  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)" },
 ];
 
+// ─────────────────────────────────────────────
+// Mobile tool icon (unchanged from original)
+// ─────────────────────────────────────────────
 function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compact?: boolean }) {
   return (
     <a
@@ -27,7 +30,7 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[82px] md:w-auto snap-start' : 'w-[105px] md:w-auto snap-center'}`}
     >
       <div
-        className={`${compact ? 'w-14 h-14 md:w-20 md:h-20' : 'w-16 h-16 md:w-20 md:h-20'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
+        className={`${compact ? 'w-14 h-14' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
           e.currentTarget.style.borderColor = tool.color;
@@ -39,25 +42,286 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       >
         <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
       </div>
-      <span className={`mt-3 ${compact ? 'text-[6px] md:text-[8px] tracking-[0.12em] md:tracking-[0.2em]' : 'text-[7px] md:text-[8px] tracking-[0.2em]'} text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white`}>
+      <span className={`mt-3 ${compact ? 'text-[6px] tracking-[0.12em]' : 'text-[7px] tracking-[0.2em]'} text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white`}>
         {tool.name}
       </span>
     </a>
   );
 }
 
+// ─────────────────────────────────────────────
+// Desktop Solar System
+// ─────────────────────────────────────────────
+function SolarSystem() {
+  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
+  const animRef = useRef<number>(0);
+  const angleRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
+
+  // Orbit config
+  // Outer ellipse: premium (3 tools, evenly spaced 120° apart)
+  // Inner ellipse: free (6 tools, evenly spaced 60° apart)
+  const OUTER_RX = 340; // horizontal radius
+  const OUTER_RY = 90;  // vertical radius (perspective tilt)
+  const INNER_RX = 210;
+  const INNER_RY = 56;
+  const SPEED = 0.018; // degrees per ms
+  const W = 760;
+  const H = 420;
+  const CX = W / 2;
+  const CY = H / 2 + 10;
+
+  const [outerAngles, setOuterAngles] = useState(() =>
+    premiumTools.map((_, i) => (i * 360) / premiumTools.length)
+  );
+  const [innerAngles, setInnerAngles] = useState(() =>
+    utilities.map((_, i) => (i * 360) / utilities.length)
+  );
+
+  const outerAnglesRef = useRef(outerAngles);
+  const innerAnglesRef = useRef(innerAngles);
+  outerAnglesRef.current = outerAngles;
+  innerAnglesRef.current = innerAngles;
+
+  useEffect(() => {
+    let paused = false;
+    const onVisibility = () => { paused = document.hidden; };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    const tick = (time: number) => {
+      if (!lastTimeRef.current) lastTimeRef.current = time;
+      const delta = time - lastTimeRef.current;
+      lastTimeRef.current = time;
+
+      if (!paused && !hoveredTool) {
+        const step = SPEED * delta;
+        setOuterAngles(prev => prev.map(a => (a + step) % 360));
+        setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360)); // counter-rotate inner
+      }
+      animRef.current = requestAnimationFrame(tick);
+    };
+
+    animRef.current = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [hoveredTool]);
+
+  const toXY = (angleDeg: number, rx: number, ry: number) => {
+    const rad = (angleDeg * Math.PI) / 180;
+    return {
+      x: CX + rx * Math.cos(rad),
+      y: CY + ry * Math.sin(rad),
+    };
+  };
+
+  // Sort tools by y (painter's algorithm — tools at bottom render on top)
+  const outerItems = premiumTools.map((tool, i) => {
+    const pos = toXY(outerAngles[i], OUTER_RX, OUTER_RY);
+    return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, i };
+  });
+  const innerItems = utilities.map((tool, i) => {
+    const pos = toXY(innerAngles[i], INNER_RX, INNER_RY);
+    return { tool, pos, angle: innerAngles[i], orbit: 'inner' as const, i };
+  });
+  const allItems = [...outerItems, ...innerItems].sort((a, b) => a.pos.y - b.pos.y);
+
+  const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
+    // Slightly scale based on Y position for depth
+    const sinVal = Math.sin((angle * Math.PI) / 180);
+    const base = orbit === 'outer' ? 44 : 38;
+    return base + sinVal * 5;
+  };
+
+  return (
+    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%' }}>
+      <svg
+        width={W}
+        height={H}
+        viewBox={`0 0 ${W} ${H}`}
+        style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+      >
+        <defs>
+          {/* Outer orbit gradient */}
+          <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(234,179,8,0)" />
+            <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
+            <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
+            <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+          </linearGradient>
+          <linearGradient id="orbitGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(234,179,8,0)" />
+            <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
+            <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
+            <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+          </linearGradient>
+          {/* Star glow filter */}
+          <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="iconGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Outer orbit ellipse */}
+        <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY}
+          fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
+        {/* Second thin outer ring for depth */}
+        <ellipse cx={CX} cy={CY} rx={OUTER_RX + 2} ry={OUTER_RY + 1}
+          fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
+
+        {/* Inner orbit ellipse */}
+        <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY}
+          fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
+
+        {/* Central star glow halo */}
+        <circle cx={CX} cy={CY} r="55" fill="rgba(234,179,8,0.04)" />
+        <circle cx={CX} cy={CY} r="35" fill="rgba(234,179,8,0.08)" />
+        <circle cx={CX} cy={CY} r="18" fill="rgba(234,179,8,0.18)" />
+
+        {/* Central star (8-pointed) */}
+        <g filter="url(#starGlow)">
+          {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5].map((rot, i) => (
+            <line
+              key={i}
+              x1={CX} y1={CY - (i % 2 === 0 ? 22 : 14)}
+              x2={CX} y2={CY + (i % 2 === 0 ? 22 : 14)}
+              stroke={i % 2 === 0 ? "rgba(234,179,8,0.9)" : "rgba(234,179,8,0.5)"}
+              strokeWidth={i % 2 === 0 ? "2.5" : "1.5"}
+              transform={`rotate(${rot} ${CX} ${CY})`}
+            />
+          ))}
+          <circle cx={CX} cy={CY} r="6" fill="rgba(234,179,8,0.95)" />
+        </g>
+      </svg>
+
+      {/* Render all icons absolutely */}
+      {allItems.map(({ tool, pos, orbit, angle, i }) => {
+        const size = iconSize(orbit, angle);
+        const isHovered = hoveredTool === `${orbit}-${i}`;
+        const isPremium = orbit === 'outer';
+
+        // Behind center (top half) → slightly faded
+        const sinVal = Math.sin((angle * Math.PI) / 180);
+        const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
+
+        return (
+          <a
+            key={`${orbit}-${i}`}
+            href={tool.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)}
+            onMouseLeave={() => setHoveredTool(null)}
+            style={{
+              position: 'absolute',
+              left: pos.x,
+              top: pos.y,
+              transform: 'translate(-50%, -50%)',
+              zIndex: Math.round(pos.y),
+              opacity,
+              transition: 'opacity 0.2s',
+            }}
+            className="group flex flex-col items-center"
+          >
+            <div
+              style={{
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`,
+                boxShadow: isHovered
+                  ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}`
+                  : isPremium
+                    ? '0 0 10px rgba(234,179,8,0.2)'
+                    : 'none',
+                transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s',
+                flexShrink: 0,
+              }}
+            >
+              <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            {/* Label — only show on hover */}
+            <span
+              style={{
+                marginTop: 6,
+                fontSize: '7px',
+                letterSpacing: '0.2em',
+                color: 'rgba(255,255,255,0.9)',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                whiteSpace: 'nowrap',
+                textShadow: `0 0 8px ${tool.color}`,
+                opacity: isHovered ? 1 : 0,
+                transition: 'opacity 0.25s',
+                pointerEvents: 'none',
+              }}
+            >
+              {tool.name}
+            </span>
+          </a>
+        );
+      })}
+
+      {/* Premium / Free labels */}
+      <div style={{
+        position: 'absolute',
+        top: CY - OUTER_RY - 28,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontSize: 9,
+        letterSpacing: '0.35em',
+        color: 'rgba(234,179,8,0.7)',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+      }}>
+        ★ Premium Tools ★
+      </div>
+      <div style={{
+        position: 'absolute',
+        bottom: H - CY - OUTER_RY - 18,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontSize: 9,
+        letterSpacing: '0.35em',
+        color: 'rgba(255,255,255,0.5)',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+      }}>
+        Free Tools
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Main section
+// ─────────────────────────────────────────────
 export function UtilitiesSection() {
   const premiumScrollRef = useRef<HTMLDivElement>(null);
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Premium: center on middle item (index 1 of 3) — children: [spacer, item0, item1, item2, spacer]
     if (premiumScrollRef.current) {
       const el = premiumScrollRef.current;
       const mid = el.children[2] as HTMLElement;
       if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
-    // Free: center so items peek on both sides, then nudge to hint scrollability
     if (freeScrollRef.current) {
       const el = freeScrollRef.current;
       const center = (el.scrollWidth - el.clientWidth) / 2;
@@ -70,7 +334,7 @@ export function UtilitiesSection() {
   }, []);
 
   return (
-    <section className="py-24 bg-black overflow-x-hidden md:overflow-x-visible" id="utilities">
+    <section className="py-24 bg-black overflow-x-hidden" id="utilities">
       <div className="container mx-auto px-4">
 
         {/* Title */}
@@ -82,76 +346,53 @@ export function UtilitiesSection() {
           />
         </div>
 
-        {/* Premium Tools */}
-        <div className="mb-16">
-          {/* Premium label */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
-            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">
-              ★ Premium Tools ★
-            </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
-          </div>
-
-          {/* Mobile: simple horizontal scroll */}
-          <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory md:hidden pb-4 px-4 gap-3">
-            <div className="flex-shrink-0 w-4" />
-            {premiumTools.map((tool, index) => (
-              <ToolIcon key={index} tool={tool} />
-            ))}
-            <div className="flex-shrink-0 w-4" />
-          </div>
-
-          {/* Desktop: decorative golden box — overflow:visible so glows aren't clipped */}
-          <div className="hidden md:flex justify-center" style={{ overflow: 'visible' }}>
-            <div style={{ position: 'relative', overflow: 'visible', padding: '2.5rem 4rem' }}>
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '1rem',
-                border: '1px solid rgba(234, 179, 8, 0.25)',
-                background: 'linear-gradient(to bottom, rgba(234,179,8,0.05), transparent)',
-                boxShadow: '0 0 40px rgba(234, 179, 8, 0.06)',
-                pointerEvents: 'none',
-              }} />
-              <div
-                className="flex hide-scrollbar gap-16"
-                style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible', padding: '30px', margin: '-30px' }}
-              >
-                {premiumTools.map((tool, index) => (
-                  <ToolIcon key={index} tool={tool} />
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* ── DESKTOP: Solar System ── */}
+        <div className="hidden md:flex flex-col items-center justify-center">
+          <SolarSystem />
         </div>
 
-        {/* Regular Tools */}
-        <div className="relative">
-          {/* Free Tools label */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
-            <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white" style={{ textShadow: '0 0 16px rgba(255,255,255,0.6)' }}>
-              Free Tools
-            </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
-          </div>
-
-          {/* Scroll hint — mobile only */}
-          <div className="flex items-center justify-center gap-3 mb-4 md:hidden">
-            <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
-            <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
-            <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
-          </div>
-
-          {/* Mobile: 4 tools visible + swipe for more. Desktop: centered row */}
-          <div className="relative">
-            <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10 md:hidden" />
-            <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent pointer-events-none z-10 md:hidden" />
-            <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar md:justify-center gap-[10px] md:gap-16 pb-10 pt-10 px-4 md:px-0 scroll-smooth">
-              {utilities.map((tool, index) => (
-                <ToolIcon key={index} tool={tool} compact={true} />
+        {/* ── MOBILE: Original design (unchanged) ── */}
+        <div className="md:hidden">
+          {/* Premium Tools */}
+          <div className="mb-16">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
+              <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">
+                ★ Premium Tools ★
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
+            </div>
+            <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 px-4 gap-3">
+              <div className="flex-shrink-0 w-4" />
+              {premiumTools.map((tool, index) => (
+                <ToolIcon key={index} tool={tool} />
               ))}
+              <div className="flex-shrink-0 w-4" />
+            </div>
+          </div>
+
+          {/* Free Tools */}
+          <div className="relative">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
+              <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white" style={{ textShadow: '0 0 16px rgba(255,255,255,0.6)' }}>
+                Free Tools
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
+            </div>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
+              <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
+              <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
+            </div>
+            <div className="relative">
+              <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
+              <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar gap-[10px] pb-10 pt-10 px-4 scroll-smooth">
+                {utilities.map((tool, index) => (
+                  <ToolIcon key={index} tool={tool} compact={true} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
