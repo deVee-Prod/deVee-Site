@@ -215,7 +215,6 @@ function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[]
         const maxDist = container.clientWidth / 1.5; 
         const ratio = Math.min(dist / maxDist, 1);
 
-        // invert = true יוצר קשת הפוכה (המרכז נמוך יותר)
         const intensity = invert ? 45 : -45;
         const translateY = Math.pow(ratio, 2) * intensity; 
         const scale = 1 - (ratio * 0.25);
@@ -262,10 +261,44 @@ export function UtilitiesSection() {
   const premiumScrollRef = useRef<HTMLDivElement>(null);
   const freeScrollRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // פונקציה למרכוז מדויק של שתי הקרוסלות
+    const centerCarousels = () => {
+      if (premiumScrollRef.current) {
+        const el = premiumScrollRef.current;
+        const mid = el.children[1] as HTMLElement; // הלוגו האמצעי מתוך ה-3
+        if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
+      }
+      if (freeScrollRef.current) {
+        const el = freeScrollRef.current;
+        const center = (el.scrollWidth - el.clientWidth) / 2;
+        el.scrollLeft = center;
+      }
+    };
+
+    // אנחנו מריצים את הפונקציה גם מיד, וגם אחרי עיכוב קל כדי לוודא ששום טעינה
+    // של תמונות או פונטים לא "זורקת" את המרכוז הצידה.
+    centerCarousels();
+    setTimeout(centerCarousels, 150);
+    setTimeout(centerCarousels, 400);
+
+    // אנימציית רמיזת הגלילה - מופעלת רק אחרי שהכל סודר באמצע
+    setTimeout(() => {
+      if (freeScrollRef.current) {
+        const el = freeScrollRef.current;
+        const center = (el.scrollWidth - el.clientWidth) / 2;
+        el.scrollBy({ left: 30, behavior: 'smooth' });
+        setTimeout(() => el.scrollTo({ left: center, behavior: 'smooth' }), 450);
+      }
+    }, 1000);
+  }, []);
+
   return (
     <section className="py-12 bg-black overflow-x-hidden" id="utilities">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center mb-4 relative z-10">
+        
+        {/* Title - הוסר ה-mb-4 כדי לקרב לכותרת */}
+        <div className="flex flex-col items-center relative z-10">
           <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="max-w-[250px] md:max-w-[400px] h-auto object-contain" />
         </div>
 
@@ -274,8 +307,8 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile - שיניתי את הריווח הכללי כאן כדי לסגור את הפערים */}
-        <div className="md:hidden relative min-h-[550px] flex flex-col justify-center gap-2">
+        {/* Mobile - גובה צומצם ל-480, והוסף -mt-4 כדי להיצמד ממש לכותרת */}
+        <div className="md:hidden relative min-h-[480px] flex flex-col justify-center gap-2 -mt-4">
           
           {/* השמש במרכז בין השורות */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
@@ -315,7 +348,6 @@ export function UtilitiesSection() {
           <div className="relative z-10">
             <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
             
-            {/* הכותרת הועברה למטה מתחת לאייקונים */}
             <div className="flex items-center justify-center gap-4 mt-4 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white">Free Tools</span>
