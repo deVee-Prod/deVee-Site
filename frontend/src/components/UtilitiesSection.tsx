@@ -57,15 +57,16 @@ function SolarSystem() {
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
-  const OUTER_RX = 420;
-  const OUTER_RY = 112;
-  const INNER_RX = 260;
-  const INNER_RY = 70;
+  // --- השינויים שבוצעו כאן ---
+  const OUTER_RX = 540; // הורחב המסלול החיצוני
+  const OUTER_RY = 150; // הוגדל העומק החיצוני
+  const INNER_RX = 340; // הורחב המסלול הפנימי
+  const INNER_RY = 90;  // הוגדל העומק הפנימי
   const SPEED = 0.018;
-  const W = 960;
-  const H = 460;
+  const W = 1200;       // הוגדל רוחב הקנבס
+  const H = 500;        // הוגדל גובה הקנבס כדי לתת לזה מקום לנשום
   const CX = W / 2;
-  const CY = H / 2 + 10;
+  const CY = H / 2;     // מרכז מדויק
 
   const [outerAngles, setOuterAngles] = useState(() =>
     premiumTools.map((_, i) => (i * 360) / premiumTools.length)
@@ -112,7 +113,6 @@ function SolarSystem() {
     };
   };
 
-  // Sort tools by y (painter's algorithm — tools at bottom render on top)
   const outerItems = premiumTools.map((tool, i) => {
     const pos = toXY(outerAngles[i], OUTER_RX, OUTER_RY);
     return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, i };
@@ -124,14 +124,14 @@ function SolarSystem() {
   const allItems = [...outerItems, ...innerItems].sort((a, b) => a.pos.y - b.pos.y);
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
-    // Slightly scale based on Y position for depth
     const sinVal = Math.sin((angle * Math.PI) / 180);
     const base = orbit === 'outer' ? 58 : 50;
     return base + sinVal * 7;
   };
 
   return (
-    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%', margin: '0 auto' }}>
+    // הוסף פה מרג'ין שלילי (-30px) למעלה כדי לקרב את הקנבס לכותרת
+    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%', margin: '-30px auto 0 auto' }}>
       <svg
         width={W}
         height={H}
@@ -139,7 +139,6 @@ function SolarSystem() {
         style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
       >
         <defs>
-          {/* Outer orbit gradient */}
           <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="rgba(234,179,8,0)" />
             <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
@@ -152,7 +151,6 @@ function SolarSystem() {
             <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
             <stop offset="100%" stopColor="rgba(234,179,8,0)" />
           </linearGradient>
-          {/* Star glow filter */}
           <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="blur" />
             <feMerge>
@@ -160,33 +158,20 @@ function SolarSystem() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="iconGlow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
-        {/* Outer orbit ellipse */}
         <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY}
           fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
-        {/* Second thin outer ring for depth */}
         <ellipse cx={CX} cy={CY} rx={OUTER_RX + 2} ry={OUTER_RY + 1}
           fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
 
-        {/* Inner orbit ellipse */}
         <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY}
           fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
 
-        {/* Central glow — subtle, single halo */}
         <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
         <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
 
-        {/* Central star — 4 main rays + 4 shorter diagonal rays */}
         <g filter="url(#starGlow)">
-          {/* 4 main rays */}
           {[0, 90, 45, 135].map((rot, i) => (
             <line
               key={i}
@@ -201,13 +186,10 @@ function SolarSystem() {
         </g>
       </svg>
 
-      {/* Render all icons absolutely */}
       {allItems.map(({ tool, pos, orbit, angle, i }) => {
         const size = iconSize(orbit, angle);
         const isHovered = hoveredTool === `${orbit}-${i}`;
         const isPremium = orbit === 'outer';
-
-        // Behind center (top half) → slightly faded
         const sinVal = Math.sin((angle * Math.PI) / 180);
         const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
 
@@ -248,7 +230,6 @@ function SolarSystem() {
             >
               <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            {/* Label — only show on hover */}
             <span
               style={{
                 marginTop: 6,
@@ -270,10 +251,10 @@ function SolarSystem() {
         );
       })}
 
-      {/* Premium / Free labels */}
+      {/* הרחקנו את הכיתוב כלפי מעלה כדי שלא יגע באייקונים */}
       <div style={{
         position: 'absolute',
-        top: CY - OUTER_RY - 28,
+        top: CY - OUTER_RY - 55, 
         left: '50%',
         transform: 'translateX(-50%)',
         fontSize: 9,
@@ -286,9 +267,11 @@ function SolarSystem() {
       }}>
         ★ Premium Tools ★
       </div>
+
+      {/* הרחקנו את הכיתוב כלפי מטה כדי שלא יגע באייקונים (שונה ל-top למען הדיוק) */}
       <div style={{
         position: 'absolute',
-        bottom: H - CY - OUTER_RY - 18,
+        top: CY + OUTER_RY + 45,
         left: '50%',
         transform: 'translateX(-50%)',
         fontSize: 9,
