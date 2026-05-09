@@ -185,7 +185,8 @@ function SolarSystem() {
           );
         })}
 
-        <div style={{ position: 'absolute', top: CY - OUTER_RY - 55, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(234,179,8,0.7)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        {/* שים לב למיקום האנכי כאן: CY - OUTER_RY - 90 במקום 55 כדי להרים את זה למעלה */}
+        <div style={{ position: 'absolute', top: CY - OUTER_RY - 90, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(234,179,8,0.7)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           ★ Premium Tools ★
         </div>
         <div style={{ position: 'absolute', top: CY + OUTER_RY + 45, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
@@ -319,11 +320,6 @@ export function UtilitiesSection() {
                   <stop offset="30%" stopColor="#f97316" />
                   <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
                 </radialGradient>
-                
-                {/* תיקון הגרדיאנטים:
-                  ה-Opacity הופחת משמעותית (המקסימום הוא רק 0.12 לזהב ו-0.08 לכסף)
-                  והם דוהים לאפס מוחלט ב-20% וב-80% כדי שלא ייחתכו בקצוות המסך!
-                */}
                 <linearGradient id="mobOrbitOuter" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="rgba(234,179,8,0)" />
                   <stop offset="20%" stopColor="rgba(234,179,8,0)" />
@@ -345,7 +341,6 @@ export function UtilitiesSection() {
                 </linearGradient>
               </defs>
 
-              {/* הוסרו הקווים הקשיחים (solid), נשארנו רק עם המעברים החלקים והעדינים */}
               <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="url(#mobOrbitOuter)" strokeWidth="1" />
               <ellipse cx="400" cy="200" rx="190" ry="60" fill="none" stroke="url(#mobOrbitInner)" strokeWidth="1" />
 
