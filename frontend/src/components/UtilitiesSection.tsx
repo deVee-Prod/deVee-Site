@@ -57,14 +57,13 @@ function SolarSystem() {
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
-  // --- המשתנים הבאים עודכנו כדי להגדיל את המערכת ---
-  const OUTER_RX = 720; // הורחב המסלול החיצוני עוד (היה 540)
-  const OUTER_RY = 200; // הוגדל העומק החיצוני עוד (היה 150)
-  const INNER_RX = 450; // הורחב המסלול הפנימי עוד (היה 340)
-  const INNER_RY = 120; // הוגדל העומק הפנימי עוד (היה 90)
+  const OUTER_RX = 720; // הורחב המסלול החיצוני עוד
+  const OUTER_RY = 200; // הוגדל העומק החיצוני עוד
+  const INNER_RX = 450; // הורחב המסלול הפנימי עוד
+  const INNER_RY = 120; // הוגדל העומק הפנימי עוד
   const SPEED = 0.018;
-  const W = 1600;       // הוגדל רוחב הקנבס (היה 1200) כדי להכיל את ההרחבה
-  const H = 650;        // הוגדל גובה הקנבס (היה 500)
+  const W = 1600;       // הוגדל רוחב הקנבס
+  const H = 650;        // הוגדל גובה הקנבס
   const CX = W / 2;
   const CY = H / 2;     // מרכז מדויק
 
@@ -130,161 +129,158 @@ function SolarSystem() {
   };
 
   return (
-    // הוסף פה מרג'ין שלילי (-30px) למעלה כדי לקרב את הקנבס לכותרת
-    <div className="relative select-none" style={{ width: W, height: H, maxWidth: '100%', margin: '-30px auto 0 auto' }}>
-      <svg
-        width={W}
-        height={H}
-        viewBox={`0 0 ${W} ${H}`}
-        style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
-      >
-        <defs>
-          <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-            <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
-            <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
-            <stop offset="100%" stopColor="rgba(234,179,8,0)" />
-          </linearGradient>
-          <linearGradient id="orbitGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-            <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
-            <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
-            <stop offset="100%" stopColor="rgba(234,179,8,0)" />
-          </linearGradient>
-          
-          {/* פילטר ההילה הרך החדש לשמש */}
-          <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="12" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-          
-          {/* גרדיאנט כתום תלת-ממדי לליבת השמש */}
-          <radialGradient id="sunGradientOrange">
-            <stop offset="0%" stopColor="#fff" />
-            <stop offset="30%" stopColor="#f97316" />
-            <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
-          </radialGradient>
-        </defs>
+    // העטיפה החדשה שמוודאת מרכוז אבסולוטי מושלם למסך
+    <div className="relative select-none w-full" style={{ height: H, marginTop: '-30px' }}>
+      <div style={{ position: 'absolute', width: W, height: H, left: '50%', transform: 'translateX(-50%)' }}>
+        <svg
+          width={W}
+          height={H}
+          viewBox={`0 0 ${W} ${H}`}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+        >
+          <defs>
+            <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
+              <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
+              <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
+              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+            </linearGradient>
+            <linearGradient id="orbitGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
+              <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
+              <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
+              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+            </linearGradient>
+            
+            <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="12" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            
+            <radialGradient id="sunGradientOrange">
+              <stop offset="0%" stopColor="#fff" />
+              <stop offset="30%" stopColor="#f97316" />
+              <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
+            </radialGradient>
+          </defs>
 
-        <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY}
-          fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
-        <ellipse cx={CX} cy={CY} rx={OUTER_RX + 2} ry={OUTER_RY + 1}
-          fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY}
+            fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX + 2} ry={OUTER_RY + 1}
+            fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
 
-        <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY}
-          fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
+          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY}
+            fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
 
-        <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
-        <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
+          <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
+          <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
 
-        {/* שמש כתומה, יפה ופועמת ללא הקווים */}
-        <g filter="url(#starGlow)">
-          <circle cx={CX} cy={CY} r="35" fill="rgba(249, 115, 22, 0.15)">
-            <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
-          </circle>
-          
-          <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
-        </g>
-      </svg>
+          <g filter="url(#starGlow)">
+            <circle cx={CX} cy={CY} r="35" fill="rgba(249, 115, 22, 0.15)">
+              <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+            </circle>
+            
+            <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
+          </g>
+        </svg>
 
-      {allItems.map(({ tool, pos, orbit, angle, i }) => {
-        const size = iconSize(orbit, angle);
-        const isHovered = hoveredTool === `${orbit}-${i}`;
-        const isPremium = orbit === 'outer';
-        const sinVal = Math.sin((angle * Math.PI) / 180);
-        const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
+        {allItems.map(({ tool, pos, orbit, angle, i }) => {
+          const size = iconSize(orbit, angle);
+          const isHovered = hoveredTool === `${orbit}-${i}`;
+          const isPremium = orbit === 'outer';
+          const sinVal = Math.sin((angle * Math.PI) / 180);
+          const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
 
-        return (
-          <a
-            key={`${orbit}-${i}`}
-            href={tool.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)}
-            onMouseLeave={() => setHoveredTool(null)}
-            style={{
-              position: 'absolute',
-              left: pos.x,
-              top: pos.y,
-              transform: 'translate(-50%, -50%)',
-              zIndex: Math.round(pos.y),
-              opacity,
-              transition: 'opacity 0.2s',
-            }}
-            className="group flex flex-col items-center"
-          >
-            <div
+          return (
+            <a
+              key={`${orbit}-${i}`}
+              href={tool.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)}
+              onMouseLeave={() => setHoveredTool(null)}
               style={{
-                width: size,
-                height: size,
-                borderRadius: '50%',
-                overflow: 'hidden',
-                border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`,
-                boxShadow: isHovered
-                  ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}`
-                  : isPremium
-                    ? '0 0 10px rgba(234,179,8,0.2)'
-                    : 'none',
-                transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s',
-                flexShrink: 0,
+                position: 'absolute',
+                left: pos.x,
+                top: pos.y,
+                transform: 'translate(-50%, -50%)',
+                zIndex: Math.round(pos.y),
+                opacity,
+                transition: 'opacity 0.2s',
               }}
+              className="group flex flex-col items-center"
             >
-              <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-            <span
-              style={{
-                marginTop: 6,
-                fontSize: '7px',
-                letterSpacing: '0.2em',
-                color: 'rgba(255,255,255,0.9)',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                whiteSpace: 'nowrap',
-                textShadow: `0 0 8px ${tool.color}`,
-                opacity: isHovered ? 1 : 0,
-                transition: 'opacity 0.25s',
-                pointerEvents: 'none',
-              }}
-            >
-              {tool.name}
-            </span>
-          </a>
-        );
-      })}
+              <div
+                style={{
+                  width: size,
+                  height: size,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`,
+                  boxShadow: isHovered
+                    ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}`
+                    : isPremium
+                      ? '0 0 10px rgba(234,179,8,0.2)'
+                      : 'none',
+                  transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s',
+                  flexShrink: 0,
+                }}
+              >
+                <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <span
+                style={{
+                  marginTop: 6,
+                  fontSize: '7px',
+                  letterSpacing: '0.2em',
+                  color: 'rgba(255,255,255,0.9)',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  textShadow: `0 0 8px ${tool.color}`,
+                  opacity: isHovered ? 1 : 0,
+                  transition: 'opacity 0.25s',
+                  pointerEvents: 'none',
+                }}
+              >
+                {tool.name}
+              </span>
+            </a>
+          );
+        })}
 
-      {/* הרחקנו את הכיתוב כלפי מעלה כדי שלא יגע באייקונים */}
-      <div style={{
-        position: 'absolute',
-        top: CY - OUTER_RY - 55, 
-        left: '50%',
-        transform: 'translateX(-50%)',
-        fontSize: 9,
-        letterSpacing: '0.35em',
-        color: 'rgba(234,179,8,0.7)',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-        whiteSpace: 'nowrap',
-        pointerEvents: 'none',
-      }}>
-        ★ Premium Tools ★
-      </div>
+        <div style={{
+          position: 'absolute',
+          top: CY - OUTER_RY - 55, 
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: 9,
+          letterSpacing: '0.35em',
+          color: 'rgba(234,179,8,0.7)',
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+        }}>
+          ★ Premium Tools ★
+        </div>
 
-      {/* הרחקנו את הכיתוב כלפי מטה כדי שלא יגע באייקונים (שונה ל-top למען הדיוק) */}
-      <div style={{
-        position: 'absolute',
-        top: CY + OUTER_RY + 45,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        fontSize: 9,
-        letterSpacing: '0.35em',
-        color: 'rgba(255,255,255,0.5)',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-        whiteSpace: 'nowrap',
-        pointerEvents: 'none',
-      }}>
-        Free Tools
+        <div style={{
+          position: 'absolute',
+          top: CY + OUTER_RY + 45,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontSize: 9,
+          letterSpacing: '0.35em',
+          color: 'rgba(255,255,255,0.5)',
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+        }}>
+          Free Tools
+        </div>
       </div>
     </div>
   );
