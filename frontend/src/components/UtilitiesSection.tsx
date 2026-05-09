@@ -177,7 +177,7 @@ function SolarSystem() {
         <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
         <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
 
-        {/* שמש כתומה, יפה ופועמת */}
+        {/* שמש כתומה, יפה ופועמת ללא הקווים */}
         <g filter="url(#starGlow)">
           <circle cx={CX} cy={CY} r="35" fill="rgba(249, 115, 22, 0.15)">
             <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
@@ -185,25 +185,6 @@ function SolarSystem() {
           </circle>
           
           <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
-          
-          {[0, 45, 90, 135].map((rot, i) => (
-            <rect
-              key={i}
-              x={CX - 1} y={CY - 40}
-              width="2" height="80"
-              fill="rgba(249, 115, 22, 0.4)"
-              transform={`rotate(${rot} ${CX} ${CY})`}
-            >
-              <animateTransform 
-                attributeName="transform" 
-                type="rotate" 
-                from={`${rot} ${CX} ${CY}`} 
-                to={`${rot + 360} ${CX} ${CY}`} 
-                dur="20s" 
-                repeatCount="indefinite" 
-              />
-            </rect>
-          ))}
         </g>
       </svg>
 
