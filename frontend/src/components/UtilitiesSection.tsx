@@ -151,13 +151,19 @@ function SolarSystem() {
             <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
             <stop offset="100%" stopColor="rgba(234,179,8,0)" />
           </linearGradient>
-          <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          
+          {/* פילטר ההילה הרך החדש לשמש */}
+          <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="12" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
+          
+          {/* גרדיאנט כתום תלת-ממדי לליבת השמש */}
+          <radialGradient id="sunGradientOrange">
+            <stop offset="0%" stopColor="#fff" />
+            <stop offset="30%" stopColor="#f97316" />
+            <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
+          </radialGradient>
         </defs>
 
         <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY}
@@ -171,18 +177,33 @@ function SolarSystem() {
         <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
         <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
 
+        {/* שמש כתומה, יפה ופועמת */}
         <g filter="url(#starGlow)">
-          {[0, 90, 45, 135].map((rot, i) => (
-            <line
+          <circle cx={CX} cy={CY} r="35" fill="rgba(249, 115, 22, 0.15)">
+            <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+          </circle>
+          
+          <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
+          
+          {[0, 45, 90, 135].map((rot, i) => (
+            <rect
               key={i}
-              x1={CX} y1={CY - (i < 2 ? 28 : 18)}
-              x2={CX} y2={CY + (i < 2 ? 28 : 18)}
-              stroke={i < 2 ? "rgba(234,179,8,0.95)" : "rgba(234,179,8,0.55)"}
-              strokeWidth={i < 2 ? "2" : "1.2"}
+              x={CX - 1} y={CY - 40}
+              width="2" height="80"
+              fill="rgba(249, 115, 22, 0.4)"
               transform={`rotate(${rot} ${CX} ${CY})`}
-            />
+            >
+              <animateTransform 
+                attributeName="transform" 
+                type="rotate" 
+                from={`${rot} ${CX} ${CY}`} 
+                to={`${rot + 360} ${CX} ${CY}`} 
+                dur="20s" 
+                repeatCount="indefinite" 
+              />
+            </rect>
           ))}
-          <circle cx={CX} cy={CY} r="5" fill="rgba(255,220,80,0.95)" />
         </g>
       </svg>
 
