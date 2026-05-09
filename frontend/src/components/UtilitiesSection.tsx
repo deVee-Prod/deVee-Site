@@ -50,22 +50,22 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
 }
 
 // ─────────────────────────────────────────────
-// Desktop Solar System
+// Desktop Solar System (Unchanged)
 // ─────────────────────────────────────────────
 function SolarSystem() {
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
-  const OUTER_RX = 720; // הורחב המסלול החיצוני עוד
-  const OUTER_RY = 200; // הוגדל העומק החיצוני עוד
-  const INNER_RX = 450; // הורחב המסלול הפנימי עוד
-  const INNER_RY = 120; // הוגדל העומק הפנימי עוד
+  const OUTER_RX = 720;
+  const OUTER_RY = 200;
+  const INNER_RX = 450;
+  const INNER_RY = 120;
   const SPEED = 0.018;
-  const W = 1600;       // הוגדל רוחב הקנבס
-  const H = 650;        // הוגדל גובה הקנבס
+  const W = 1600;
+  const H = 650;
   const CX = W / 2;
-  const CY = H / 2;     // מרכז מדויק
+  const CY = H / 2;
 
   const [outerAngles, setOuterAngles] = useState(() =>
     premiumTools.map((_, i) => (i * 360) / premiumTools.length)
@@ -92,7 +92,7 @@ function SolarSystem() {
       if (!paused && !hoveredTool) {
         const step = SPEED * delta;
         setOuterAngles(prev => prev.map(a => (a + step) % 360));
-        setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360)); // counter-rotate inner
+        setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360));
       }
       animRef.current = requestAnimationFrame(tick);
     };
@@ -129,7 +129,6 @@ function SolarSystem() {
   };
 
   return (
-    // העטיפה החדשה שמוודאת מרכוז אבסולוטי מושלם למסך
     <div className="relative select-none w-full" style={{ height: H, marginTop: '-30px' }}>
       <div style={{ position: 'absolute', width: W, height: H, left: '50%', transform: 'translateX(-50%)' }}>
         <svg
@@ -180,7 +179,6 @@ function SolarSystem() {
               <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
             </circle>
-            
             <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
           </g>
         </svg>
@@ -287,6 +285,69 @@ function SolarSystem() {
 }
 
 // ─────────────────────────────────────────────
+// Mobile Arc Scroll Helper
+// ─────────────────────────────────────────────
+function ArcScroll({ tools, compact, scrollRef }: { tools: any[], compact?: boolean, scrollRef: React.RefObject<HTMLDivElement> }) {
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const updateArc = () => {
+      if (!scrollRef || !scrollRef.current) return;
+      const container = scrollRef.current;
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+
+      itemsRef.current.forEach((item) => {
+        if (!item) return;
+        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+        const dist = Math.abs(containerCenter - itemCenter);
+        const maxDist = container.clientWidth; 
+        const ratio = Math.min(dist / maxDist, 1);
+
+        // חישוב הקשת - דוחף למטה ומקטין ככל שמתרחקים מהאמצע
+        const translateY = Math.pow(ratio, 2) * 60; 
+        const scale = 1 - (ratio * 0.3);
+
+        item.style.transform = `translateY(${translateY}px) scale(${scale})`;
+      });
+    };
+
+    const container = scrollRef.current;
+    if (container) {
+      container.addEventListener('scroll', updateArc);
+      setTimeout(updateArc, 100); // הפעלה ראשונית
+      window.addEventListener('resize', updateArc);
+      return () => {
+        container.removeEventListener('scroll', updateArc);
+        window.removeEventListener('resize', updateArc);
+      };
+    }
+  }, [scrollRef]);
+
+  return (
+    <div className="relative">
+      <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
+      <div 
+        ref={scrollRef} 
+        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-20 pt-4 gap-4 relative z-0 scroll-smooth"
+        style={{ paddingLeft: 'calc(50vw - 40px)', paddingRight: 'calc(50vw - 40px)' }}
+      >
+        {tools.map((tool, index) => (
+          <div 
+            key={index} 
+            ref={el => { itemsRef.current[index] = el; }} 
+            className="snap-center flex-shrink-0 origin-top"
+          >
+            <ToolIcon tool={tool} compact={compact} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+// ─────────────────────────────────────────────
 // Main section
 // ─────────────────────────────────────────────
 export function UtilitiesSection() {
@@ -296,7 +357,7 @@ export function UtilitiesSection() {
   useEffect(() => {
     if (premiumScrollRef.current) {
       const el = premiumScrollRef.current;
-      const mid = el.children[2] as HTMLElement;
+      const mid = el.children[1] as HTMLElement; // מרכז פרימיום
       if (mid) el.scrollLeft = mid.offsetLeft + mid.offsetWidth / 2 - el.clientWidth / 2;
     }
     if (freeScrollRef.current) {
@@ -315,7 +376,7 @@ export function UtilitiesSection() {
       <div className="container mx-auto px-4">
 
         {/* Title */}
-        <div className="flex flex-col items-center mb-4">
+        <div className="flex flex-col items-center mb-4 relative z-10">
           <img
             src="/tools%20for%20artists.png"
             alt="Tools for Artists"
@@ -328,49 +389,60 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* ── MOBILE: Original design (unchanged) ── */}
-        <div className="md:hidden">
+        {/* ── MOBILE: Arc design with Sun ── */}
+        <div className="md:hidden relative overflow-hidden pb-10">
+          
+          {/* שמש כתומה מרוכזת ברקע של המובייל */}
+          <div className="absolute left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+            <svg width="250" height="250" viewBox="0 0 250 250">
+              <defs>
+                <filter id="mobileStarGlow" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="15" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <radialGradient id="mobileSunGradient">
+                  <stop offset="0%" stopColor="#fff" />
+                  <stop offset="30%" stopColor="#f97316" />
+                  <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
+                </radialGradient>
+              </defs>
+              <g filter="url(#mobileStarGlow)">
+                <circle cx="125" cy="125" r="60" fill="rgba(249, 115, 22, 0.15)">
+                  <animate attributeName="r" values="55;65;55" dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="125" cy="125" r="20" fill="url(#mobileSunGradient)" />
+              </g>
+            </svg>
+          </div>
+
           {/* Premium Tools */}
-          <div className="mb-16">
-            <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="mb-4 relative z-10">
+            <div className="flex items-center justify-center gap-4 mb-4">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">
                 ★ Premium Tools ★
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
             </div>
-            <div ref={premiumScrollRef} className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-4 px-4 gap-3">
-              <div className="flex-shrink-0 w-4" />
-              {premiumTools.map((tool, index) => (
-                <ToolIcon key={index} tool={tool} />
-              ))}
-              <div className="flex-shrink-0 w-4" />
-            </div>
+            <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} />
           </div>
 
           {/* Free Tools */}
-          <div className="relative">
-            <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="relative z-10">
+            <div className="flex items-center justify-center gap-4 mb-4">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/50" />
               <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-white" style={{ textShadow: '0 0 16px rgba(255,255,255,0.6)' }}>
                 Free Tools
               </span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/50" />
             </div>
-            <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-2">
               <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
               <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
               <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
             </div>
-            <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
-              <div ref={freeScrollRef} className="flex overflow-x-auto hide-scrollbar gap-[10px] pb-10 pt-10 px-4 scroll-smooth">
-                {utilities.map((tool, index) => (
-                  <ToolIcon key={index} tool={tool} compact={true} />
-                ))}
-              </div>
-            </div>
+            <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} />
           </div>
         </div>
 
