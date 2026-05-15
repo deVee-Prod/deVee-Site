@@ -145,6 +145,15 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             deVee Tools
           </button>
           <a
+            href="https://tube.devee-music.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            onClick={onClose}
+          >
+            deVee Tube
+          </a>
+          <a
             href="https://www.instagram.com/devee_prod?igsh=aGNzODI5eXp6YjFq&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
