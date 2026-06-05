@@ -5,7 +5,7 @@ export function HeroSection() {
       <div className="relative z-10 flex flex-col items-center text-center">
         {/* 1. Profile Image - Top, full uncropped original image at natural aspect ratio */}
         <div className="relative">
-          <div className="relative max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+          <div className="relative max-w-[14rem] sm:max-w-[22rem] md:max-w-[25rem] lg:max-w-[29rem]">
             <img
               src="/deVee Vingette 2 sized.PNG"
               alt="deVee"
