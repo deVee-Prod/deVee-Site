@@ -30,7 +30,7 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[82px] md:w-auto snap-start' : 'w-[105px] md:w-auto snap-center'}`}
     >
       <div
-        className={`${compact ? 'w-14 h-14' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
+        className={`${compact ? 'w-14 h-14' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl bg-black`}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
           e.currentTarget.style.borderColor = tool.color;
