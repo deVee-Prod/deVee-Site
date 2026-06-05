@@ -291,7 +291,7 @@ export function UtilitiesSection() {
   }, []);
 
   return (
-    <section className="py-12 overflow-x-hidden" id="utilities">
+    <section className="py-12" id="utilities">
       <div className="container mx-auto px-4">
         
         {/* Title */}
@@ -305,7 +305,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-4">
+        <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-4 overflow-x-hidden">
           
           <div className="absolute left-1/2 top-[47%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
             <svg width="800" height="400" viewBox="0 0 800 400">
