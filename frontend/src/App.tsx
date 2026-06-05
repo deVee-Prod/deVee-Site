@@ -8,6 +8,7 @@ import { UtilitiesSection } from './components/UtilitiesSection';
 import { SocialSection } from './components/SocialSection';
 import { Footer } from './components/Footer';
 import { InfoPage } from './pages/InfoPage';
+import { DriftingGridBackground } from './components/DriftingGridBackground';
 
 function App() {
   const [path, setPath] = useState(router.getCurrentPath());
@@ -21,16 +22,19 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-orange-500 selection:text-white">
-      <Header />
-      <main>
-        <HeroSection />
-        <NewsBanner />
-        <VideoSection />
-        <UtilitiesSection />
-<SocialSection />
-      </main>
-      <Footer />
+    <div className="min-h-screen text-white selection:bg-orange-500 selection:text-white">
+      <DriftingGridBackground />
+      <div className="relative z-10">
+        <Header />
+        <main>
+          <HeroSection />
+          <NewsBanner />
+          <VideoSection />
+          <UtilitiesSection />
+          <SocialSection />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

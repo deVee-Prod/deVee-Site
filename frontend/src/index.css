@@ -135,3 +135,298 @@
 html {
     scroll-behavior: smooth;
 }
+
+/* ── Video CoverFlow ── */
+.vcf-scene {
+  position: relative;
+  padding: 0 0 4.5rem;
+  overflow: hidden;
+}
+
+.vcf-track {
+  position: relative;
+  height: 310px;
+  perspective: 1400px;
+  perspective-origin: 50% 38%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vcf-card {
+  position: absolute;
+  width: min(480px, 82vw);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0a0a0a;
+  cursor: pointer;
+  transition: transform 0.62s cubic-bezier(0.4,0,0.2,1),
+              opacity   0.62s ease,
+              box-shadow 0.62s ease,
+              border-color 0.62s ease;
+  will-change: transform, opacity;
+}
+
+.vcf-card-iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  border: none;
+}
+
+.vcf-card-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  object-fit: cover;
+}
+
+.vcf-card.vcf-active {
+  transform: translateX(0) rotateY(0deg) translateZ(0) scale(1);
+  opacity: 1;
+  z-index: 3;
+  border-color: rgba(234,88,12,0.35);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7),
+              0 0 0 1px rgba(234,88,12,0.12),
+              0 0 80px rgba(234,88,12,0.1);
+  cursor: default;
+}
+
+.vcf-card.vcf-prev {
+  transform: translateX(-67%) rotateY(44deg) translateZ(-60px);
+  opacity: 0.55;
+  z-index: 2;
+}
+
+.vcf-card.vcf-next {
+  transform: translateX(67%) rotateY(-44deg) translateZ(-60px);
+  opacity: 0.55;
+  z-index: 2;
+}
+
+.vcf-card.vcf-prev:hover,
+.vcf-card.vcf-next:hover { opacity: 0.78; }
+
+.vcf-card.vcf-far-left {
+  transform: translateX(-94%) rotateY(58deg) translateZ(-180px);
+  opacity: 0.12;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.vcf-card.vcf-far-right {
+  transform: translateX(94%) rotateY(-58deg) translateZ(-180px);
+  opacity: 0.12;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.vcf-fade-left,
+.vcf-fade-right {
+  position: absolute;
+  top: 0; bottom: 4.5rem;
+  width: 14%;
+  pointer-events: none;
+  z-index: 5;
+}
+.vcf-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent); }
+.vcf-fade-right { right: 0; background: linear-gradient(to left,  rgba(0,0,0,0.9), transparent); }
+
+.vcf-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 2.25rem));
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  z-index: 10;
+}
+.vcf-nav:hover {
+  background: rgba(234,88,12,0.2);
+  border-color: rgba(234,88,12,0.55);
+  color: #fff;
+}
+.vcf-btn-prev { left:  max(0.5rem, calc(50% - min(268px, 44vw))); }
+.vcf-btn-next { right: max(0.5rem, calc(50% - min(268px, 44vw))); }
+
+.vcf-dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px;
+  z-index: 10;
+}
+.vcf-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: none; padding: 0;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+.vcf-dot-active {
+  background: oklch(0.70 0.20 45);
+  transform: scale(1.4);
+}
+
+@media (max-width: 640px) {
+  .vcf-track { height: 230px; }
+  .vcf-card.vcf-prev { transform: translateX(-56%) rotateY(36deg) translateZ(-30px); opacity: 0.7; }
+  .vcf-card.vcf-next { transform: translateX(56%) rotateY(-36deg) translateZ(-30px); opacity: 0.7; }
+  .vcf-fade-left, .vcf-fade-right { display: none; }
+  .vcf-btn-prev { left: 0.3rem; }
+  .vcf-btn-next { right: 0.3rem; }
+}
+
+/* ── Platform Perspective Row ── */
+.pf-scene {
+  position: relative;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 420px;
+  perspective-origin: 50% 50%;
+  padding: 8px 0;
+}
+
+.pf-card {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(234,88,12,0.2);
+  background: rgba(8,8,8,0.92);
+  text-decoration: none;
+  transition: transform 0.52s cubic-bezier(0.4,0,0.2,1),
+              opacity   0.52s ease,
+              border-color 0.52s ease,
+              box-shadow 0.52s ease;
+  will-change: transform, opacity;
+}
+
+.pf-card.pf-active {
+  transform: translateX(0) translateZ(28px);
+  opacity: 1;
+  z-index: 3;
+  cursor: default;
+  border-color: rgba(234,88,12,0.6);
+  background: rgba(234,88,12,0.1);
+  box-shadow: 0 0 36px rgba(234,88,12,0.28);
+}
+
+.pf-card.pf-left {
+  transform: translateX(-108px) translateZ(-90px);
+  opacity: 0.5;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.pf-card.pf-right {
+  transform: translateX(108px) translateZ(-90px);
+  opacity: 0.5;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.pf-card.pf-left:hover,
+.pf-card.pf-right:hover { opacity: 0.8; }
+
+.pf-icon {
+  width: 30px;
+  height: 30px;
+  color: #ea580c;
+}
+
+/* ── Drifting Grid Background ── */
+.bg-drift-container {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-drift-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.76);
+  z-index: 2;
+}
+
+.bg-drift-overlay-grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 40%, rgba(0,0,0,0.65) 100%);
+  z-index: 3;
+}
+
+/* Orange glow — large element so it can translate outside the viewport */
+.bg-drift-glow-orange {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at center, rgba(234, 88, 12, 0.14) 0%, transparent 45%);
+  z-index: 3;
+  pointer-events: none;
+  animation: orangeGlowFloat 26s ease-in-out infinite;
+}
+
+@keyframes orangeGlowFloat {
+  0%   { transform: translate(0%,    0%);   }
+  15%  { transform: translate(7%,   -7%);   }
+  30%  { transform: translate(-4%,  -11%);  }
+  50%  { transform: translate(-8%,   4%);   }
+  65%  { transform: translate(3%,    9%);   }
+  82%  { transform: translate(10%,   1%);   }
+  100% { transform: translate(0%,    0%);   }
+}
+
+.bg-drift-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -8%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 8px;
+  z-index: 1;
+}
+
+@keyframes drift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-4%); }
+}
+
+.bg-drift-grid-animated {
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+.bg-drift-cell {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 200px;
+  background: #111;
+}
+
+.bg-drift-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,102 +1,190 @@
-import { SiSpotify, SiApplemusic } from 'react-icons/si';
+import { useState, useRef, useCallback, ElementType } from 'react';
+import { SiSpotify, SiApplemusic, SiYoutubemusic } from 'react-icons/si';
+
+const tracks = [
+  {
+    id: 'track1',
+    videoId: 'Hv6yD04iwe0',
+    title: 'ניקיתי את הלב (Prod by. deVee)',
+    spotify: 'https://open.spotify.com/track/0IccXF4g1FcsgLEq82SioC?si=dqop7sCTSqCbQLxjkwWNIQ',
+    appleMusic: 'https://music.apple.com/il/album/%D7%A0%D7%99%D7%A7%D7%99%D7%AA%D7%99-%D7%90%D7%AA-%D7%94%D7%9C%D7%91/1794794200?i=1794794278',
+    youtubeMusic: 'https://music.youtube.com/watch?v=Hv6yD04iwe0',
+  },
+  {
+    id: 'track2',
+    videoId: 'hRo2y0U-N_k',
+    title: 'YALi | יהלי - בראשית (Prod. by deVee)',
+    spotify: 'https://open.spotify.com/track/4AA6RpirW0hsRY8c4ioRi1?si=5mrAXNLrSXq88yd8BucN_Q',
+    appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/1838307735?i=1838307740',
+    youtubeMusic: 'https://music.youtube.com/watch?v=hRo2y0U-N_k',
+  },
+  {
+    id: 'track3',
+    videoId: 'ZPr1Y7-PAWM',
+    title: 'Gondola - Ariella Eve ft. deVee',
+    spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
+    appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
+    youtubeMusic: 'https://music.youtube.com/watch?v=ZPr1Y7-PAWM',
+  },
+  {
+    id: 'track4',
+    videoId: 'RO1LiMKFBwA',
+    title: 'קאש (Prod. by deVee)',
+    spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
+    appleMusic: 'https://music.apple.com/il/album/%D7%A7%D7%90%D7%A9/1895594252?i=6764002846',
+    youtubeMusic: 'https://music.youtube.com/watch?v=RO1LiMKFBwA',
+  },
+  {
+    id: 'track5',
+    videoId: 'eR4GRRwIJVc',
+    title: 'Shadow (feat. deVee)',
+    spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
+    appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
+    youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
+  },
+];
+
+const PLATFORMS: { key: keyof typeof tracks[0]; Icon: ElementType; label: string }[] = [
+  { key: 'spotify',      Icon: SiSpotify,      label: 'Spotify' },
+  { key: 'appleMusic',   Icon: SiApplemusic,   label: 'Apple Music' },
+  { key: 'youtubeMusic', Icon: SiYoutubemusic, label: 'YouTube Music' },
+];
+
+function normalizeOffset(raw: number, total: number): number {
+  let o = raw % total;
+  if (o > Math.floor(total / 2)) o -= total;
+  if (o < -Math.ceil(total / 2)) o += total;
+  return o;
+}
 
 export function VideoSection() {
-  const tracks = [
-    {
-      id: 'track1',
-      videoUrl: 'http://www.youtube.com/watch?v=Hv6yD04iwe0',
-      title: 'ניקיתי את הלב (Prod by. deVee)',
-      spotify: 'https://open.spotify.com/track/0IccXF4g1FcsgLEq82SioC?si=dqop7sCTSqCbQLxjkwWNIQ',
-      appleMusic: 'https://music.apple.com/il/album/%D7%A0%D7%99%D7%A7%D7%99%D7%AA%D7%99-%D7%90%D7%AA-%D7%94%D7%9C%D7%91/1794794200?i=1794794278'
-    },
-    {
-      id: 'track2',
-      videoUrl: 'http://www.youtube.com/watch?v=hRo2y0U-N_k',
-      title: 'YALi | יהלי - בראשית (Prod. by deVee)',
-      spotify: 'https://open.spotify.com/track/4AA6RpirW0hsRY8c4ioRi1?si=5mrAXNLrSXq88yd8BucN_Q',
-      appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/1838307735?i=1838307740'
-    },
-    {
-      id: 'track3',
-      videoUrl: 'https://www.youtube.com/watch?v=ZPr1Y7-PAWM',
-      title: 'Gondola - Ariella Eve ft. deVee',
-      spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
-      appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295'
-    },
-    {
-      id: 'track4',
-      videoUrl: 'https://www.youtube.com/watch?v=RO1LiMKFBwA',
-      title: 'קאש (Prod. by deVee)',
-      spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
-      appleMusic: 'https://music.apple.com/il/album/%D7%A7%D7%90%D7%A9/1895594252?i=6764002846'
-    }
-  ];
+  const [active, setActive]               = useState(0);
+  const [activePf, setActivePf]           = useState(0);
+  const touchX   = useRef(0);
+  const pfTouchX = useRef(0);
 
-  // Convert YouTube URLs to embed format
-  const getEmbedUrl = (url: string) => {
-    const videoId = url.split('v=')[1]?.split('&')[0];
-    return `https://www.youtube.com/embed/${videoId}`;
-  };
+  const goTo = useCallback((index: number) => {
+    setActive(((index % tracks.length) + tracks.length) % tracks.length);
+  }, []);
+
+  const goToPf = useCallback((index: number) => {
+    setActivePf(((index % PLATFORMS.length) + PLATFORMS.length) % PLATFORMS.length);
+  }, []);
+
+  function posClass(i: number): string {
+    const offset = normalizeOffset(i - active, tracks.length);
+    if (offset === 0)  return 'vcf-active';
+    if (offset === -1) return 'vcf-prev';
+    if (offset === 1)  return 'vcf-next';
+    return offset < 0  ? 'vcf-far-left' : 'vcf-far-right';
+  }
+
+  const current = tracks[active];
 
   return (
-    <section className="relative pt-4 sm:pt-6 pb-5 px-4 sm:px-6 bg-gradient-to-b from-black via-zinc-950 to-black z-20">
+    <section className="relative pt-4 sm:pt-6 pb-8 px-4 sm:px-6 z-20">
       <div className="container mx-auto max-w-6xl">
-        {/* Latest Releases Header Image - Added margin-left for perfect centering */}
-        <div className="flex justify-center mb-5">
-          <img 
-            src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png" 
+
+        {/* Header image */}
+        <div className="flex justify-center mb-8">
+          <img
+            src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
             className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain ml-[10px] sm:ml-[15px]"
           />
         </div>
 
-        {/* Track Cards Container */}
-        <div className="flex flex-col items-center gap-5">
-          {tracks.map((track) => (
-            <div 
-              key={track.id} 
-              className="w-full max-w-4xl border border-white/10 rounded-2xl p-4 sm:p-6 bg-black/30 backdrop-blur-sm hover:border-white/20 transition-all duration-300"
-            >
-              {/* Video Container */}
-              <div className="group mb-4">
-                <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-zinc-900 shadow-2xl border border-white/5 hover:border-orange-500/30 transition-all duration-500">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition duration-500" />
-                  
+        {/* 3D CoverFlow */}
+        <div
+          className="vcf-scene"
+          onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
+          onTouchEnd={e => {
+            const dx = touchX.current - e.changedTouches[0].clientX;
+            if (Math.abs(dx) > 48) goTo(active + (dx > 0 ? 1 : -1));
+          }}
+        >
+          <div className="vcf-track">
+            {tracks.map((track, i) => (
+              <div
+                key={track.id}
+                className={`vcf-card ${posClass(i)}`}
+                onClick={() => { if (i !== active) goTo(i); }}
+              >
+                {i === active ? (
                   <iframe
-                    src={getEmbedUrl(track.videoUrl)}
+                    className="vcf-card-iframe"
+                    src={`https://www.youtube.com/embed/${track.videoId}`}
                     title={track.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                    className="relative w-full h-full"
                   />
-                </div>
+                ) : (
+                  <img
+                    className="vcf-card-thumb"
+                    src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
+                    alt={track.title}
+                  />
+                )}
               </div>
+            ))}
+          </div>
 
-              {/* Streaming Platform Buttons */}
-              <div className="flex gap-6 sm:gap-8 justify-center">
-                <a
-                  href={track.spotify}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/icon transition-all duration-300 hover:scale-110"
-                  aria-label="Listen on Spotify"
-                >
-                  <SiSpotify className="w-8 h-8 sm:w-9 sm:h-9 text-orange-500 hover:text-orange-400 transition-colors duration-300 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)] hover:drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]" />
-                </a>
+          <div className="vcf-fade-left"  aria-hidden="true" />
+          <div className="vcf-fade-right" aria-hidden="true" />
 
-                <a
-                  href={track.appleMusic}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/icon transition-all duration-300 hover:scale-110"
-                  aria-label="Listen on Apple Music"
-                >
-                  <SiApplemusic className="w-8 h-8 sm:w-9 sm:h-9 text-orange-500 hover:text-orange-400 transition-colors duration-300 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)] hover:drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]" />
-                </a>
-              </div>
-            </div>
-          ))}
+          <button className="vcf-nav vcf-btn-prev" aria-label="הקודם" onClick={() => goTo(active - 1)}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button className="vcf-nav vcf-btn-next" aria-label="הבא" onClick={() => goTo(active + 1)}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+
+          <div className="vcf-dots">
+            {tracks.map((_, i) => (
+              <button
+                key={i}
+                className={`vcf-dot${i === active ? ' vcf-dot-active' : ''}`}
+                aria-label={`סרטון ${i + 1}`}
+                onClick={() => goTo(i)}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Active track title + platform drum */}
+        <div className="text-center mt-2 pb-4">
+          <p className="text-sm font-semibold text-white/70 mb-5 transition-all duration-500">
+            {current.title}
+          </p>
+          <div
+            className="pf-scene"
+            onTouchStart={e => { pfTouchX.current = e.touches[0].clientX; }}
+            onTouchEnd={e => {
+              const dx = pfTouchX.current - e.changedTouches[0].clientX;
+              if (Math.abs(dx) > 32) goToPf(activePf + (dx > 0 ? 1 : -1));
+            }}
+          >
+            {PLATFORMS.map(({ key, Icon, label }, i) => {
+              const offset = normalizeOffset(i - activePf, PLATFORMS.length);
+              const posClass = offset === 0 ? 'pf-active' : offset === -1 ? 'pf-left' : 'pf-right';
+              const isActive = offset === 0;
+              return (
+                <a
+                  key={key}
+                  href={current[key] as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`pf-card ${posClass}`}
+                  aria-label={label}
+                  onClick={e => { if (!isActive) { e.preventDefault(); goToPf(i); } }}
+                >
+                  <Icon className="pf-icon" />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
       </div>
     </section>
   );

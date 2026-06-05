@@ -18,7 +18,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="bg-black relative z-30">
+    <header className="relative z-30">
       {/* sm: ומטה (מובייל) — container mx-auto כמו קודם */}
       {/* md: ומעלה (דסקטופ) — w-full כדי להתפרס לקצוות */}
       <div className="container mx-auto md:max-w-none px-4 sm:px-6 pt-4 sm:pt-6 pb-1 sm:pb-2 flex justify-between items-center">

@@ -291,7 +291,7 @@ export function UtilitiesSection() {
   }, []);
 
   return (
-    <section className="py-12 bg-black overflow-x-hidden" id="utilities">
+    <section className="py-12 overflow-x-hidden" id="utilities">
       <div className="container mx-auto px-4">
         
         {/* Title */}
