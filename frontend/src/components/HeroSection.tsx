@@ -1,6 +1,6 @@
 export function HeroSection() {
   return (
-    <section className="relative flex items-center justify-center pt-0 pb-0 px-4 sm:px-6">
+    <section className="relative flex items-center justify-center pt-10 sm:pt-14 pb-0 px-4 sm:px-6">
       {/* Main content stack - perfectly centered with two elements */}
       <div className="relative z-10 flex flex-col items-center text-center">
         {/* 1. Profile Image - Top, full uncropped original image at natural aspect ratio */}
