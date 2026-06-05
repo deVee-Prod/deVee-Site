@@ -278,23 +278,26 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-card { width: min(260px, 68vw); }
-  .vcf-track { height: 210px; }
-  .vcf-card.vcf-prev { transform: translateX(-72%) rotateY(48deg) translateZ(-40px); opacity: 0.75; }
-  .vcf-card.vcf-next { transform: translateX(72%) rotateY(-48deg) translateZ(-40px); opacity: 0.75; }
-  .vcf-card.vcf-far-left  { transform: translateX(-105%) rotateY(62deg) translateZ(-120px); opacity: 0.15; }
-  .vcf-card.vcf-far-right { transform: translateX(105%) rotateY(-62deg) translateZ(-120px); opacity: 0.15; }
+  .vcf-card { width: min(210px, 55vw); }
+  .vcf-track {
+    height: 190px;
+    perspective: 560px;
+  }
+  .vcf-card.vcf-prev { transform: translateX(-60%) rotateY(50deg) translateZ(-18px); opacity: 0.78; }
+  .vcf-card.vcf-next { transform: translateX(60%) rotateY(-50deg) translateZ(-18px); opacity: 0.78; }
+  .vcf-card.vcf-far-left  { transform: translateX(-100%) rotateY(65deg) translateZ(-100px); opacity: 0.1; }
+  .vcf-card.vcf-far-right { transform: translateX(100%) rotateY(-65deg) translateZ(-100px); opacity: 0.1; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
 
-  /* Platform picker — smaller cards, stronger depth */
-  .pf-scene { perspective: 240px; height: 80px; }
-  .pf-card { width: 54px; height: 54px; border-radius: 14px; }
-  .pf-card.pf-active { transform: translateX(0) translateZ(22px); }
-  .pf-card.pf-left  { transform: translateX(-76px) translateZ(-80px); opacity: 0.55; }
-  .pf-card.pf-right { transform: translateX(76px)  translateZ(-80px); opacity: 0.55; }
-  .pf-icon { width: 22px; height: 22px; }
+  /* Platform picker — much smaller cards, dramatic depth */
+  .pf-scene { perspective: 150px; height: 72px; }
+  .pf-card { width: 46px; height: 46px; border-radius: 12px; }
+  .pf-card.pf-active { transform: translateX(0) translateZ(14px); }
+  .pf-card.pf-left  { transform: translateX(-72px) translateZ(-88px); opacity: 0.55; }
+  .pf-card.pf-right { transform: translateX(72px)  translateZ(-88px); opacity: 0.55; }
+  .pf-icon { width: 20px; height: 20px; }
 }
 
 /* ── Platform Perspective Row ── */
