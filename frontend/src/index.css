@@ -278,12 +278,23 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-track { height: 230px; }
-  .vcf-card.vcf-prev { transform: translateX(-56%) rotateY(36deg) translateZ(-30px); opacity: 0.7; }
-  .vcf-card.vcf-next { transform: translateX(56%) rotateY(-36deg) translateZ(-30px); opacity: 0.7; }
+  .vcf-card { width: min(260px, 68vw); }
+  .vcf-track { height: 210px; }
+  .vcf-card.vcf-prev { transform: translateX(-72%) rotateY(48deg) translateZ(-40px); opacity: 0.75; }
+  .vcf-card.vcf-next { transform: translateX(72%) rotateY(-48deg) translateZ(-40px); opacity: 0.75; }
+  .vcf-card.vcf-far-left  { transform: translateX(-105%) rotateY(62deg) translateZ(-120px); opacity: 0.15; }
+  .vcf-card.vcf-far-right { transform: translateX(105%) rotateY(-62deg) translateZ(-120px); opacity: 0.15; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
+
+  /* Platform picker — smaller cards, stronger depth */
+  .pf-scene { perspective: 240px; height: 80px; }
+  .pf-card { width: 54px; height: 54px; border-radius: 14px; }
+  .pf-card.pf-active { transform: translateX(0) translateZ(22px); }
+  .pf-card.pf-left  { transform: translateX(-76px) translateZ(-80px); opacity: 0.55; }
+  .pf-card.pf-right { transform: translateX(76px)  translateZ(-80px); opacity: 0.55; }
+  .pf-icon { width: 22px; height: 22px; }
 }
 
 /* ── Platform Perspective Row ── */
