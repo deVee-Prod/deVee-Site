@@ -291,13 +291,6 @@ html {
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
 
-  /* Platform picker — much smaller cards, dramatic depth */
-  .pf-scene { perspective: 150px; height: 72px; }
-  .pf-card { width: 46px; height: 46px; border-radius: 12px; }
-  .pf-card.pf-active { transform: translateX(0) translateZ(14px); }
-  .pf-card.pf-left  { transform: translateX(-72px) translateZ(-88px); opacity: 0.55; }
-  .pf-card.pf-right { transform: translateX(72px)  translateZ(-88px); opacity: 0.55; }
-  .pf-icon { width: 20px; height: 20px; }
 }
 
 /* ── Platform Perspective Row ── */
@@ -361,6 +354,15 @@ html {
   width: 30px;
   height: 30px;
   color: #ea580c;
+}
+
+@media (max-width: 640px) {
+  .pf-scene { perspective: 150px; height: 68px; }
+  .pf-card { width: 40px; height: 40px; border-radius: 11px; }
+  .pf-card.pf-active { transform: translateX(0) translateZ(12px); }
+  .pf-card.pf-left  { transform: translateX(-64px) translateZ(-80px); opacity: 0.55; }
+  .pf-card.pf-right { transform: translateX(64px)  translateZ(-80px); opacity: 0.55; }
+  .pf-icon { width: 18px; height: 18px; }
 }
 
 /* ── Drifting Grid Background ── */
