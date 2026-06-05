@@ -290,6 +290,7 @@ html {
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
+  .vcf-nav { width: 28px; height: 28px; }
 
 }
 
