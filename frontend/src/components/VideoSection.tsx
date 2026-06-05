@@ -20,14 +20,6 @@ const tracks = [
   },
   {
     id: 'track3',
-    videoId: 'ZPr1Y7-PAWM',
-    title: 'Gondola - Ariella Eve ft. deVee',
-    spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
-    appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
-    youtubeMusic: 'https://music.youtube.com/watch?v=ZPr1Y7-PAWM',
-  },
-  {
-    id: 'track4',
     videoId: 'RO1LiMKFBwA',
     title: 'קאש (Prod. by deVee)',
     spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
@@ -35,12 +27,20 @@ const tracks = [
     youtubeMusic: 'https://music.youtube.com/watch?v=RO1LiMKFBwA',
   },
   {
-    id: 'track5',
+    id: 'track4',
     videoId: 'eR4GRRwIJVc',
     title: 'Shadow (feat. deVee)',
     spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
     appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
     youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
+  },
+  {
+    id: 'track5',
+    videoId: 'ZPr1Y7-PAWM',
+    title: 'Gondola - Ariella Eve ft. deVee',
+    spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
+    appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
+    youtubeMusic: 'https://music.youtube.com/watch?v=ZPr1Y7-PAWM',
   },
 ];
 
