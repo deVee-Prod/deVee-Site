@@ -278,15 +278,15 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-card { width: min(260px, 68vw); }
+  .vcf-card { width: min(220px, 57vw); }
   .vcf-track {
-    height: 210px;
-    perspective: 900px;
+    height: 195px;
+    perspective: 520px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-74%) scale(0.88); opacity: 0.8; }
-  .vcf-card.vcf-next { transform: translateX(74%) scale(0.88); opacity: 0.8; }
-  .vcf-card.vcf-far-left  { transform: translateX(-130%) scale(0.75); opacity: 0; }
-  .vcf-card.vcf-far-right { transform: translateX(130%) scale(0.75); opacity: 0; }
+  .vcf-card.vcf-prev { transform: translateX(-60%) rotateY(28deg) translateZ(-25px); opacity: 0.78; }
+  .vcf-card.vcf-next { transform: translateX(60%) rotateY(-28deg) translateZ(-25px); opacity: 0.78; }
+  .vcf-card.vcf-far-left  { transform: translateX(-110%) rotateY(50deg) translateZ(-80px); opacity: 0.1; }
+  .vcf-card.vcf-far-right { transform: translateX(110%) rotateY(-50deg) translateZ(-80px); opacity: 0.1; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
