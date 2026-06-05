@@ -237,12 +237,15 @@ function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[]
 
   return (
     <div className="relative">
-      <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
-      <div 
-        ref={scrollRef} 
-        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 gap-4 relative z-0 scroll-smooth"
-        style={{ paddingLeft: 'calc(50vw - 40px)', paddingRight: 'calc(50vw - 40px)' }}
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 gap-4 scroll-smooth"
+        style={{
+          paddingLeft: 'calc(50vw - 40px)',
+          paddingRight: 'calc(50vw - 40px)',
+          WebkitBackdropFilter: 'brightness(1)',
+          backdropFilter: 'brightness(1)',
+        }}
       >
         {tools.map((tool, index) => (
           <div key={index} ref={el => { itemsRef.current[index] = el; }} className="snap-center flex-shrink-0 origin-center">
