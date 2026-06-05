@@ -280,13 +280,13 @@ html {
 @media (max-width: 640px) {
   .vcf-card { width: min(260px, 68vw); }
   .vcf-track {
-    height: 215px;
-    perspective: 480px;
+    height: 210px;
+    perspective: 900px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-48%) rotateY(36deg) translateZ(-18px); opacity: 0.85; }
-  .vcf-card.vcf-next { transform: translateX(48%) rotateY(-36deg) translateZ(-18px); opacity: 0.85; }
-  .vcf-card.vcf-far-left  { transform: translateX(-100%) rotateY(65deg) translateZ(-100px); opacity: 0.1; }
-  .vcf-card.vcf-far-right { transform: translateX(100%) rotateY(-65deg) translateZ(-100px); opacity: 0.1; }
+  .vcf-card.vcf-prev { transform: translateX(-74%) scale(0.88); opacity: 0.8; }
+  .vcf-card.vcf-next { transform: translateX(74%) scale(0.88); opacity: 0.8; }
+  .vcf-card.vcf-far-left  { transform: translateX(-130%) scale(0.75); opacity: 0; }
+  .vcf-card.vcf-far-right { transform: translateX(130%) scale(0.75); opacity: 0; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0.3rem; }
   .vcf-btn-next { right: 0.3rem; }
