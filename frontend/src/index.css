@@ -283,8 +283,8 @@ html {
     height: 190px;
     perspective: 560px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-60%) rotateY(50deg) translateZ(-18px); opacity: 0.78; }
-  .vcf-card.vcf-next { transform: translateX(60%) rotateY(-50deg) translateZ(-18px); opacity: 0.78; }
+  .vcf-card.vcf-prev { transform: translateX(-48%) rotateY(42deg) translateZ(-18px); opacity: 0.85; }
+  .vcf-card.vcf-next { transform: translateX(48%) rotateY(-42deg) translateZ(-18px); opacity: 0.85; }
   .vcf-card.vcf-far-left  { transform: translateX(-100%) rotateY(65deg) translateZ(-100px); opacity: 0.1; }
   .vcf-card.vcf-far-right { transform: translateX(100%) rotateY(-65deg) translateZ(-100px); opacity: 0.1; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
