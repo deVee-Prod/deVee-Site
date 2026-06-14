@@ -4,18 +4,22 @@ import { VideoSection } from '../components/VideoSection';
 import { SectionSeparator } from '../components/SectionSeparator';
 import { ContactSection } from '../components/ContactSection';
 import { Footer } from '../components/Footer';
+import { DriftingGridBackground } from '../components/DriftingGridBackground';
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Header />
-      <main>
-        <HeroSection />
-        <VideoSection />
-        <SectionSeparator />
-        <ContactSection />
-      </main>
-      <Footer />
+    <div className="min-h-screen text-white">
+      <DriftingGridBackground />
+      <div className="relative z-10">
+        <Header />
+        <main>
+          <HeroSection />
+          <VideoSection />
+          <SectionSeparator />
+          <ContactSection />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
