@@ -1,11 +1,6 @@
-import { EnergyParticles } from './EnergyParticles';
-
 export function HeroSection() {
   return (
     <section className="relative flex flex-col items-center justify-center md:min-h-[85vh] pt-10 sm:pt-14 pb-0 px-4 sm:px-6 overflow-hidden">
-      {/* 3D Interactive Energy Background */}
-      <EnergyParticles />
-
       {/* Main content stack - perfectly centered with two elements */}
       <div className="relative z-10 flex flex-col items-center text-center w-full mt-auto mb-auto md:mt-auto md:mb-auto">
         {/* 1. Profile Image - Top, full uncropped original image at natural aspect ratio */}
