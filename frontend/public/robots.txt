@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://devee-music.com/sitemap.xml
+Sitemap: https://www.devee-music.com/sitemap.xml
