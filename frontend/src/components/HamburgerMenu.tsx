@@ -169,7 +169,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             Info
           </button>
 
-          <div className="mt-auto pt-16 pb-8 flex flex-col items-center gap-4">
+          <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-4">
             <a
               href="/privacy-he.html"
               className="text-white/40 hover:text-white/80 text-sm transition-colors duration-300 tracking-wider"
