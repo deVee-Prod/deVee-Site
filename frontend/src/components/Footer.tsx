@@ -58,7 +58,7 @@ export function Footer() {
           {/* הלינק עבור גוגל - שקוף וקלאסי אבל קריא ורשמי */}
           <div className="mt-3 flex items-center justify-center gap-4">
             <a 
-              href="/privacy.html" 
+              href="/privacy-he.html" 
               className="text-white/20 hover:text-white/60 text-xs tracking-wider transition-colors"
             >
               מדיניות פרטיות
