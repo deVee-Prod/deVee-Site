@@ -55,20 +55,13 @@ export function Footer() {
               caffeine.ai
             </a>
           </p>
-          {/* הלינק עבור גוגל - שקוף וקלאסי אבל קריא ורשמי */}
-          <div className="mt-3 flex items-center justify-center gap-4">
+          {/* הלינק עבור גוגל - שקוף כמעט ולא משנה את העיצוב */}
+          <div className="mt-2">
             <a 
-              href="/privacy-he.html" 
-              className="text-white/20 hover:text-white/60 text-xs tracking-wider transition-colors"
+              href="/privacy.html" 
+              className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
             >
-              מדיניות פרטיות
-            </a>
-            <span className="text-white/10">|</span>
-            <a 
-              href="/terms.html" 
-              className="text-white/20 hover:text-white/60 text-xs tracking-wider transition-colors"
-            >
-              תקנון ותנאי שימוש
+              Privacy Policy
             </a>
           </div>
         </div>
