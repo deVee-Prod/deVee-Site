@@ -75,9 +75,9 @@ export function HeroSection() {
               style={{
                 left: '-40%',
                 width: '50%',
-                background: 'radial-gradient(ellipse at 70% 50%, rgba(234,88,12,0.5) 0%, rgba(234,88,12,0.2) 40%, transparent 70%)',
+                background: 'radial-gradient(ellipse at 70% 50%, rgba(234,88,12,0.12) 0%, rgba(234,88,12,0.05) 40%, transparent 70%)',
                 opacity: tilt.scale > 1 ? 1 : 0,
-                filter: 'blur(18px)',
+                filter: 'blur(14px)',
               }}
             />
             {/* Orange glow on RIGHT side */}
@@ -86,9 +86,9 @@ export function HeroSection() {
               style={{
                 right: '-40%',
                 width: '50%',
-                background: 'radial-gradient(ellipse at 30% 50%, rgba(234,88,12,0.5) 0%, rgba(234,88,12,0.2) 40%, transparent 70%)',
+                background: 'radial-gradient(ellipse at 30% 50%, rgba(234,88,12,0.12) 0%, rgba(234,88,12,0.05) 40%, transparent 70%)',
                 opacity: tilt.scale > 1 ? 1 : 0,
-                filter: 'blur(18px)',
+                filter: 'blur(14px)',
               }}
             />
           </div>
