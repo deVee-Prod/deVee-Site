@@ -27,7 +27,8 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       href={tool.link}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[80px] md:w-auto snap-center' : 'w-[105px] md:w-auto snap-center'}`}
+      className={`flex-shrink-0 group flex flex-col items-center md:w-auto snap-center`}
+      style={compact ? { width: 'calc((100vw - 32px) / 3)' } : { width: '105px' }}
     >
       <div
         className={`${compact ? 'w-12 h-12' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
@@ -241,9 +242,9 @@ function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[]
         ref={scrollRef}
         className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 scroll-smooth"
         style={{
-          gap: compact ? '12px' : '16px',
-          paddingLeft: compact ? 'calc(50vw - 132px)' : 'calc(50vw - 40px)',
-          paddingRight: compact ? 'calc(50vw - 132px)' : 'calc(50vw - 40px)',
+          gap: compact ? '0px' : '16px',
+          paddingLeft: compact ? '0px' : 'calc(50vw - 40px)',
+          paddingRight: compact ? '0px' : 'calc(50vw - 40px)',
           WebkitBackdropFilter: 'brightness(1)',
           backdropFilter: 'brightness(1)',
         }}
@@ -273,25 +274,13 @@ export function UtilitiesSection() {
         if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
       }
       if (freeScrollRef.current) {
-        const el = freeScrollRef.current;
-        const mid = el.children[2] as HTMLElement; 
-        if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
+        freeScrollRef.current.scrollLeft = 0;
       }
     };
 
     centerCarousels();
     setTimeout(centerCarousels, 150);
     setTimeout(centerCarousels, 400);
-
-    setTimeout(() => {
-      if (freeScrollRef.current) {
-        const el = freeScrollRef.current;
-        const mid = el.children[2] as HTMLElement;
-        const center = mid ? mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2) : 0;
-        el.scrollBy({ left: 30, behavior: 'smooth' });
-        setTimeout(() => el.scrollTo({ left: center, behavior: 'smooth' }), 450);
-      }
-    }, 1000);
   }, []);
 
   return (
