@@ -74,6 +74,7 @@ export function HeroParticles() {
   const raf         = useRef<number>(0);
   const time        = useRef(0);
   const hoverBoost  = useRef(0);   // 0 → 1 smoothly
+  const dims        = useRef({ w: 0, h: 0 }); // cached dimensions — scroll-safe
   const isHovering  = useRef(false);
 
   /* ---- called from HeroSection on logo hover ---- */
@@ -105,6 +106,7 @@ export function HeroParticles() {
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
+      dims.current = { w: rect.width, h: rect.height };
       canvas.width  = rect.width  * dpr;
       canvas.height = rect.height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -114,8 +116,7 @@ export function HeroParticles() {
     window.addEventListener('resize', resize);
 
     const draw = () => {
-      const w = canvas.getBoundingClientRect().width;
-      const h = canvas.getBoundingClientRect().height;
+      const { w, h } = dims.current; // cached — not affected by scroll
       ctx.clearRect(0, 0, w, h);
       time.current += 1;
 

@@ -39,7 +39,7 @@ export function HeroSection() {
   return (
     <section
       ref={heroRef}
-      className="relative flex flex-col items-center justify-center md:min-h-[85vh] pt-10 sm:pt-14 pb-0 px-4 sm:px-6 overflow-hidden"
+      className="relative flex flex-col items-center justify-center min-h-[88vh] md:min-h-[85vh] pt-10 sm:pt-14 pb-0 px-4 sm:px-6 overflow-hidden"
     >
       {/* 3D Dust Particles */}
       <HeroParticles />
