@@ -1,11 +1,12 @@
 import { useEffect, useRef, useCallback } from 'react';
 
 /* ─── Tunables ─── */
-const PARTICLE_COUNT = 80;          // total particles
-const DEPTH_LAYERS   = 3;           // near / mid / far
-const BASE_SPEED     = 0.15;        // px per frame (slowest layer)
+const PARTICLE_COUNT_DESKTOP = 80;
+const PARTICLE_COUNT_MOBILE  = 40;   // lighter on mobile
+const DEPTH_LAYERS   = 3;
+const BASE_SPEED     = 0.15;
 
-/* Warm accent palette — blends with the orange/white theme */
+/* Warm accent palette */
 const COLORS = [
   [255, 160, 60],   // warm orange
   [255, 200, 120],  // soft amber
@@ -17,7 +18,7 @@ const COLORS = [
 interface Particle {
   x: number;
   y: number;
-  z: number;           // 0 = far … 1 = near
+  z: number;
   radius: number;
   baseRadius: number;
   color: number[];
@@ -25,29 +26,28 @@ interface Particle {
   baseAlpha: number;
   vx: number;
   vy: number;
-  drift: number;       // sine-wave amplitude
-  phase: number;       // sine-wave offset
-  pulseSpeed: number;  // gentle glow pulse
+  baseVx: number;
+  baseVy: number;
+  drift: number;
+  phase: number;
+  pulseSpeed: number;
 }
 
 function createParticle(w: number, h: number): Particle {
-  const z     = Math.random();                         // depth
+  const z     = Math.random();
   const layer = Math.floor(z * DEPTH_LAYERS) / DEPTH_LAYERS;
 
-  /* ---- Spawn from left or right edge ---- */
   const fromLeft = Math.random() < 0.5;
   const x = fromLeft
-    ? -10 + Math.random() * w * 0.18          // just off left edge → 18 %
-    : w * 0.82 + Math.random() * w * 0.18 + 10; // 82 % → just off right edge
+    ? -10 + Math.random() * w * 0.18
+    : w * 0.82 + Math.random() * w * 0.18 + 10;
 
   const y = Math.random() * h;
 
-  /* Nearer particles are bigger, brighter, faster */
   const baseRadius = 0.6 + layer * 2.2 + Math.random() * 1.2;
   const baseAlpha  = 0.08 + layer * 0.22 + Math.random() * 0.12;
   const speed      = BASE_SPEED * (0.4 + layer * 1.2);
 
-  /* Inward velocity (toward center) */
   const vx = fromLeft ? speed : -speed;
   const vy = (Math.random() - 0.5) * speed * 0.3;
 
@@ -60,6 +60,8 @@ function createParticle(w: number, h: number): Particle {
     baseAlpha,
     vx,
     vy,
+    baseVx: vx,
+    baseVy: vy,
     drift: 8 + Math.random() * 18,
     phase: Math.random() * Math.PI * 2,
     pulseSpeed: 0.003 + Math.random() * 0.008,
@@ -67,14 +69,28 @@ function createParticle(w: number, h: number): Particle {
 }
 
 export function HeroParticles() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particles = useRef<Particle[]>([]);
-  const raf       = useRef<number>(0);
-  const time      = useRef(0);
+  const canvasRef   = useRef<HTMLCanvasElement>(null);
+  const particles   = useRef<Particle[]>([]);
+  const raf         = useRef<number>(0);
+  const time        = useRef(0);
+  const hoverBoost  = useRef(0);   // 0 → 1 smoothly
+  const isHovering  = useRef(false);
 
-  /* ---- build / reset particle pool ---- */
+  /* ---- called from HeroSection on logo hover ---- */
+  const setHover = useCallback((hovering: boolean) => {
+    isHovering.current = hovering;
+  }, []);
+
+  /* expose setHover on the canvas element via a data attribute ref */
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (el) (el as any).__setHover = setHover;
+  }, [setHover]);
+
   const initParticles = useCallback((w: number, h: number) => {
-    particles.current = Array.from({ length: PARTICLE_COUNT }, () =>
+    const isMobile = w < 768;
+    const count = isMobile ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
+    particles.current = Array.from({ length: count }, () =>
       createParticle(w, h),
     );
   }, []);
@@ -86,7 +102,6 @@ export function HeroParticles() {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    /* ---- hi-DPI sizing ---- */
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
@@ -98,27 +113,31 @@ export function HeroParticles() {
     resize();
     window.addEventListener('resize', resize);
 
-    /* ---- animation loop ---- */
     const draw = () => {
       const w = canvas.getBoundingClientRect().width;
       const h = canvas.getBoundingClientRect().height;
       ctx.clearRect(0, 0, w, h);
       time.current += 1;
 
-      for (const p of particles.current) {
-        /* move */
-        p.x += p.vx;
-        p.y += p.vy + Math.sin(time.current * 0.012 + p.phase) * 0.12;
+      /* smooth ease toward target hover state */
+      const target = isHovering.current ? 1 : 0;
+      hoverBoost.current += (target - hoverBoost.current) * 0.045;
 
-        /* gentle sine drift on Y */
+      const speedMul  = 1 + hoverBoost.current * 3.5;   // up to 4.5× speed
+      const alphaMul  = 1 + hoverBoost.current * 0.6;   // brighter glow
+      const radiusMul = 1 + hoverBoost.current * 0.35;  // slightly larger
+
+      for (const p of particles.current) {
+        /* move with hover-boosted speed */
+        p.x += p.baseVx * speedMul;
+        p.y += p.baseVy * speedMul + Math.sin(time.current * 0.012 + p.phase) * 0.12;
+
         const yOff = Math.sin(time.current * 0.006 + p.phase) * p.drift;
 
-        /* glow pulse */
         const pulse = 0.85 + 0.15 * Math.sin(time.current * p.pulseSpeed + p.phase);
-        const alpha = p.baseAlpha * pulse;
-        const r     = p.baseRadius * (0.9 + 0.1 * pulse);
+        const alpha = p.baseAlpha * pulse * alphaMul;
+        const r     = p.baseRadius * (0.9 + 0.1 * pulse) * radiusMul;
 
-        /* draw glow + core */
         const [cr, cg, cb] = p.color;
         const grd = ctx.createRadialGradient(p.x, p.y + yOff, 0, p.x, p.y + yOff, r * 3);
         grd.addColorStop(0,   `rgba(${cr},${cg},${cb},${alpha})`);
@@ -129,13 +148,11 @@ export function HeroParticles() {
         ctx.fillStyle = grd;
         ctx.fill();
 
-        /* bright core dot */
         ctx.beginPath();
         ctx.arc(p.x, p.y + yOff, r * 0.45, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${cr},${cg},${cb},${Math.min(alpha * 1.8, 0.7)})`;
         ctx.fill();
 
-        /* recycle when it passes center area or goes off-screen */
         if (p.x < -20 || p.x > w + 20 || p.y < -20 || p.y > h + 20) {
           Object.assign(p, createParticle(w, h));
         }
@@ -153,7 +170,7 @@ export function HeroParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none hidden md:block"
+      className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ zIndex: 1 }}
       aria-hidden="true"
     />
