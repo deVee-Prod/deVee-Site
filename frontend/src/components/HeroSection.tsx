@@ -69,13 +69,26 @@ export function HeroSection() {
               className="w-full h-auto mix-blend-screen"
               style={{ maskImage: 'radial-gradient(circle, black 45%, transparent 72%)', WebkitMaskImage: 'radial-gradient(circle, black 45%, transparent 72%)' }}
             />
-            {/* Orange glow aura around image on hover */}
+            {/* Orange glow on LEFT side */}
             <div
-              className="absolute inset-[-18%] rounded-full hidden md:block transition-opacity duration-500 ease-out"
+              className="absolute top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
               style={{
-                background: 'radial-gradient(circle, rgba(234,88,12,0.28) 0%, rgba(234,88,12,0.12) 35%, rgba(234,88,12,0.04) 55%, transparent 72%)',
+                left: '-40%',
+                width: '50%',
+                background: 'radial-gradient(ellipse at 70% 50%, rgba(234,88,12,0.25) 0%, rgba(234,88,12,0.08) 40%, transparent 70%)',
                 opacity: tilt.scale > 1 ? 1 : 0,
-                filter: 'blur(8px)',
+                filter: 'blur(12px)',
+              }}
+            />
+            {/* Orange glow on RIGHT side */}
+            <div
+              className="absolute top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
+              style={{
+                right: '-40%',
+                width: '50%',
+                background: 'radial-gradient(ellipse at 30% 50%, rgba(234,88,12,0.25) 0%, rgba(234,88,12,0.08) 40%, transparent 70%)',
+                opacity: tilt.scale > 1 ? 1 : 0,
+                filter: 'blur(12px)',
               }}
             />
           </div>

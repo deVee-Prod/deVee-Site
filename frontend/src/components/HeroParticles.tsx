@@ -103,20 +103,44 @@ export function HeroParticles() {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    const resize = () => {
+    let prevWidth = 0;
+
+    const applySize = () => {
       const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      dims.current = { w: rect.width, h: rect.height };
-      canvas.width  = rect.width  * dpr;
-      canvas.height = rect.height * dpr;
+      /* Use offsetWidth/Height — immune to scroll position */
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      dims.current = { w, h };
+      canvas.width  = w * dpr;
+      canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      initParticles(rect.width, rect.height);
     };
-    resize();
-    window.addEventListener('resize', resize);
+
+    const fullInit = () => {
+      applySize();
+      initParticles(dims.current.w, dims.current.h);
+      prevWidth = dims.current.w;
+    };
+    fullInit();
+
+    /* ResizeObserver — only reinit particles when WIDTH changes.
+       Height-only changes (mobile address bar) just update the canvas size. */
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const newW = entry.contentRect.width;
+        if (Math.abs(newW - prevWidth) > 2) {
+          /* Real resize (rotation, window drag) */
+          fullInit();
+        } else {
+          /* Height-only change (address bar) — just update dims, keep particles */
+          applySize();
+        }
+      }
+    });
+    ro.observe(canvas);
 
     const draw = () => {
-      const { w, h } = dims.current; // cached — not affected by scroll
+      const { w, h } = dims.current;
       ctx.clearRect(0, 0, w, h);
       time.current += 1;
 
@@ -126,13 +150,12 @@ export function HeroParticles() {
 
       /* On hover: reverse direction (outward) + speed boost */
       const boostAmt  = hoverBoost.current;
-      const speedMul  = 1 + boostAmt * 3.5;              // up to 4.5× speed
-      const dirMul    = 1 - boostAmt * 2;                 // 1 → −1 (reverses)
-      const alphaMul  = 1 + boostAmt * 0.6;              // brighter glow
-      const radiusMul = 1 + boostAmt * 0.35;             // slightly larger
+      const speedMul  = 1 + boostAmt * 3.5;
+      const dirMul    = 1 - boostAmt * 2;
+      const alphaMul  = 1 + boostAmt * 0.6;
+      const radiusMul = 1 + boostAmt * 0.35;
 
       for (const p of particles.current) {
-        /* move — dirMul flips direction on hover so particles fly outward */
         p.x += p.baseVx * speedMul * dirMul;
         p.y += p.baseVy * speedMul + Math.sin(time.current * 0.012 + p.phase) * 0.12;
 
@@ -167,7 +190,7 @@ export function HeroParticles() {
 
     return () => {
       cancelAnimationFrame(raf.current);
-      window.removeEventListener('resize', resize);
+      ro.disconnect();
     };
   }, [initParticles]);
 
