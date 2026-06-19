@@ -139,6 +139,12 @@ html {
     scroll-behavior: smooth;
 }
 
+/* ── Mobile Logo Glow Pulse ── */
+@keyframes mobileGlowPulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
 /* ── Video CoverFlow ── */
 .vcf-scene {
   position: relative;

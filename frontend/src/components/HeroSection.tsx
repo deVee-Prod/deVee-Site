@@ -91,6 +91,15 @@ export function HeroSection() {
                 filter: 'blur(14px)',
               }}
             />
+            {/* Mobile: always-on subtle glow around logo (hidden on desktop) */}
+            <div
+              className="absolute inset-[-12%] rounded-full block md:hidden"
+              style={{
+                background: 'radial-gradient(circle, rgba(234,88,12,0.13) 0%, rgba(234,88,12,0.05) 40%, transparent 65%)',
+                filter: 'blur(10px)',
+                animation: 'mobileGlowPulse 4s ease-in-out infinite',
+              }}
+            />
           </div>
         </div>
 
