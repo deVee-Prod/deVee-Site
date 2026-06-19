@@ -27,10 +27,10 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       href={tool.link}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[82px] md:w-auto snap-start' : 'w-[105px] md:w-auto snap-center'}`}
+      className={`flex-shrink-0 group flex flex-col items-center ${compact ? 'w-[80px] md:w-auto snap-center' : 'w-[105px] md:w-auto snap-center'}`}
     >
       <div
-        className={`${compact ? 'w-14 h-14' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
+        className={`${compact ? 'w-12 h-12' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
           e.currentTarget.style.borderColor = tool.color;
@@ -239,10 +239,11 @@ function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[]
     <div className="relative">
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 gap-4 scroll-smooth"
+        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 scroll-smooth"
         style={{
-          paddingLeft: 'calc(50vw - 40px)',
-          paddingRight: 'calc(50vw - 40px)',
+          gap: compact ? '12px' : '16px',
+          paddingLeft: compact ? 'calc(50vw - 132px)' : 'calc(50vw - 40px)',
+          paddingRight: compact ? 'calc(50vw - 132px)' : 'calc(50vw - 40px)',
           WebkitBackdropFilter: 'brightness(1)',
           backdropFilter: 'brightness(1)',
         }}
