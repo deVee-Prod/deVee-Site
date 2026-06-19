@@ -123,13 +123,16 @@ export function HeroParticles() {
       const target = isHovering.current ? 1 : 0;
       hoverBoost.current += (target - hoverBoost.current) * 0.045;
 
-      const speedMul  = 1 + hoverBoost.current * 3.5;   // up to 4.5× speed
-      const alphaMul  = 1 + hoverBoost.current * 0.6;   // brighter glow
-      const radiusMul = 1 + hoverBoost.current * 0.35;  // slightly larger
+      /* On hover: reverse direction (outward) + speed boost */
+      const boostAmt  = hoverBoost.current;
+      const speedMul  = 1 + boostAmt * 3.5;              // up to 4.5× speed
+      const dirMul    = 1 - boostAmt * 2;                 // 1 → −1 (reverses)
+      const alphaMul  = 1 + boostAmt * 0.6;              // brighter glow
+      const radiusMul = 1 + boostAmt * 0.35;             // slightly larger
 
       for (const p of particles.current) {
-        /* move with hover-boosted speed */
-        p.x += p.baseVx * speedMul;
+        /* move — dirMul flips direction on hover so particles fly outward */
+        p.x += p.baseVx * speedMul * dirMul;
         p.y += p.baseVy * speedMul + Math.sin(time.current * 0.012 + p.phase) * 0.12;
 
         const yOff = Math.sin(time.current * 0.006 + p.phase) * p.drift;
