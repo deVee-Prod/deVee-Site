@@ -107,23 +107,23 @@ export function PluginsSection() {
   const activePlugin = plugins[activeIndex];
 
   return (
-    <section className="py-8 sm:py-12 relative overflow-hidden" id="plugins">
+    <section className="pt-2 pb-12 sm:pt-4 sm:pb-16 relative overflow-hidden" id="plugins">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-8 flex justify-center">
+        <div className="mb-4 flex justify-center">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
-            className="w-full max-w-[400px] md:max-w-[600px] object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)]" 
+            className="w-full max-w-[280px] md:max-w-[450px] object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)]" 
           />
         </div>
 
         {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-6 transform-gpu">
+        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-2 transform-gpu">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';
@@ -177,7 +177,7 @@ export function PluginsSection() {
         </div>
 
         {/* Active Plugin Info & Download */}
-        <div className="flex flex-col items-center text-center mt-2">
+        <div className="flex flex-col items-center text-center mt-0 relative z-20">
           <p className="text-white/40 text-[10px] sm:text-xs max-w-sm leading-relaxed mb-4 px-4">
             Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
           </p>
