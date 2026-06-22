@@ -88,11 +88,11 @@ export function VideoSection() {
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
-        <div className="flex justify-center mb-[-15px] sm:mb-8 mt-2 px-4 sm:px-0 relative z-30">
+        <div className="flex justify-center mb-[-25px] sm:mb-8 mt-2 px-4 sm:px-0 relative z-30">
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
-            className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain ml-[10px] sm:ml-[15px]"
+            className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto ml-[10px] sm:ml-[15px]"
           />
         </div>
 

@@ -118,7 +118,7 @@ export function PluginsSection() {
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
-            className="w-[85%] max-w-[260px] md:max-w-[650px] object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
+            className="w-[85%] max-w-[250px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
           />
         </div>
 
