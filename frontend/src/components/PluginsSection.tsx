@@ -126,16 +126,20 @@ export function PluginsSection() {
           {/* Navigation Controls inside Carousel */}
           <button 
             onClick={handlePrev}
-            className="absolute left-2 sm:left-10 z-20 p-3 sm:p-4 rounded-full bg-gradient-to-r from-orange-600/80 to-orange-400/80 hover:from-orange-500 hover:to-orange-300 border border-orange-300/50 text-white shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_30px_rgba(249,115,22,0.8)] hover:-translate-x-1 transition-all backdrop-blur-md"
+            className="absolute left-0 sm:left-4 md:left-8 z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
           >
-            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-lg" />
+            <svg width="30" height="80" viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_currentColor]">
+              <path d="M25 5 L5 40 L25 75" />
+            </svg>
           </button>
           
           <button 
             onClick={handleNext}
-            className="absolute right-2 sm:right-10 z-20 p-3 sm:p-4 rounded-full bg-gradient-to-l from-orange-600/80 to-orange-400/80 hover:from-orange-500 hover:to-orange-300 border border-orange-300/50 text-white shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_30px_rgba(249,115,22,0.8)] hover:translate-x-1 transition-all backdrop-blur-md"
+            className="absolute right-0 sm:right-4 md:right-8 z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
           >
-            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-lg" />
+            <svg width="30" height="80" viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="drop-shadow-[0_0_10px_currentColor]">
+              <path d="M5 5 L25 40 L5 75" />
+            </svg>
           </button>
         </div>
 
