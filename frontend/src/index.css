@@ -287,20 +287,19 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-card { width: min(220px, 57vw); }
+  .vcf-card { width: min(270px, 72vw); }
   .vcf-track {
-    height: 195px;
-    perspective: 520px;
+    height: 230px;
+    perspective: 500px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-60%) rotateY(28deg) translateZ(-25px); opacity: 0.78; }
-  .vcf-card.vcf-next { transform: translateX(60%) rotateY(-28deg) translateZ(-25px); opacity: 0.78; }
-  .vcf-card.vcf-far-left  { transform: translateX(-110%) rotateY(50deg) translateZ(-80px); opacity: 0.1; }
-  .vcf-card.vcf-far-right { transform: translateX(110%) rotateY(-50deg) translateZ(-80px); opacity: 0.1; }
+  .vcf-card.vcf-prev { transform: translateX(-58%) rotateY(35deg) translateZ(-45px); opacity: 0.85; }
+  .vcf-card.vcf-next { transform: translateX(58%) rotateY(-35deg) translateZ(-45px); opacity: 0.85; }
+  .vcf-card.vcf-far-left  { transform: translateX(-105%) rotateY(55deg) translateZ(-100px); opacity: 0.2; }
+  .vcf-card.vcf-far-right { transform: translateX(105%) rotateY(-55deg) translateZ(-100px); opacity: 0.2; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
-  .vcf-btn-prev { left: 0.3rem; }
-  .vcf-btn-next { right: 0.3rem; }
-  .vcf-nav { width: 28px; height: 28px; }
-
+  .vcf-btn-prev { left: 0.1rem; }
+  .vcf-btn-next { right: 0.1rem; }
+  .vcf-nav { width: 30px; height: 30px; }
 }
 
 /* ── Platform Perspective Row ── */
