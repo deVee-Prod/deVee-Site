@@ -114,7 +114,7 @@ export function PluginsSection() {
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-2 sm:mb-4 flex justify-center mt-[-20px] sm:mt-0">
+        <div className="mb-0 sm:mb-2 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
@@ -123,7 +123,7 @@ export function PluginsSection() {
         </div>
 
         {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-0 sm:mb-2 transform-gpu">
+        <div className="relative w-full max-w-5xl h-[280px] sm:h-[400px] md:h-[480px] flex justify-center items-center perspective-[1200px] mb-0 transform-gpu mt-[-20px] md:mt-0">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';
@@ -177,7 +177,7 @@ export function PluginsSection() {
         </div>
 
         {/* Active Plugin Info & Download */}
-        <div className="flex flex-col items-center text-center mt-0 sm:mt-2 relative z-20">
+        <div className="flex flex-col items-center text-center mt-[-10px] md:mt-0 relative z-20">
           <p className="text-white/40 text-[10px] sm:text-xs max-w-sm leading-relaxed mb-2 px-4">
             Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
           </p>
