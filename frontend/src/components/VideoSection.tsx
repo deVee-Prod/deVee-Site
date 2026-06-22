@@ -133,7 +133,7 @@ export function VideoSection() {
           <div className="vcf-fade-right" aria-hidden="true" />
 
           <button 
-            className="absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
+            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
             aria-label="הקודם" 
             onClick={() => goTo(active - 1)}
           >
@@ -143,7 +143,7 @@ export function VideoSection() {
           </button>
           
           <button 
-            className="absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
+            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
             aria-label="הבא" 
             onClick={() => goTo(active + 1)}
           >
