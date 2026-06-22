@@ -108,8 +108,8 @@ export function PluginsSection() {
 
   return (
     <section className="pt-0 pb-24 relative overflow-hidden" id="plugins">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background glow - fixed safari blur rectangle bug */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-red-500/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none opacity-50 md:opacity-100" />
       
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
