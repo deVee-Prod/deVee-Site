@@ -24,7 +24,7 @@ const utilities = [
 const PremiumCrown = () => (
   <div 
     className="absolute -top-3 -right-2 z-20 pointer-events-none drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]"
-    style={{ animation: 'floatCrown 3s ease-in-out infinite' }}
+    style={{ animation: 'floatCrown 4s ease-in-out infinite' }}
   >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-[18px] h-[18px] md:w-[20px] md:h-[20px]">
       <defs>
@@ -407,8 +407,8 @@ export function UtilitiesSection() {
         .scroll-hint-left { animation: nudge-left 1.8s ease-in-out infinite; }
         .scroll-hint-right { animation: nudge-right 1.8s ease-in-out infinite; animation-delay: 0.9s; }
         @keyframes floatCrown {
-          0%, 100% { transform: translateY(0) rotate(15deg) scale(1); }
-          50% { transform: translateY(-4px) rotate(15deg) scale(1.05); }
+          0%, 100% { transform: translateY(0) rotate(15deg); }
+          50% { transform: translateY(-2px) rotate(15deg); }
         }
       `}} />
     </section>
