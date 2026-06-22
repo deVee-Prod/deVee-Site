@@ -60,11 +60,13 @@ function normalizeOffset(raw: number, total: number): number {
 export function VideoSection() {
   const [active, setActive]               = useState(0);
   const [activePf, setActivePf]           = useState(0);
+  const [playing, setPlaying]             = useState<string | null>(null);
   const touchX   = useRef(0);
   const pfTouchX = useRef(0);
 
   const goTo = useCallback((index: number) => {
     setActive(((index % tracks.length) + tracks.length) % tracks.length);
+    setPlaying(null);
   }, []);
 
   const goToPf = useCallback((index: number) => {
@@ -111,13 +113,33 @@ export function VideoSection() {
                 onClick={() => { if (i !== active) goTo(i); }}
               >
                 {i === active ? (
-                  <iframe
-                    className="vcf-card-iframe"
-                    src={`https://www.youtube.com/embed/${track.videoId}`}
-                    title={track.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+                  playing === track.id ? (
+                    <iframe
+                      className="vcf-card-iframe"
+                      src={`https://www.youtube.com/embed/${track.videoId}?autoplay=1`}
+                      title={track.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div 
+                      className="relative w-full h-full cursor-pointer group"
+                      onClick={() => setPlaying(track.id)}
+                    >
+                      <img
+                        className="vcf-card-thumb group-hover:opacity-90 transition-opacity"
+                        src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
+                        alt={track.title}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-[68px] h-[48px] bg-red-600 rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform duration-300 group-hover:scale-110">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-white ml-1">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  )
                 ) : (
                   <img
                     className="vcf-card-thumb"
