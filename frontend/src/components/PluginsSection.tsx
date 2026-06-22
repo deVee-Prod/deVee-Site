@@ -120,28 +120,21 @@ export function PluginsSection() {
           {/* Navigation Controls inside Carousel */}
           <button 
             onClick={handlePrev}
-            className="absolute left-2 sm:left-10 z-20 p-2 sm:p-3 rounded-full bg-black/40 hover:bg-black/80 border border-white/10 text-white/50 hover:text-white transition-all backdrop-blur-md"
+            className="absolute left-2 sm:left-10 z-20 p-3 sm:p-4 rounded-full bg-gradient-to-r from-orange-600/80 to-orange-400/80 hover:from-orange-500 hover:to-orange-300 border border-orange-300/50 text-white shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_30px_rgba(249,115,22,0.8)] hover:-translate-x-1 transition-all backdrop-blur-md"
           >
-            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+            <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-lg" />
           </button>
           
           <button 
             onClick={handleNext}
-            className="absolute right-2 sm:right-10 z-20 p-2 sm:p-3 rounded-full bg-black/40 hover:bg-black/80 border border-white/10 text-white/50 hover:text-white transition-all backdrop-blur-md"
+            className="absolute right-2 sm:right-10 z-20 p-3 sm:p-4 rounded-full bg-gradient-to-l from-orange-600/80 to-orange-400/80 hover:from-orange-500 hover:to-orange-300 border border-orange-300/50 text-white shadow-[0_0_20px_rgba(249,115,22,0.5)] hover:shadow-[0_0_30px_rgba(249,115,22,0.8)] hover:translate-x-1 transition-all backdrop-blur-md"
           >
-            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+            <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-lg" />
           </button>
         </div>
 
         {/* Active Plugin Info & Download */}
-        <div className="flex flex-col items-center text-center mt-4">
-          <h3 className="text-3xl md:text-5xl font-bold tracking-wider mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">
-            {activePlugin.name}
-          </h3>
-          <p className="text-white/40 text-sm md:text-base uppercase tracking-widest mb-8">
-            {activePlugin.desc}
-          </p>
-
+        <div className="flex flex-col items-center text-center mt-2">
           <button
             onClick={() => handleDownload(activePlugin)}
             className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all duration-300 overflow-hidden"
