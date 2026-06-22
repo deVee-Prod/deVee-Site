@@ -46,8 +46,8 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
         </div>
         
         {isPremium && (
-          <div className="absolute -top-1.5 -right-3 bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold text-[8px] px-[6px] py-[2px] rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none" style={{ transform: 'rotate(10deg)' }}>
-            PRO
+          <div className="absolute -top-1 -right-1 flex items-center justify-center w-[16px] h-[16px] bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none">
+            <span className="text-[10px] leading-none mb-[1px]">★</span>
           </div>
         )}
       </div>
@@ -189,8 +189,8 @@ function SolarSystem() {
                   <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 {isPremium && (
-                  <div className="absolute -top-1.5 -right-3 bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold text-[8px] px-[6px] py-[2px] rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none" style={{ transform: 'rotate(10deg)' }}>
-                    PRO
+                  <div className="absolute -top-1 -right-1 flex items-center justify-center w-[14px] h-[14px] bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none">
+                    <span className="text-[9px] leading-none mb-[1px]">★</span>
                   </div>
                 )}
               </div>
