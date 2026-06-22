@@ -46,10 +46,10 @@ export function PluginsSection() {
   };
 
   const variants = {
-    center: { x: '0%', scale: 1, zIndex: 10, opacity: 1, rotateY: 0, filter: 'brightness(100%)', boxShadow: '0 30px 60px -15px rgba(249, 115, 22, 0.4)' },
-    left: { x: '-65%', scale: 0.8, zIndex: 5, opacity: 0.6, rotateY: 45, filter: 'brightness(30%)', boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)' },
-    right: { x: '65%', scale: 0.8, zIndex: 5, opacity: 0.6, rotateY: -45, filter: 'brightness(30%)', boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)' },
-    back: { x: '0%', scale: 0.5, zIndex: 1, opacity: 0, rotateY: 0, filter: 'brightness(10%)', boxShadow: '0 0px 0px rgba(0,0,0,0)' }
+    center: { x: '0%', scale: 1, z: 50, zIndex: 10, opacity: 1, rotateY: 0, rotateX: 0, filter: 'brightness(100%)', boxShadow: '0 30px 60px -15px rgba(249, 115, 22, 0.5), inset 0 0 0 1px rgba(255,255,255,0.2)' },
+    left: { x: '-60%', scale: 0.75, z: -100, zIndex: 5, opacity: 0.5, rotateY: 55, rotateX: 5, filter: 'brightness(30%)', boxShadow: '20px 20px 40px -10px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.1)' },
+    right: { x: '60%', scale: 0.75, z: -100, zIndex: 5, opacity: 0.5, rotateY: -55, rotateX: 5, filter: 'brightness(30%)', boxShadow: '-20px 20px 40px -10px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255,255,255,0.1)' },
+    back: { x: '0%', scale: 0.4, z: -200, zIndex: 1, opacity: 0, rotateY: 0, rotateX: 0, filter: 'brightness(10%)', boxShadow: '0 0px 0px rgba(0,0,0,0)' }
   };
 
   const handleDownload = async (plugin: typeof plugins[0]) => {
@@ -123,7 +123,7 @@ export function PluginsSection() {
         </div>
 
         {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[800px] mb-12">
+        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-12 transform-gpu">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';
@@ -133,14 +133,18 @@ export function PluginsSection() {
                 variants={variants}
                 initial={false}
                 animate={variant}
+                whileHover={isActive ? { scale: 1.05, rotateX: -2, rotateY: 2, transition: { duration: 0.3 } } : {}}
                 transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-                className="absolute w-[75%] sm:w-[55%] md:w-[45%] max-w-[550px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/20 cursor-pointer"
+                className={`absolute w-[75%] sm:w-[55%] md:w-[45%] max-w-[550px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl cursor-pointer ${isActive ? 'ring-1 ring-orange-500/50' : 'border border-white/10'}`}
                 style={{ 
                   WebkitBoxReflect: 'below 10px linear-gradient(transparent 60%, rgba(255,255,255,0.2))',
                   transformStyle: 'preserve-3d'
                 }}
                 onClick={() => !isActive && setActiveIndex(index)}
               >
+                {/* Side thickness illusion for 3D */}
+                {!isActive && variant === 'left' && <div className="absolute right-0 inset-y-0 w-6 bg-gradient-to-r from-transparent to-black/90 z-20 pointer-events-none" style={{ transform: 'rotateY(90deg)', transformOrigin: 'right' }} />}
+                {!isActive && variant === 'right' && <div className="absolute left-0 inset-y-0 w-6 bg-gradient-to-l from-transparent to-black/90 z-20 pointer-events-none" style={{ transform: 'rotateY(-90deg)', transformOrigin: 'left' }} />}
                 {/* 3D Inner Highlight */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none z-10" />
                 <img 
@@ -176,7 +180,7 @@ export function PluginsSection() {
         <div className="flex flex-col items-center text-center mt-2">
           <button
             onClick={() => handleDownload(activePlugin)}
-            className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all duration-300 overflow-hidden"
+            className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all duration-300 overflow-hidden mb-4"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <Download className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
@@ -184,6 +188,10 @@ export function PluginsSection() {
               {user ? 'Download Now' : 'Sign In To Download'}
             </span>
           </button>
+          
+          <p className="text-white/40 text-xs max-w-sm leading-relaxed">
+            Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
+          </p>
         </div>
 
       </div>
