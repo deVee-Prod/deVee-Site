@@ -118,8 +118,7 @@ export function PluginsSection() {
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
-            className="w-full max-w-[280px] md:max-w-[450px] object-contain transition-all duration-700 hover:-translate-y-2 hover:scale-[1.02]" 
-            style={{ filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.95)) drop-shadow(0 8px 15px rgba(249,115,22,0.6))' }}
+            className="w-full max-w-[280px] md:max-w-[450px] object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)]" 
           />
         </div>
 

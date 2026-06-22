@@ -90,8 +90,7 @@ export function VideoSection() {
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
-            className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain ml-[10px] sm:ml-[15px] transition-all duration-700 hover:-translate-y-2 hover:scale-[1.02]"
-            style={{ filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.95)) drop-shadow(0 8px 15px rgba(249,115,22,0.6))' }}
+            className="w-[90%] sm:w-[95%] md:max-w-[750px] h-auto object-contain ml-[10px] sm:ml-[15px]"
           />
         </div>
 
