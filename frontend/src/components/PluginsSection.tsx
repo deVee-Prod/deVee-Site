@@ -70,8 +70,37 @@ export function PluginsSection() {
         console.error('Authentication error:', error);
       }
     } else {
-      // Future logic: Trigger signed URL download from Supabase bucket
-      alert(`Download started for ${plugin.name} (Mac & Windows versions available soon)`);
+      try {
+        const fileNameMap: Record<string, string> = {
+          'phase': 'deVee_Phase.zip',
+          'hole': 'deVee_Hole.zip',
+          'blend': 'deVee_Blend.zip',
+          'haunt': 'deVee_Haunt.zip'
+        };
+        
+        const fileName = fileNameMap[plugin.id];
+        if (!fileName) return;
+
+        // Request a secure signed URL valid for 60 seconds
+        const { data, error } = await supabase.storage
+          .from('devee-plugins')
+          .createSignedUrl(fileName, 60);
+          
+        if (error) throw error;
+        
+        if (data?.signedUrl) {
+          // Trigger the download
+          const a = document.createElement('a');
+          a.href = data.signedUrl;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      } catch (error) {
+        console.error('Error downloading plugin:', error);
+        alert('There was an issue downloading the plugin. Please make sure your email is verified or contact support.');
+      }
     }
   };
 
