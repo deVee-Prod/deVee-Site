@@ -19,6 +19,30 @@ const utilities = [
 ];
 
 // ─────────────────────────────────────────────
+// Premium Crown Icon
+// ─────────────────────────────────────────────
+const PremiumCrown = () => (
+  <div 
+    className="absolute -top-3 -right-2 z-20 pointer-events-none drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]"
+    style={{ animation: 'floatCrown 3s ease-in-out infinite' }}
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-[18px] h-[18px] md:w-[20px] md:h-[20px]">
+      <defs>
+        <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#fde047" /> {/* yellow-300 */}
+          <stop offset="40%" stopColor="#f59e0b" /> {/* amber-500 */}
+          <stop offset="100%" stopColor="#ea580c" /> {/* orange-600 */}
+        </linearGradient>
+      </defs>
+      <path 
+        d="M2.5 19h19v2h-19v-2zm16.84-14.89l-3.23 8.3-4.11-6.17-4.11 6.17-3.23-8.3c-.22-.57.34-1.07.88-.85l4.8 2.05 1.66-6.66c.14-.58.98-.58 1.12 0l1.66 6.66 4.8-2.05c.54-.22 1.1.28.88.85z" 
+        fill="url(#crownGrad)" 
+      />
+    </svg>
+  </div>
+);
+
+// ─────────────────────────────────────────────
 // Mobile tool icon (unchanged from original)
 // ─────────────────────────────────────────────
 function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof utilities[0], compact?: boolean, isPremium?: boolean }) {
@@ -45,11 +69,7 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
           <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
         </div>
         
-        {isPremium && (
-          <div className="absolute -top-1 -right-1 flex items-center justify-center w-[16px] h-[16px] bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none">
-            <span className="text-[10px] leading-none mb-[1px]">★</span>
-          </div>
-        )}
+        {isPremium && <PremiumCrown />}
       </div>
       <span className={`mt-3 ${compact ? 'text-[6px] tracking-[0.12em]' : 'text-[7px] tracking-[0.2em]'} text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white`}>
         {tool.name}
@@ -188,11 +208,7 @@ function SolarSystem() {
                 <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
                   <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                {isPremium && (
-                  <div className="absolute -top-1 -right-1 flex items-center justify-center w-[14px] h-[14px] bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none">
-                    <span className="text-[9px] leading-none mb-[1px]">★</span>
-                  </div>
-                )}
+                {isPremium && <PremiumCrown />}
               </div>
               <span style={{ marginTop: 6, fontSize: '7px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.9)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', textShadow: `0 0 8px ${tool.color}`, opacity: isHovered ? 1 : 0, transition: 'opacity 0.25s', pointerEvents: 'none' }}>
                 {tool.name}
@@ -390,6 +406,10 @@ export function UtilitiesSection() {
         }
         .scroll-hint-left { animation: nudge-left 1.8s ease-in-out infinite; }
         .scroll-hint-right { animation: nudge-right 1.8s ease-in-out infinite; animation-delay: 0.9s; }
+        @keyframes floatCrown {
+          0%, 100% { transform: translateY(0) rotate(15deg) scale(1); }
+          50% { transform: translateY(-4px) rotate(15deg) scale(1.05); }
+        }
       `}} />
     </section>
   );
