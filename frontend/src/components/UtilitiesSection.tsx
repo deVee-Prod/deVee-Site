@@ -21,7 +21,7 @@ const utilities = [
 // ─────────────────────────────────────────────
 // Mobile tool icon (unchanged from original)
 // ─────────────────────────────────────────────
-function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compact?: boolean }) {
+function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof utilities[0], compact?: boolean, isPremium?: boolean }) {
   return (
     <a
       href={tool.link}
@@ -30,18 +30,26 @@ function ToolIcon({ tool, compact = false }: { tool: typeof utilities[0], compac
       className={`flex-shrink-0 group flex flex-col items-center md:w-auto snap-center`}
       style={compact ? { width: 'calc((100vw - 32px) / 3)' } : { width: '105px' }}
     >
-      <div
-        className={`${compact ? 'w-12 h-12' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
-          e.currentTarget.style.borderColor = tool.color;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = 'none';
-          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-        }}
-      >
-        <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
+      <div className="relative">
+        <div
+          className={`${compact ? 'w-12 h-12' : 'w-16 h-16'} rounded-full overflow-hidden border border-white/10 transition-all duration-500 shadow-2xl`}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = `0 0 25px ${tool.color}`;
+            e.currentTarget.style.borderColor = tool.color;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+        >
+          <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
+        </div>
+        
+        {isPremium && (
+          <div className="absolute -top-1.5 -right-3 bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold text-[8px] px-[6px] py-[2px] rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none" style={{ transform: 'rotate(10deg)' }}>
+            PRO
+          </div>
+        )}
       </div>
       <span className={`mt-3 ${compact ? 'text-[6px] tracking-[0.12em]' : 'text-[7px] tracking-[0.2em]'} text-white/40 font-bold uppercase text-center whitespace-nowrap transition-colors duration-300 group-hover:text-white`}>
         {tool.name}
@@ -176,8 +184,15 @@ function SolarSystem() {
               onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)} onMouseLeave={() => setHoveredTool(null)}
               style={{ position: 'absolute', left: pos.x, top: pos.y, transform: 'translate(-50%, -50%)', zIndex: Math.round(pos.y), opacity, transition: 'opacity 0.2s' }}
               className="group flex flex-col items-center">
-              <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
-                <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div className="relative">
+                <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
+                  <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                {isPremium && (
+                  <div className="absolute -top-1.5 -right-3 bg-gradient-to-tr from-yellow-600 to-yellow-300 text-black font-extrabold text-[8px] px-[6px] py-[2px] rounded-full shadow-[0_0_15px_rgba(234,179,8,0.6)] border border-yellow-100 z-20 pointer-events-none" style={{ transform: 'rotate(10deg)' }}>
+                    PRO
+                  </div>
+                )}
               </div>
               <span style={{ marginTop: 6, fontSize: '7px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.9)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', textShadow: `0 0 8px ${tool.color}`, opacity: isHovered ? 1 : 0, transition: 'opacity 0.25s', pointerEvents: 'none' }}>
                 {tool.name}
@@ -186,9 +201,6 @@ function SolarSystem() {
           );
         })}
 
-        <div style={{ position: 'absolute', top: CY - OUTER_RY - 90, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(234,179,8,0.7)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-          ★ Premium Tools ★
-        </div>
         <div style={{ position: 'absolute', top: CY + OUTER_RY + 80, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           Free Tools
         </div>
@@ -200,7 +212,7 @@ function SolarSystem() {
 // ─────────────────────────────────────────────
 // Mobile Arc Scroll Helper
 // ─────────────────────────────────────────────
-function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[], compact?: boolean, scrollRef: React.RefObject<HTMLDivElement>, invert?: boolean }) {
+function ArcScroll({ tools, compact, scrollRef, invert = false, isPremiumArray = false }: { tools: any[], compact?: boolean, scrollRef: React.RefObject<HTMLDivElement>, invert?: boolean, isPremiumArray?: boolean }) {
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -251,7 +263,7 @@ function ArcScroll({ tools, compact, scrollRef, invert = false }: { tools: any[]
       >
         {tools.map((tool, index) => (
           <div key={index} ref={el => { itemsRef.current[index] = el; }} className="snap-center flex-shrink-0 origin-center">
-            <ToolIcon tool={tool} compact={compact} />
+            <ToolIcon tool={tool} compact={compact} isPremium={isPremiumArray} />
           </div>
         ))}
       </div>
@@ -348,12 +360,7 @@ export function UtilitiesSection() {
 
           {/* Premium Tools */}
           <div className="relative z-10 mb-4">
-            <div className="flex items-center justify-center gap-4 mb-2">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-500/40" />
-              <span className="text-[9px] tracking-[0.35em] font-bold uppercase text-yellow-400/80">★ Premium ★</span>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-500/40" />
-            </div>
-            <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} />
+            <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} isPremiumArray={true} />
           </div>
 
           {/* Free Tools */}
