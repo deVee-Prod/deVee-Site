@@ -132,11 +132,24 @@ export function VideoSection() {
           <div className="vcf-fade-left"  aria-hidden="true" />
           <div className="vcf-fade-right" aria-hidden="true" />
 
-          <button className="vcf-nav vcf-btn-prev" aria-label="הקודם" onClick={() => goTo(active - 1)}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <button 
+            className="absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
+            aria-label="הקודם" 
+            onClick={() => goTo(active - 1)}
+          >
+            <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[20px] h-[60px] sm:w-[30px] sm:h-[80px] drop-shadow-[0_0_10px_currentColor]">
+              <path d="M25 5 L5 40 L25 75" />
+            </svg>
           </button>
-          <button className="vcf-nav vcf-btn-next" aria-label="הבא" onClick={() => goTo(active + 1)}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          
+          <button 
+            className="absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
+            aria-label="הבא" 
+            onClick={() => goTo(active + 1)}
+          >
+            <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[20px] h-[60px] sm:w-[30px] sm:h-[80px] drop-shadow-[0_0_10px_currentColor]">
+              <path d="M5 5 L25 40 L5 75" />
+            </svg>
           </button>
 
           <div className="vcf-dots">
