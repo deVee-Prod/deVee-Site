@@ -287,18 +287,18 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-card { width: min(270px, 72vw); }
+  .vcf-card { width: min(280px, 76vw); }
   .vcf-track {
     height: 230px;
     perspective: 500px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-58%) rotateY(35deg) translateZ(-45px); opacity: 0.85; }
-  .vcf-card.vcf-next { transform: translateX(58%) rotateY(-35deg) translateZ(-45px); opacity: 0.85; }
-  .vcf-card.vcf-far-left  { transform: translateX(-105%) rotateY(55deg) translateZ(-100px); opacity: 0.2; }
-  .vcf-card.vcf-far-right { transform: translateX(105%) rotateY(-55deg) translateZ(-100px); opacity: 0.2; }
+  .vcf-card.vcf-prev { transform: translateX(-42%) rotateY(38deg) translateZ(-45px); opacity: 0.85; }
+  .vcf-card.vcf-next { transform: translateX(42%) rotateY(-38deg) translateZ(-45px); opacity: 0.85; }
+  .vcf-card.vcf-far-left  { transform: translateX(-95%) rotateY(55deg) translateZ(-100px); opacity: 0.1; }
+  .vcf-card.vcf-far-right { transform: translateX(95%) rotateY(-55deg) translateZ(-100px); opacity: 0.1; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
-  .vcf-btn-prev { left: 0.1rem; }
-  .vcf-btn-next { right: 0.1rem; }
+  .vcf-btn-prev { left: 0; }
+  .vcf-btn-next { right: 0; }
   .vcf-nav { width: 30px; height: 30px; }
 }
 

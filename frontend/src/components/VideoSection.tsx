@@ -82,11 +82,11 @@ export function VideoSection() {
   const current = tracks[active];
 
   return (
-    <section className="relative pt-4 sm:pt-6 pb-8 px-4 sm:px-6 z-20">
-      <div className="container mx-auto max-w-6xl">
+    <section className="relative pt-4 sm:pt-6 pb-8 z-20 overflow-hidden">
+      <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 mt-2 px-4 sm:px-0">
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
