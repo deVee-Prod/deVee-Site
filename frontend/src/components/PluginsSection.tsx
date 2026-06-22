@@ -46,10 +46,10 @@ export function PluginsSection() {
   };
 
   const variants = {
-    center: { x: '0%', scale: 1, zIndex: 10, opacity: 1, rotateY: 0, filter: 'brightness(100%)' },
-    left: { x: '-60%', scale: 0.75, zIndex: 5, opacity: 0.6, rotateY: 20, filter: 'brightness(40%)' },
-    right: { x: '60%', scale: 0.75, zIndex: 5, opacity: 0.6, rotateY: -20, filter: 'brightness(40%)' },
-    back: { x: '0%', scale: 0.5, zIndex: 1, opacity: 0, rotateY: 0, filter: 'brightness(20%)' }
+    center: { x: '0%', scale: 1, zIndex: 10, opacity: 1, rotateY: 0, filter: 'brightness(100%)', boxShadow: '0 30px 60px -15px rgba(249, 115, 22, 0.4)' },
+    left: { x: '-65%', scale: 0.8, zIndex: 5, opacity: 0.6, rotateY: 45, filter: 'brightness(30%)', boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)' },
+    right: { x: '65%', scale: 0.8, zIndex: 5, opacity: 0.6, rotateY: -45, filter: 'brightness(30%)', boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)' },
+    back: { x: '0%', scale: 0.5, zIndex: 1, opacity: 0, rotateY: 0, filter: 'brightness(10%)', boxShadow: '0 0px 0px rgba(0,0,0,0)' }
   };
 
   const handleDownload = async (plugin: typeof plugins[0]) => {
@@ -78,14 +78,14 @@ export function PluginsSection() {
   const activePlugin = plugins[activeIndex];
 
   return (
-    <section className="py-20 relative overflow-hidden" id="plugins">
+    <section className="py-24 relative overflow-hidden" id="plugins">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-12 flex justify-center">
+        <div className="mb-16 flex justify-center">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
@@ -94,7 +94,7 @@ export function PluginsSection() {
         </div>
 
         {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[300px] sm:h-[400px] md:h-[500px] flex justify-center items-center perspective-[1200px] mb-8">
+        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[800px] mb-12">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';
@@ -104,10 +104,16 @@ export function PluginsSection() {
                 variants={variants}
                 initial={false}
                 animate={variant}
-                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                className="absolute w-[80%] sm:w-[60%] md:w-[50%] max-w-[600px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/10 cursor-pointer"
+                transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+                className="absolute w-[75%] sm:w-[55%] md:w-[45%] max-w-[550px] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-white/20 cursor-pointer"
+                style={{ 
+                  WebkitBoxReflect: 'below 10px linear-gradient(transparent 60%, rgba(255,255,255,0.2))',
+                  transformStyle: 'preserve-3d'
+                }}
                 onClick={() => !isActive && setActiveIndex(index)}
               >
+                {/* 3D Inner Highlight */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none z-10" />
                 <img 
                   src={plugin.img} 
                   alt={plugin.name} 
