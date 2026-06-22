@@ -92,7 +92,7 @@ export function VideoSection() {
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
-            className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto ml-[10px] sm:ml-[15px]"
+            className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto"
           />
         </div>
 
