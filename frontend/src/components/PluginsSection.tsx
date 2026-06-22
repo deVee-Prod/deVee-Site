@@ -107,14 +107,14 @@ export function PluginsSection() {
   const activePlugin = plugins[activeIndex];
 
   return (
-    <section className="py-24 relative overflow-hidden" id="plugins">
+    <section className="py-8 sm:py-12 relative overflow-hidden" id="plugins">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-16 flex justify-center">
+        <div className="mb-8 flex justify-center">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
@@ -123,7 +123,7 @@ export function PluginsSection() {
         </div>
 
         {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-12 transform-gpu">
+        <div className="relative w-full max-w-5xl h-[350px] sm:h-[450px] md:h-[550px] flex justify-center items-center perspective-[1200px] mb-6 transform-gpu">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';
@@ -178,9 +178,13 @@ export function PluginsSection() {
 
         {/* Active Plugin Info & Download */}
         <div className="flex flex-col items-center text-center mt-2">
+          <p className="text-white/40 text-[10px] sm:text-xs max-w-sm leading-relaxed mb-4 px-4">
+            Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
+          </p>
+
           <button
             onClick={() => handleDownload(activePlugin)}
-            className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all duration-300 overflow-hidden mb-4"
+            className="group relative flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full transition-all duration-300 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <Download className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
@@ -188,10 +192,6 @@ export function PluginsSection() {
               {user ? 'Download Now' : 'Sign In To Download'}
             </span>
           </button>
-          
-          <p className="text-white/40 text-xs max-w-sm leading-relaxed">
-            Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
-          </p>
         </div>
 
       </div>
