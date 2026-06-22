@@ -289,7 +289,12 @@ export function UtilitiesSection() {
         
         {/* Title */}
         <div className="flex flex-col items-center relative z-10">
-          <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="max-w-[250px] md:max-w-[400px] h-auto object-contain" />
+          <img 
+            src="/tools%20for%20artists.png" 
+            alt="Tools for Artists" 
+            className="max-w-[250px] md:max-w-[400px] h-auto object-contain transition-all duration-700 hover:-translate-y-2 hover:scale-[1.02]" 
+            style={{ filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.95)) drop-shadow(0 8px 10px rgba(234,179,8,0.5))' }}
+          />
         </div>
 
         {/* Desktop */}
