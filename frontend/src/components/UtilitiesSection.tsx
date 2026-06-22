@@ -289,7 +289,7 @@ export function UtilitiesSection() {
         
         {/* Title */}
         <div className="flex flex-col items-center relative z-10">
-          <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="max-w-[250px] md:max-w-[400px] h-auto object-contain" />
+          <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="w-full max-w-[300px] md:max-w-[480px] h-auto object-contain" />
         </div>
 
         {/* Desktop */}
