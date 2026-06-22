@@ -312,7 +312,7 @@ export function UtilitiesSection() {
   }, []);
 
   return (
-    <section className="py-12" id="utilities">
+    <section className="pt-0 pb-12 sm:py-12" id="utilities">
       <div className="container mx-auto px-4">
         
         {/* Title */}

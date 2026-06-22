@@ -84,7 +84,7 @@ export function VideoSection() {
   const current = tracks[active];
 
   return (
-    <section className="relative pt-4 sm:pt-6 pb-8 z-20 overflow-hidden">
+    <section className="relative pt-4 sm:pt-6 pb-0 sm:pb-8 z-20 overflow-hidden">
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
