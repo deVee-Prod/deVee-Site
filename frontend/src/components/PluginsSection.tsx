@@ -178,7 +178,7 @@ export function PluginsSection() {
 
         {/* Active Plugin Info & Download */}
         <div className="flex flex-col items-center text-center mt-[-10px] md:mt-0 relative z-20">
-          <p className="text-white/40 text-[10px] sm:text-xs max-w-md text-balance leading-relaxed mb-2 px-4">
+          <p className="text-white/40 text-[10px] sm:text-xs max-w-md text-balance leading-relaxed mb-4 px-4">
             Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
           </p>
 
