@@ -292,8 +292,8 @@ html {
     height: 230px;
     perspective: 500px;
   }
-  .vcf-card.vcf-prev { transform: translateX(-42%) rotateY(38deg) translateZ(-45px); opacity: 0.85; }
-  .vcf-card.vcf-next { transform: translateX(42%) rotateY(-38deg) translateZ(-45px); opacity: 0.85; }
+  .vcf-card.vcf-prev { transform: translateX(-42%) rotateY(38deg) translateZ(-45px); opacity: 0.45; }
+  .vcf-card.vcf-next { transform: translateX(42%) rotateY(-38deg) translateZ(-45px); opacity: 0.45; }
   .vcf-card.vcf-far-left  { transform: translateX(-95%) rotateY(55deg) translateZ(-100px); opacity: 0.1; }
   .vcf-card.vcf-far-right { transform: translateX(95%) rotateY(-55deg) translateZ(-100px); opacity: 0.1; }
   .vcf-fade-left, .vcf-fade-right { display: none; }

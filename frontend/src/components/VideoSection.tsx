@@ -133,7 +133,7 @@ export function VideoSection() {
                       />
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="w-[68px] h-[48px] bg-red-600 rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform duration-300 group-hover:scale-110">
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-white ml-1">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-white">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
