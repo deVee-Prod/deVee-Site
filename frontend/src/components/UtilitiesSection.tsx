@@ -4,18 +4,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD },
-  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD },
-  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD },
+  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD, desc: "Add automated voiceovers and dubbing to your video reels." },
+  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD, desc: "Effortlessly trim, split, and edit your reels to perfection." },
+  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD, desc: "Add dynamic motion effects and animations to your video reels." },
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)" },
-  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)" },
-  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)" },
-  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)" },
-  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)" },
-  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)" },
+  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)", desc: "Build powerful forms and collect user submissions easily." },
+  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)", desc: "Quickly calculate and tap the Beats Per Minute of any track." },
+  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)", desc: "Convert your audio and media files into various formats seamlessly." },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)", desc: "Manipulate, split, merge, or compress your PDF files." },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Spice up your tracks instantly by adjusting pitch and playback speed." },
+  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)", desc: "Ensure your tracks are perfectly prepared and ready for distribution." },
 ];
 
 // ─────────────────────────────────────────────
@@ -83,6 +83,7 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
 // ─────────────────────────────────────────────
 function SolarSystem() {
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
+  const [selectedTool, setSelectedTool] = useState<typeof premiumTools[0] | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
@@ -121,7 +122,7 @@ function SolarSystem() {
       const delta = time - lastTimeRef.current;
       lastTimeRef.current = time;
 
-      if (!paused && !hoveredTool) {
+      if (!paused && !hoveredTool && !selectedTool) {
         const step = SPEED * delta;
         setOuterAngles(prev => prev.map(a => (a + step) % 360));
         setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360));
@@ -134,7 +135,7 @@ function SolarSystem() {
       cancelAnimationFrame(animRef.current);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [hoveredTool]);
+  }, [hoveredTool, selectedTool, SPEED]);
 
   const toXY = (angleDeg: number, rx: number, ry: number) => {
     const rad = (angleDeg * Math.PI) / 180;
@@ -156,7 +157,7 @@ function SolarSystem() {
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? (isMobile ? 42 : 58) : (isMobile ? 36 : 50);
+    const base = orbit === 'outer' ? (isMobile ? 32 : 58) : (isMobile ? 28 : 50);
     const amplitude = isMobile ? 0 : 7;
     return base + sinVal * amplitude;
   };
@@ -209,9 +210,10 @@ function SolarSystem() {
           const sinVal = Math.sin((angle * Math.PI) / 180);
           const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
           return (
-            <a key={`${orbit}-${i}`} href={tool.link} target="_blank" rel="noopener noreferrer"
+            <div key={`${orbit}-${i}`} 
+              onClick={() => setSelectedTool(tool)}
               onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)} onMouseLeave={() => setHoveredTool(null)}
-              style={{ position: 'absolute', left: pos.x, top: pos.y, transform: 'translate(-50%, -50%)', zIndex: Math.round(pos.y), opacity, transition: 'opacity 0.2s' }}
+              style={{ position: 'absolute', left: pos.x, top: pos.y, transform: 'translate(-50%, -50%)', zIndex: Math.round(pos.y), opacity, transition: 'opacity 0.2s', cursor: 'pointer' }}
               className="group flex flex-col items-center">
               <div className="relative">
                 <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
@@ -219,16 +221,33 @@ function SolarSystem() {
                 </div>
                 {isPremium && <PremiumCrown />}
               </div>
-              <span style={{ marginTop: 6, fontSize: '7px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.9)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', textShadow: `0 0 8px ${tool.color}`, opacity: isHovered ? 1 : 0, transition: 'opacity 0.25s', pointerEvents: 'none' }}>
-                {tool.name}
-              </span>
-            </a>
+            </div>
           );
         })}
 
-        <div style={{ position: 'absolute', top: CY + OUTER_RY + (isMobile ? 35 : 80), left: '50%', transform: 'translateX(-50%)', fontSize: isMobile ? 8 : 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', top: CY + OUTER_RY + (isMobile ? 45 : 80), left: '50%', transform: 'translateX(-50%)', fontSize: isMobile ? 7 : 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           Free Tools
         </div>
+
+        {selectedTool && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
+            <div className="bg-[#111] border border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+              <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+              <div className="w-20 h-20 rounded-full overflow-hidden border border-white/10 mb-5 shadow-lg" style={{ boxShadow: `0 0 25px ${selectedTool.color}` }}>
+                <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
+              </div>
+              <h3 className="text-xl font-bold text-white tracking-widest uppercase mb-3">{selectedTool.name}</h3>
+              <p className="text-white/60 text-sm mb-8 leading-relaxed">
+                {selectedTool.desc}
+              </p>
+              <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-xl font-bold uppercase tracking-widest text-[11px] text-black bg-white hover:bg-gray-200 transition-colors shadow-lg">
+                Open Tool
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
