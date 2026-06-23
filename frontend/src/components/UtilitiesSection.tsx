@@ -290,6 +290,89 @@ function ArcScroll({ tools, compact, scrollRef, invert = false, isPremiumArray =
 // ─────────────────────────────────────────────
 // Main section
 // ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// Mobile Bubbles (Apple Watch Style)
+// ─────────────────────────────────────────────
+function MobileBubbles() {
+  const allTools = [
+    ...premiumTools.map(t => ({ ...t, isPremium: true })),
+    ...utilities.map(t => ({ ...t, isPremium: false }))
+  ];
+
+  const positions = [
+    { x: 0, y: 0 },
+    { x: 88, y: 0 },
+    { x: -88, y: 0 },
+    { x: 44, y: 76 },
+    { x: -44, y: 76 },
+    { x: 44, y: -76 },
+    { x: -44, y: -76 },
+    { x: 0, y: -152 },
+    { x: 0, y: 152 },
+  ];
+
+  return (
+    <div className="md:hidden relative h-[420px] w-full overflow-hidden mt-[-20px]">
+      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
+        <div className="w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-[80px]" />
+      </div>
+
+      <motion.div 
+        className="absolute w-[800px] h-[800px] left-1/2 top-1/2 -ml-[400px] -mt-[400px] z-10 cursor-grab active:cursor-grabbing"
+        drag
+        dragConstraints={{ top: -80, bottom: 80, left: -60, right: 60 }}
+        dragElastic={0.15}
+      >
+        <div className="relative w-full h-full flex items-center justify-center">
+          {allTools.map((tool, i) => {
+            const pos = positions[i] || { x: 0, y: 0 };
+            return (
+              <div 
+                key={tool.name}
+                className="absolute"
+                style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
+              >
+                <motion.div
+                  className="relative flex items-center justify-center w-[78px] h-[78px] rounded-full"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{
+                    y: {
+                      repeat: Infinity,
+                      duration: 3 + (i % 3),
+                      ease: "easeInOut",
+                    }
+                  }}
+                  onClick={() => window.open(tool.link, '_blank')}
+                >
+                  <div 
+                    className="w-full h-full rounded-full overflow-hidden border border-white/10 shadow-2xl relative bg-black/50"
+                    style={{ boxShadow: `0 0 15px ${tool.color}50` }}
+                  >
+                    <img src={tool.img} alt={tool.name} className="w-full h-full object-cover pointer-events-none" draggable={false} />
+                  </div>
+                  {tool.isPremium && <PremiumCrown />}
+                  
+                  {/* Tool Name - Faded and tiny below */}
+                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[7px] font-bold text-white/40 uppercase tracking-[0.2em] pointer-events-none drop-shadow-md">
+                    {tool.name}
+                  </div>
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
+      </motion.div>
+      
+      <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center justify-center gap-1 z-20 pointer-events-none drop-shadow-lg">
+        <span className="text-[10px] tracking-[0.3em] text-white/50 uppercase font-bold">Drag to explore</span>
+        <div className="w-12 h-[2px] bg-white/20 mt-1 rounded-full" />
+      </div>
+    </div>
+  );
+}
+
 export function UtilitiesSection() {
   const premiumScrollRef = useRef<HTMLDivElement>(null);
   const freeScrollRef = useRef<HTMLDivElement>(null);
@@ -326,71 +409,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden relative min-h-[520px] flex flex-col justify-center gap-4 -mt-12 sm:-mt-4 overflow-x-hidden">
-          
-          <div className="absolute left-1/2 top-[47%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-            <svg width="800" height="400" viewBox="0 0 800 400">
-              <defs>
-                <filter id="mobileStarGlow" x="-100%" y="-100%" width="300%" height="300%">
-                  <feGaussianBlur stdDeviation="15" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <radialGradient id="mobileSunGradient">
-                  <stop offset="0%" stopColor="#fff" />
-                  <stop offset="30%" stopColor="#f97316" />
-                  <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
-                </radialGradient>
-                <linearGradient id="mobOrbitOuter" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-                  <stop offset="20%" stopColor="rgba(234,179,8,0)" />
-                  <stop offset="40%" stopColor="rgba(234,179,8,0.08)" />
-                  <stop offset="50%" stopColor="rgba(234,179,8,0.12)" />
-                  <stop offset="60%" stopColor="rgba(234,179,8,0.08)" />
-                  <stop offset="80%" stopColor="rgba(234,179,8,0)" />
-                  <stop offset="100%" stopColor="rgba(234,179,8,0)" />
-                </linearGradient>
-
-                <linearGradient id="mobOrbitInner" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-                  <stop offset="15%" stopColor="rgba(255,255,255,0)" />
-                  <stop offset="35%" stopColor="rgba(255,255,255,0.04)" />
-                  <stop offset="50%" stopColor="rgba(255,255,255,0.08)" />
-                  <stop offset="65%" stopColor="rgba(255,255,255,0.04)" />
-                  <stop offset="85%" stopColor="rgba(255,255,255,0)" />
-                  <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-                </linearGradient>
-              </defs>
-
-              <ellipse cx="400" cy="200" rx="260" ry="110" fill="none" stroke="url(#mobOrbitOuter)" strokeWidth="1" />
-              <ellipse cx="400" cy="200" rx="190" ry="60" fill="none" stroke="url(#mobOrbitInner)" strokeWidth="1" />
-
-              <g filter="url(#mobileStarGlow)">
-                <circle cx="400" cy="200" r="50" fill="rgba(249, 115, 22, 0.12)">
-                  <animate attributeName="r" values="45;55;45" dur="3s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="400" cy="200" r="15" fill="url(#mobileSunGradient)" />
-              </g>
-            </svg>
-          </div>
-
-          {/* Premium Tools */}
-          <div className="relative z-10 mb-4">
-            <ArcScroll tools={premiumTools} scrollRef={premiumScrollRef} invert={false} isPremiumArray={true} />
-          </div>
-
-          {/* Free Tools */}
-          <div className="relative z-10 mt-12">
-            <ArcScroll tools={utilities} compact={true} scrollRef={freeScrollRef} invert={true} />
-            
-            {/* Scroll Hint (הכותרת מתחתיו הוסרה לחלוטין) */}
-            <div className="flex items-center justify-center gap-3 mt-1 mb-3">
-              <ChevronLeft className="w-3 h-3 text-white/20 scroll-hint-left" />
-              <span className="text-[8px] tracking-[0.35em] text-white/20 uppercase font-bold">Scroll</span>
-              <ChevronRight className="w-3 h-3 text-white/20 scroll-hint-right" />
-            </div>
-          </div>
-        </div>
+        <MobileBubbles />
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
