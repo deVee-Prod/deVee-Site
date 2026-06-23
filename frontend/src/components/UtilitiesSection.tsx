@@ -157,7 +157,8 @@ function SolarSystem() {
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
     const base = orbit === 'outer' ? (isMobile ? 42 : 58) : (isMobile ? 36 : 50);
-    return base + sinVal * (isMobile ? 4 : 7);
+    const amplitude = isMobile ? 0 : 7;
+    return base + sinVal * amplitude;
   };
 
   return (
@@ -244,7 +245,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Unified Solar System for Desktop and Mobile */}
-        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:mt-0">
+        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16">
           <SolarSystem />
         </div>
 
