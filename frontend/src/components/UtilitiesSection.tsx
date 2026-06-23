@@ -4,18 +4,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD, desc: "Add automated voiceovers and dubbing to your video reels." },
-  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD, desc: "Effortlessly trim, split, and edit your reels to perfection." },
-  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD, desc: "Add dynamic motion effects and animations to your video reels." },
+  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD, desc: "Automatically generate subtitles for your video." },
+  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD, desc: "The ultimate video editor: cut and create subtitles." },
+  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD, desc: "Add dynamic zoom in and zoom out effects to your video." },
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)", desc: "Build powerful forms and collect user submissions easily." },
-  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)", desc: "Quickly calculate and tap the Beats Per Minute of any track." },
-  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)", desc: "Convert your audio and media files into various formats seamlessly." },
-  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)", desc: "Manipulate, split, merge, or compress your PDF files." },
-  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Spice up your tracks instantly by adjusting pitch and playback speed." },
-  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)", desc: "Ensure your tracks are perfectly prepared and ready for distribution." },
+  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)", desc: "Easily generate info files to send new songs to record labels." },
+  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)", desc: "Calculate the exact BPM for any song you input." },
+  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)", desc: "Convert files easily: PNG to PDF, WAV to MP3, and much more." },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Create a fast-paced (sped up) version of any chosen song." },
+  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)", desc: "Crop your artwork exactly to 3000x3000 to fit distribution platforms perfectly." },
 ];
 
 // ─────────────────────────────────────────────
