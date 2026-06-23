@@ -239,12 +239,12 @@ export function UtilitiesSection() {
       <div className="container mx-auto px-4">
         
         {/* Title */}
-        <div className="flex flex-col items-center relative z-10 mb-8 sm:mb-0">
+        <div className="flex flex-col items-center relative z-10 mb-0 sm:mb-0">
           <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 
         {/* Unified Solar System for Desktop and Mobile */}
-        <div className="flex flex-col items-center justify-center overflow-hidden -mx-4 sm:mx-0">
+        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:mt-0">
           <SolarSystem />
         </div>
 
