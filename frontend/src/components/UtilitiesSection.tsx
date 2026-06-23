@@ -84,16 +84,24 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
 // ─────────────────────────────────────────────
 function SolarSystem() {
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
-  const OUTER_RX = 720;
-  const OUTER_RY = 200;
-  const INNER_RX = 450;
-  const INNER_RY = 120;
-  const SPEED = 0.018;
-  const W = 1600;
-  const H = 650;
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const OUTER_RX = isMobile ? 160 : 720;
+  const OUTER_RY = isMobile ? 60 : 200;
+  const INNER_RX = isMobile ? 100 : 450;
+  const INNER_RY = isMobile ? 35 : 120;
+  const SPEED = isMobile ? 0.03 : 0.018;
+  const W = isMobile ? 390 : 1600;
+  const H = isMobile ? 300 : 650;
   const CX = W / 2;
   const CY = H / 2;
 
@@ -149,8 +157,8 @@ function SolarSystem() {
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? 58 : 50;
-    return base + sinVal * 7;
+    const base = orbit === 'outer' ? (isMobile ? 42 : 58) : (isMobile ? 36 : 50);
+    return base + sinVal * (isMobile ? 4 : 7);
   };
 
   return (
@@ -181,16 +189,16 @@ function SolarSystem() {
             </radialGradient>
           </defs>
           <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX + 2} ry={OUTER_RY + 1} fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX + (isMobile ? 1 : 2)} ry={OUTER_RY + 1} fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
           <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
-          <circle cx={CX} cy={CY} r="48" fill="rgba(234,179,8,0.06)" />
-          <circle cx={CX} cy={CY} r="24" fill="rgba(234,179,8,0.13)" />
+          <circle cx={CX} cy={CY} r={isMobile ? 24 : 48} fill="rgba(234,179,8,0.06)" />
+          <circle cx={CX} cy={CY} r={isMobile ? 12 : 24} fill="rgba(234,179,8,0.13)" />
           <g filter="url(#starGlow)">
-            <circle cx={CX} cy={CY} r="35" fill="rgba(249, 115, 22, 0.15)">
-              <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
+            <circle cx={CX} cy={CY} r={isMobile ? 18 : 35} fill="rgba(249, 115, 22, 0.15)">
+              <animate attributeName="r" values={isMobile ? "15;20;15" : "32;38;32"} dur="3s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
             </circle>
-            <circle cx={CX} cy={CY} r="12" fill="url(#sunGradientOrange)" />
+            <circle cx={CX} cy={CY} r={isMobile ? 8 : 12} fill="url(#sunGradientOrange)" />
           </g>
         </svg>
 
@@ -218,7 +226,7 @@ function SolarSystem() {
           );
         })}
 
-        <div style={{ position: 'absolute', top: CY + OUTER_RY + 80, left: '50%', transform: 'translateX(-50%)', fontSize: 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', top: CY + OUTER_RY + (isMobile ? 35 : 80), left: '50%', transform: 'translateX(-50%)', fontSize: isMobile ? 8 : 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
           Free Tools
         </div>
       </div>
@@ -226,186 +234,18 @@ function SolarSystem() {
   );
 }
 
-// ─────────────────────────────────────────────
-// Mobile Arc Scroll Helper
-// ─────────────────────────────────────────────
-function ArcScroll({ tools, compact, scrollRef, invert = false, isPremiumArray = false }: { tools: any[], compact?: boolean, scrollRef: React.RefObject<HTMLDivElement>, invert?: boolean, isPremiumArray?: boolean }) {
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const updateArc = () => {
-      if (!scrollRef || !scrollRef.current) return;
-      const container = scrollRef.current;
-      const containerCenter = container.scrollLeft + container.clientWidth / 2;
-
-      itemsRef.current.forEach((item) => {
-        if (!item) return;
-        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-        const dist = Math.abs(containerCenter - itemCenter);
-        const maxDist = container.clientWidth / 1.5; 
-        const ratio = Math.min(dist / maxDist, 1);
-
-        const intensity = invert ? 45 : -45;
-        const translateY = Math.pow(ratio, 2) * intensity; 
-        const scale = 1 - (ratio * 0.25);
-
-        item.style.transform = `translateY(${translateY}px) scale(${scale})`;
-      });
-    };
-
-    const container = scrollRef.current;
-    if (container) {
-      container.addEventListener('scroll', updateArc);
-      setTimeout(updateArc, 100);
-      window.addEventListener('resize', updateArc);
-      return () => {
-        container.removeEventListener('scroll', updateArc);
-        window.removeEventListener('resize', updateArc);
-      };
-    }
-  }, [scrollRef, invert]);
-
-  return (
-    <div className="relative">
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-12 pt-12 scroll-smooth"
-        style={{
-          gap: compact ? '0px' : '16px',
-          paddingLeft: compact ? '0px' : 'calc(50vw - 40px)',
-          paddingRight: compact ? '0px' : 'calc(50vw - 40px)',
-          WebkitBackdropFilter: 'brightness(1)',
-          backdropFilter: 'brightness(1)',
-        }}
-      >
-        {tools.map((tool, index) => (
-          <div key={index} ref={el => { itemsRef.current[index] = el; }} className="snap-center flex-shrink-0 origin-center">
-            <ToolIcon tool={tool} compact={compact} isPremium={isPremiumArray} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────
-// Main section
-// ─────────────────────────────────────────────
-// ─────────────────────────────────────────────
-// Mobile Bubbles (Apple Watch Style)
-// ─────────────────────────────────────────────
-function MobileBubbles() {
-  const allTools = [
-    ...premiumTools.map(t => ({ ...t, isPremium: true })),
-    ...utilities.map(t => ({ ...t, isPremium: false }))
-  ];
-
-  const positions = [
-    { x: 0, y: 0 },
-    { x: 88, y: 0 },
-    { x: -88, y: 0 },
-    { x: 44, y: 76 },
-    { x: -44, y: 76 },
-    { x: 44, y: -76 },
-    { x: -44, y: -76 },
-    { x: 0, y: -152 },
-    { x: 0, y: 152 },
-  ];
-
-  return (
-    <div className="md:hidden relative h-[420px] w-full overflow-hidden mt-[-20px]">
-      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
-        <div className="w-[300px] h-[300px] bg-orange-500/10 rounded-full blur-[80px]" />
-      </div>
-
-      <motion.div 
-        className="absolute w-[800px] h-[800px] left-1/2 top-1/2 -ml-[400px] -mt-[400px] z-10 cursor-grab active:cursor-grabbing"
-        drag
-        dragConstraints={{ top: -80, bottom: 80, left: -60, right: 60 }}
-        dragElastic={0.15}
-      >
-        <div className="relative w-full h-full flex items-center justify-center">
-          {allTools.map((tool, i) => {
-            const pos = positions[i] || { x: 0, y: 0 };
-            return (
-              <div 
-                key={tool.name}
-                className="absolute"
-                style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
-              >
-                <motion.div
-                  className="relative flex items-center justify-center w-[78px] h-[78px] rounded-full"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{
-                    y: {
-                      repeat: Infinity,
-                      duration: 3 + (i % 3),
-                      ease: "easeInOut",
-                    }
-                  }}
-                  onClick={() => window.open(tool.link, '_blank')}
-                >
-                  <div 
-                    className="w-full h-full rounded-full overflow-hidden border border-white/10 shadow-2xl relative bg-black/50"
-                    style={{ boxShadow: `0 0 15px ${tool.color}50` }}
-                  >
-                    <img src={tool.img} alt={tool.name} className="w-full h-full object-cover pointer-events-none" draggable={false} />
-                  </div>
-                  {tool.isPremium && <PremiumCrown />}
-                  
-                  {/* Tool Name - Faded and tiny below */}
-                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[7px] font-bold text-white/40 uppercase tracking-[0.2em] pointer-events-none drop-shadow-md">
-                    {tool.name}
-                  </div>
-                </motion.div>
-              </div>
-            );
-          })}
-        </div>
-      </motion.div>
-      
-      <div className="absolute bottom-4 left-0 right-0 flex flex-col items-center justify-center gap-1 z-20 pointer-events-none drop-shadow-lg">
-        <span className="text-[10px] tracking-[0.3em] text-white/50 uppercase font-bold">Drag to explore</span>
-        <div className="w-12 h-[2px] bg-white/20 mt-1 rounded-full" />
-      </div>
-    </div>
-  );
-}
-
 export function UtilitiesSection() {
-  const premiumScrollRef = useRef<HTMLDivElement>(null);
-  const freeScrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const centerCarousels = () => {
-      if (premiumScrollRef.current) {
-        const el = premiumScrollRef.current;
-        const mid = el.children[1] as HTMLElement; 
-        if (mid) el.scrollLeft = mid.offsetLeft + (mid.offsetWidth / 2) - (el.clientWidth / 2);
-      }
-      if (freeScrollRef.current) {
-        freeScrollRef.current.scrollLeft = 0;
-      }
-    };
-
-    centerCarousels();
-    setTimeout(centerCarousels, 150);
-    setTimeout(centerCarousels, 400);
-  }, []);
-
   return (
     <section className="pt-0 pb-12 sm:py-12" id="utilities">
       <div className="container mx-auto px-4">
         
         {/* Title */}
-        <div className="flex flex-col items-center relative z-10">
+        <div className="flex flex-col items-center relative z-10 mb-8 sm:mb-0">
           <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 
-        {/* Desktop */}
-        <div className="hidden md:flex flex-col items-center justify-center">
+        {/* Unified Solar System for Desktop and Mobile */}
+        <div className="flex flex-col items-center justify-center overflow-hidden -mx-4 sm:mx-0">
           <SolarSystem />
         </div>
 
