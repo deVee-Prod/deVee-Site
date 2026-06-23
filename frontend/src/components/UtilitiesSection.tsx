@@ -229,26 +229,28 @@ function SolarSystem() {
           Free Tools
         </div>
 
-        {selectedTool && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
-            <div className="bg-[#111] border border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
-              <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </button>
-              <div className="w-20 h-20 rounded-full overflow-hidden border border-white/10 mb-5 shadow-lg" style={{ boxShadow: `0 0 25px ${selectedTool.color}` }}>
-                <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
-              </div>
-              <h3 className="text-xl font-bold text-white tracking-widest uppercase mb-3">{selectedTool.name}</h3>
-              <p className="text-white/60 text-sm mb-8 leading-relaxed">
-                {selectedTool.desc}
-              </p>
-              <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-xl font-bold uppercase tracking-widest text-[11px] text-black bg-white hover:bg-gray-200 transition-colors shadow-lg">
-                Open Tool
-              </a>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Modal moved outside the transform div so fixed positioning works relative to the viewport */}
+      {selectedTool && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/70 backdrop-blur-md" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
+          <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-[320px] md:max-w-[380px] w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setSelectedTool(null)} className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-white/10 mb-6 shadow-lg" style={{ boxShadow: `0 0 35px ${selectedTool.color.replace('0.85', '0.4')}` }}>
+              <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-black text-white tracking-widest uppercase mb-3 drop-shadow-md">{selectedTool.name}</h3>
+            <p className="text-white/50 text-sm md:text-base font-medium mb-8 leading-relaxed px-2">
+              {selectedTool.desc}
+            </p>
+            <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-2xl font-bold uppercase tracking-[0.25em] text-[12px] md:text-[13px] text-black bg-white hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              Get in!
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
