@@ -248,8 +248,6 @@ export function UtilitiesSection() {
           <SolarSystem />
         </div>
 
-        {/* Mobile */}
-        <MobileBubbles />
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
