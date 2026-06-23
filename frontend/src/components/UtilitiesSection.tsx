@@ -233,40 +233,21 @@ function SolarSystem() {
 
       {/* Modal moved outside the transform div so fixed positioning works relative to the viewport */}
       {selectedTool && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/80 backdrop-blur-sm" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
-          <div className="bg-[#0f0f11] border border-white/10 rounded-[32px] overflow-hidden max-w-[340px] md:max-w-[400px] w-full shadow-2xl relative flex flex-col animate-in fade-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
-            <div className="absolute top-0 left-0 right-0 h-40 opacity-20 pointer-events-none" style={{ background: `linear-gradient(to bottom, ${selectedTool.color}, transparent)` }} />
-            
-            <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 z-20 text-white/50 hover:text-white bg-black/20 hover:bg-black/50 rounded-full p-2 backdrop-blur-md transition-all">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/70 backdrop-blur-md" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
+          <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-[320px] md:max-w-[380px] w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setSelectedTool(null)} className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
-            
-            <div className="px-8 pt-10 pb-8 flex flex-col relative z-10">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-[20px] overflow-hidden border border-white/10 mb-6 shadow-xl relative self-start bg-[#1a1a1a]" style={{ boxShadow: `0 15px 35px ${selectedTool.color.replace('0.85', '0.25')}` }}>
-                <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
-              </div>
-              
-              <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-3 leading-[1.1]" style={{ textShadow: `0 4px 20px ${selectedTool.color.replace('0.85', '0.4')}` }}>
-                {selectedTool.name.split(' ').map((word, i) => (
-                  <React.Fragment key={i}>
-                    <span className={i === 1 ? "text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-white/40" : ""}>{word}</span>
-                    {i === 0 && <br />}
-                  </React.Fragment>
-                ))}
-              </h3>
-              
-              <div className="w-10 h-1 rounded-full mb-6" style={{ backgroundColor: selectedTool.color }} />
-              
-              <p className="text-white/60 text-[15px] md:text-base font-medium mb-10 leading-relaxed">
-                {selectedTool.desc}
-              </p>
-              
-              <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="group relative flex items-center justify-center w-full py-4 px-6 rounded-[18px] font-bold uppercase tracking-[0.2em] text-[13px] md:text-[14px] text-white transition-all overflow-hidden" style={{ backgroundColor: '#18181b', border: `1px solid ${selectedTool.color.replace('0.85', '0.5')}` }}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300" style={{ backgroundColor: selectedTool.color }} />
-                <span className="relative z-10 mr-3">Get In!</span>
-                <svg className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
+            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-white/10 mb-6 shadow-lg" style={{ boxShadow: `0 0 35px ${selectedTool.color.replace('0.85', '0.4')}` }}>
+              <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
             </div>
+            <h3 className="text-2xl md:text-3xl font-black text-white tracking-widest uppercase mb-3 drop-shadow-md">{selectedTool.name}</h3>
+            <p className="text-white/50 text-sm md:text-base font-medium mb-8 leading-relaxed px-2">
+              {selectedTool.desc}
+            </p>
+            <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-2xl font-bold uppercase tracking-[0.25em] text-[12px] md:text-[13px] text-black bg-white hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              Get in!
+            </a>
           </div>
         </div>
       )}
