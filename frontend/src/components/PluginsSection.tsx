@@ -74,8 +74,8 @@ export function PluginsSection() {
         const fileNameMap: Record<string, string> = {
           'phase': 'deVee_Phase.zip',
           'hole': 'deVee_Hole.zip',
-          'blend': 'deVee_Blend.zip',
-          'haunt': 'deVee_Haunt.zip'
+          'blend': 'deVee_Haunt.zip',
+          'haunt': 'deVee_Blend.zip'
         };
         
         const fileName = fileNameMap[plugin.id];
