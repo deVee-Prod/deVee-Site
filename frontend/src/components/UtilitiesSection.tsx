@@ -95,13 +95,13 @@ function SolarSystem() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const OUTER_RX = isMobile ? 160 : 720;
-  const OUTER_RY = isMobile ? 60 : 200;
-  const INNER_RX = isMobile ? 100 : 450;
-  const INNER_RY = isMobile ? 35 : 120;
-  const SPEED = isMobile ? 0.03 : 0.018;
-  const W = isMobile ? 390 : 1600;
-  const H = isMobile ? 300 : 650;
+  const OUTER_RX = isMobile ? 260 : 720;
+  const OUTER_RY = isMobile ? 110 : 200;
+  const INNER_RX = isMobile ? 160 : 450;
+  const INNER_RY = isMobile ? 65 : 120;
+  const SPEED = isMobile ? 0.035 : 0.018;
+  const W = isMobile ? 600 : 1600;
+  const H = isMobile ? 450 : 650;
   const CX = W / 2;
   const CY = H / 2;
 
@@ -157,8 +157,8 @@ function SolarSystem() {
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? (isMobile ? 32 : 58) : (isMobile ? 28 : 50);
-    const amplitude = isMobile ? 0 : 7;
+    const base = orbit === 'outer' ? (isMobile ? 55 : 58) : (isMobile ? 45 : 50);
+    const amplitude = isMobile ? 5 : 7;
     return base + sinVal * amplitude;
   };
 
@@ -192,14 +192,14 @@ function SolarSystem() {
           <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
           <ellipse cx={CX} cy={CY} rx={OUTER_RX + (isMobile ? 1 : 2)} ry={OUTER_RY + 1} fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
           <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
-          <circle cx={CX} cy={CY} r={isMobile ? 24 : 48} fill="rgba(234,179,8,0.06)" />
-          <circle cx={CX} cy={CY} r={isMobile ? 12 : 24} fill="rgba(234,179,8,0.13)" />
+          <circle cx={CX} cy={CY} r={isMobile ? 36 : 48} fill="rgba(234,179,8,0.06)" />
+          <circle cx={CX} cy={CY} r={isMobile ? 18 : 24} fill="rgba(234,179,8,0.13)" />
           <g filter="url(#starGlow)">
-            <circle cx={CX} cy={CY} r={isMobile ? 18 : 35} fill="rgba(249, 115, 22, 0.15)">
-              <animate attributeName="r" values={isMobile ? "15;20;15" : "32;38;32"} dur="3s" repeatCount="indefinite" />
+            <circle cx={CX} cy={CY} r={isMobile ? 25 : 35} fill="rgba(249, 115, 22, 0.15)">
+              <animate attributeName="r" values={isMobile ? "20;25;20" : "32;38;32"} dur="3s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
             </circle>
-            <circle cx={CX} cy={CY} r={isMobile ? 8 : 12} fill="url(#sunGradientOrange)" />
+            <circle cx={CX} cy={CY} r={isMobile ? 11 : 12} fill="url(#sunGradientOrange)" />
           </g>
         </svg>
 
