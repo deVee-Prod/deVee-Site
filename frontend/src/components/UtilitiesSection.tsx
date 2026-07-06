@@ -95,13 +95,13 @@ function SolarSystem() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const OUTER_RX = isMobile ? 160 : 720;
-  const OUTER_RY = isMobile ? 60 : 200;
-  const INNER_RX = isMobile ? 100 : 450;
-  const INNER_RY = isMobile ? 35 : 120;
-  const SPEED = isMobile ? 0.03 : 0.018;
+  const OUTER_RX = isMobile ? 110 : 720;
+  const OUTER_RY = isMobile ? 220 : 200;
+  const INNER_RX = isMobile ? 55 : 450;
+  const INNER_RY = isMobile ? 120 : 120;
+  const SPEED = isMobile ? 0.025 : 0.018;
   const W = isMobile ? 390 : 1600;
-  const H = isMobile ? 300 : 650;
+  const H = isMobile ? 550 : 650;
   const CX = W / 2;
   const CY = H / 2;
 
@@ -157,8 +157,8 @@ function SolarSystem() {
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? (isMobile ? 32 : 58) : (isMobile ? 28 : 50);
-    const amplitude = isMobile ? 0 : 7;
+    const base = orbit === 'outer' ? (isMobile ? 55 : 58) : (isMobile ? 45 : 50);
+    const amplitude = isMobile ? 8 : 7;
     return base + sinVal * amplitude;
   };
 
@@ -195,11 +195,11 @@ function SolarSystem() {
           <circle cx={CX} cy={CY} r={isMobile ? 24 : 48} fill="rgba(234,179,8,0.06)" />
           <circle cx={CX} cy={CY} r={isMobile ? 12 : 24} fill="rgba(234,179,8,0.13)" />
           <g filter="url(#starGlow)">
-            <circle cx={CX} cy={CY} r={isMobile ? 18 : 35} fill="rgba(249, 115, 22, 0.15)">
-              <animate attributeName="r" values={isMobile ? "15;20;15" : "32;38;32"} dur="3s" repeatCount="indefinite" />
+            <circle cx={CX} cy={CY} r={isMobile ? 22 : 35} fill="rgba(249, 115, 22, 0.15)">
+              <animate attributeName="r" values={isMobile ? "18;24;18" : "32;38;32"} dur="3s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
             </circle>
-            <circle cx={CX} cy={CY} r={isMobile ? 8 : 12} fill="url(#sunGradientOrange)" />
+            <circle cx={CX} cy={CY} r={isMobile ? 10 : 12} fill="url(#sunGradientOrange)" />
           </g>
         </svg>
 
