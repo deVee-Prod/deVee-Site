@@ -371,7 +371,7 @@ function MobileTools3D() {
             onClick={handlePremiumPrev}
             animate={{ x: [-3, 0, -3] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className={`absolute left-0 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`absolute left-4 sm:left-8 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
             <ChevronLeft size={28} />
           </motion.button>
@@ -379,7 +379,7 @@ function MobileTools3D() {
             onClick={handlePremiumNext}
             animate={{ x: [3, 0, 3] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className={`absolute right-0 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === premiumTools.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`absolute right-4 sm:right-8 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === premiumTools.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
             <ChevronRight size={28} />
           </motion.button>
@@ -438,7 +438,7 @@ function MobileTools3D() {
             onClick={handleFreePrev}
             animate={{ x: [-3, 0, -3] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="absolute left-0 z-20 p-2 text-white/50 hover:text-white"
+            className="absolute left-6 sm:left-10 z-20 p-2 text-white/50 hover:text-white"
           >
             <ChevronLeft size={28} />
           </motion.button>
@@ -446,7 +446,7 @@ function MobileTools3D() {
             onClick={handleFreeNext}
             animate={{ x: [3, 0, 3] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="absolute right-0 z-20 p-2 text-white/50 hover:text-white"
+            className="absolute right-6 sm:right-10 z-20 p-2 text-white/50 hover:text-white"
           >
             <ChevronRight size={28} />
           </motion.button>
