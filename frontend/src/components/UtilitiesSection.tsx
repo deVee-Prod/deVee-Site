@@ -371,6 +371,9 @@ function MobileTools3D() {
             {premiumTools[activePremium].desc}
           </p>
         </div>
+        <div className="mt-4 flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-[0.2em] animate-pulse pointer-events-none">
+          <ChevronLeft size={10} /> Swipe <ChevronRight size={10} />
+        </div>
       </div>
 
 
@@ -419,6 +422,9 @@ function MobileTools3D() {
           <p className="text-white/50 text-[10px] leading-tight mt-1 max-w-[260px]">
             {utilities[activeFree].desc}
           </p>
+        </div>
+        <div className="mt-4 flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-[0.2em] animate-pulse pointer-events-none">
+          <ChevronLeft size={10} /> Swipe <ChevronRight size={10} />
         </div>
       </div>
 
