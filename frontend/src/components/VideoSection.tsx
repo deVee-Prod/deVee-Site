@@ -92,6 +92,7 @@ export function VideoSection() {
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
             alt="Latest Releases"
+            loading="lazy"
             className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto"
           />
         </div>
@@ -128,6 +129,7 @@ export function VideoSection() {
                     >
                       <img
                         className="vcf-card-thumb group-hover:opacity-90 transition-opacity"
+                        loading="lazy"
                         src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
                         alt={track.title}
                       />
@@ -143,6 +145,7 @@ export function VideoSection() {
                 ) : (
                   <img
                     className="vcf-card-thumb"
+                    loading="lazy"
                     src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
                     alt={track.title}
                   />

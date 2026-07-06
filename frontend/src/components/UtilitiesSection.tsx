@@ -4,18 +4,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.png", color: GOLD, desc: "Automatically generate subtitles for your video." },
-  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.png", color: GOLD, desc: "The ultimate video editor: cut and create subtitles." },
-  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.png", color: GOLD, desc: "Add dynamic zoom in and zoom out effects to your video." },
+  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.webp", color: GOLD, desc: "Automatically generate subtitles for your video." },
+  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.webp", color: GOLD, desc: "The ultimate video editor: cut and create subtitles." },
+  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.webp", color: GOLD, desc: "Add dynamic zoom in and zoom out effects to your video." },
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.png", color: "rgba(59, 130, 246, 0.85)", desc: "Easily generate info files to send new songs to record labels." },
-  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.png", color: "rgba(236, 72, 153, 0.85)", desc: "Calculate the exact BPM for any song you input." },
-  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.png", color: "rgba(239, 68, 68, 0.85)", desc: "Convert files easily: PNG to PDF, WAV to MP3, and much more." },
-  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.png", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
-  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Create a fast-paced (sped up) version of any chosen song." },
-  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.png", color: "rgba(234, 179, 8, 0.85)", desc: "Crop your artwork exactly to 3000x3000 to fit distribution platforms perfectly." },
+  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.webp", color: "rgba(59, 130, 246, 0.85)", desc: "Easily generate info files to send new songs to record labels." },
+  { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.webp", color: "rgba(236, 72, 153, 0.85)", desc: "Calculate the exact BPM for any song you input." },
+  { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.webp", color: "rgba(239, 68, 68, 0.85)", desc: "Convert files easily: PNG to PDF, WAV to MP3, and much more." },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.webp", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.webp", color: "rgba(249, 115, 22, 0.85)", desc: "Create a fast-paced (sped up) version of any chosen song." },
+  { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.webp", color: "rgba(234, 179, 8, 0.85)", desc: "Crop your artwork exactly to 3000x3000 to fit distribution platforms perfectly." },
 ];
 
 // ─────────────────────────────────────────────
@@ -66,7 +66,7 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
           }}
         >
-          <img src={tool.img} alt={tool.name} className="w-full h-full object-cover" />
+          <img src={tool.img} alt={tool.name} loading="lazy" className="w-full h-full object-cover" />
         </div>
         
         {isPremium && <PremiumCrown />}
@@ -217,7 +217,7 @@ function SolarSystem() {
               className="group flex flex-col items-center">
               <div className="relative">
                 <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
-                  <img src={tool.img} alt={tool.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={tool.img} alt={tool.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 {isPremium && <PremiumCrown />}
               </div>

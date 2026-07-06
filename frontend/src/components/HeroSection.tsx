@@ -66,6 +66,8 @@ export function HeroSection() {
             <img
               src="/deVee Vingette 2 sized.PNG"
               alt="deVee"
+              fetchPriority="high"
+              loading="eager"
               className="w-full h-auto mix-blend-screen"
               style={{ maskImage: 'radial-gradient(circle, black 45%, transparent 72%)', WebkitMaskImage: 'radial-gradient(circle, black 45%, transparent 72%)' }}
             />

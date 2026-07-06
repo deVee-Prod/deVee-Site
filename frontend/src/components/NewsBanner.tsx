@@ -7,6 +7,7 @@ export const NewsBanner = () => {
         <img
           src="/assets/news-may.jpeg"
           alt="deVee News May 2026"
+          loading="lazy"
           className="w-full h-auto block transition-transform duration-700 hover:scale-[1.03]"
         />
       </div>

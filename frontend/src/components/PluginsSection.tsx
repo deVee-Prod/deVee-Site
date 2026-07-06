@@ -118,6 +118,7 @@ export function PluginsSection() {
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
+            loading="lazy"
             className="w-[85%] max-w-[250px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
           />
         </div>
@@ -150,6 +151,7 @@ export function PluginsSection() {
                 <img 
                   src={plugin.img} 
                   alt={plugin.name} 
+                  loading="lazy"
                   className="w-full h-full object-cover object-top"
                 />
               </motion.div>
