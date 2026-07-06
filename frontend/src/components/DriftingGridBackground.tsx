@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 const IMGS = [
-  '/bg-crush.png',
-  '/bg-gondola.jpg',
-  '/bg-shadow.png',
-  '/bg-zohar.jpg',
-  '/bg-yali.jpg',
-  '/bg-fck-that.jpg',
-  '/bg-cat.png',
+  '/bg-crush.webp',
+  '/bg-gondola.webp',
+  '/bg-shadow.webp',
+  '/bg-zohar.webp',
+  '/bg-yali.webp',
+  '/bg-fck-that.webp',
+  '/bg-cat.webp',
 ];
 
 // 3 sets of 16 — 7 images shuffled differently each set
