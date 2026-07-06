@@ -316,10 +316,13 @@ function MobileTools3D() {
   const handleTouchEndPrem = (e: React.TouchEvent) => {
     if (touchStartXPrem.current === null) return;
     const diff = touchStartXPrem.current - e.changedTouches[0].clientX;
-    if (diff > 50 && activePremium < 2) setActivePremium(p => p + 1);
+    if (diff > 50 && activePremium < premiumTools.length - 1) setActivePremium(p => p + 1);
     else if (diff < -50 && activePremium > 0) setActivePremium(p => p - 1);
     touchStartXPrem.current = null;
   };
+
+  const handlePremiumNext = () => { if (activePremium < premiumTools.length - 1) setActivePremium(p => p + 1); };
+  const handlePremiumPrev = () => { if (activePremium > 0) setActivePremium(p => p - 1); };
 
   return (
     <div className="flex flex-col w-full mt-2 mb-8 gap-14 overflow-hidden">
@@ -362,6 +365,24 @@ function MobileTools3D() {
               </motion.div>
             );
           })}
+          
+          {/* Navigation Arrows */}
+          <motion.button 
+            onClick={handlePremiumPrev}
+            animate={{ x: [-3, 0, -3] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className={`absolute left-0 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <ChevronLeft size={28} />
+          </motion.button>
+          <motion.button 
+            onClick={handlePremiumNext}
+            animate={{ x: [3, 0, 3] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className={`absolute right-0 z-20 p-2 text-white/50 hover:text-white transition-opacity ${activePremium === premiumTools.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <ChevronRight size={28} />
+          </motion.button>
         </div>
         <div className="mt-6 h-[40px] flex flex-col items-center justify-start text-center px-4">
           <h4 className="text-white text-lg font-black tracking-widest uppercase drop-shadow-md">
@@ -370,9 +391,6 @@ function MobileTools3D() {
           <p className="text-white/50 text-[11px] leading-tight mt-1 max-w-[260px]">
             {premiumTools[activePremium].desc}
           </p>
-        </div>
-        <div className="mt-4 flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-[0.2em] animate-pulse pointer-events-none">
-          <ChevronLeft size={10} /> Swipe <ChevronRight size={10} />
         </div>
       </div>
 
@@ -414,6 +432,24 @@ function MobileTools3D() {
               </motion.div>
             );
           })}
+          
+          {/* Navigation Arrows */}
+          <motion.button 
+            onClick={handleFreePrev}
+            animate={{ x: [-3, 0, -3] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="absolute left-0 z-20 p-2 text-white/50 hover:text-white"
+          >
+            <ChevronLeft size={28} />
+          </motion.button>
+          <motion.button 
+            onClick={handleFreeNext}
+            animate={{ x: [3, 0, 3] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="absolute right-0 z-20 p-2 text-white/50 hover:text-white"
+          >
+            <ChevronRight size={28} />
+          </motion.button>
         </div>
         <div className="mt-4 h-[40px] flex flex-col items-center justify-start text-center px-4">
           <h4 className="text-white text-base font-bold tracking-widest uppercase drop-shadow-md">
@@ -422,9 +458,6 @@ function MobileTools3D() {
           <p className="text-white/50 text-[10px] leading-tight mt-1 max-w-[260px]">
             {utilities[activeFree].desc}
           </p>
-        </div>
-        <div className="mt-4 flex items-center gap-2 text-white/30 text-[9px] uppercase tracking-[0.2em] animate-pulse pointer-events-none">
-          <ChevronLeft size={10} /> Swipe <ChevronRight size={10} />
         </div>
       </div>
 
