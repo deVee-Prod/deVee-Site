@@ -4,10 +4,10 @@ import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 const plugins = [
-  { id: 'phase', name: 'deVee Phase', img: '/plugins/phase.png', desc: 'Select which channel to invert.' },
-  { id: 'hole', name: 'deVee Hole', img: '/plugins/hole.png', desc: 'Vocal Throw Generator.' },
-  { id: 'blend', name: 'deVee Blend', img: '/plugins/blend.jpg', desc: 'Spectral Sidechain Ducker.' },
-  { id: 'haunt', name: 'deVee Haunt', img: '/plugins/haunt.png', desc: 'Pre-verb Swell Generator.' }
+  { id: 'phase', name: 'deVee Phase', img: '/plugins/phase.webp', desc: 'Select which channel to invert.' },
+  { id: 'hole', name: 'deVee Hole', img: '/plugins/hole.webp', desc: 'Vocal Throw Generator.' },
+  { id: 'blend', name: 'deVee Blend', img: '/plugins/blend.webp', desc: 'Spectral Sidechain Ducker.' },
+  { id: 'haunt', name: 'deVee Haunt', img: '/plugins/haunt.webp', desc: 'Pre-verb Swell Generator.' }
 ];
 
 export function PluginsSection() {

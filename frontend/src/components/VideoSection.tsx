@@ -90,7 +90,7 @@ export function VideoSection() {
         {/* Header image */}
         <div className="flex justify-center mb-[-25px] sm:mb-8 mt-2 px-4 sm:px-0 relative z-30">
           <img
-            src="/Gemini_Generated_Image_evzpamevzpamevzp 2.png"
+            src="/Gemini_Generated_Image_evzpamevzpamevzp 2.webp"
             alt="Latest Releases"
             loading="lazy"
             className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto"

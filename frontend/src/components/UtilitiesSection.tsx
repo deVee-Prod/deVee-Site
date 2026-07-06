@@ -262,7 +262,7 @@ export function UtilitiesSection() {
         
         {/* Title */}
         <div className="flex flex-col items-center relative z-10 mb-0 sm:mb-0">
-          <img src="/tools%20for%20artists.png" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
+          <img src="/tools for artists.webp" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 
         {/* Unified Solar System for Desktop and Mobile */}
