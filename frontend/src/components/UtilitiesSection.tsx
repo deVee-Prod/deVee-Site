@@ -263,7 +263,6 @@ function SolarSystem() {
 function MobileTools3D() {
   const [activePremium, setActivePremium] = useState(1);
   const [activeFree, setActiveFree] = useState(2);
-  const [selectedTool, setSelectedTool] = useState<any | null>(null);
 
   const getPremiumVariant = (index: number) => {
     if (index === activePremium) return 'center';
@@ -348,7 +347,7 @@ function MobileTools3D() {
                 initial={false}
                 animate={variant}
                 transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-                onClick={() => isActive ? setSelectedTool(tool) : setActivePremium(index)}
+                onClick={() => isActive ? window.open(tool.link, '_blank') : setActivePremium(index)}
                 className="absolute w-[105px] h-[105px] rounded-full cursor-pointer flex items-center justify-center"
                 style={{ transformStyle: 'preserve-3d' }}
               >
@@ -416,7 +415,7 @@ function MobileTools3D() {
                 initial={false}
                 animate={variant}
                 transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-                onClick={() => isActive ? setSelectedTool(tool) : setActiveFree(index)}
+                onClick={() => isActive ? window.open(tool.link, '_blank') : setActiveFree(index)}
                 className="absolute w-[90px] h-[90px] rounded-full cursor-pointer flex items-center justify-center"
                 style={{ transformStyle: 'preserve-3d' }}
               >
@@ -460,28 +459,6 @@ function MobileTools3D() {
           </p>
         </div>
       </div>
-
-      {/* Modal */}
-      {selectedTool && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/70 backdrop-blur-md" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-[320px] w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setSelectedTool(null)} className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <div className="w-24 h-24 rounded-full overflow-hidden border border-white/10 mb-6 shadow-lg" style={{ boxShadow: `0 0 35px ${selectedTool.color.replace('0.85', '0.4')}` }}>
-              <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
-            </div>
-            <h3 className="text-2xl font-black text-white tracking-widest uppercase mb-3 drop-shadow-md">{selectedTool.name}</h3>
-            <p className="text-white/50 text-sm font-medium mb-8 leading-relaxed px-2">
-              {selectedTool.desc}
-            </p>
-            <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-2xl font-bold uppercase tracking-[0.25em] text-[12px] text-black bg-white hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-              Get in!
-            </a>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
