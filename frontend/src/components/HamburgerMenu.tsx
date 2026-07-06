@@ -80,7 +80,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
     <>
       <button
         onClick={onToggle}
-        className="relative z-50 p-2 text-white hover:text-primary transition-colors duration-300"
+        className="relative z-50 p-2 text-white hover:text-orange-500 transition-colors duration-300"
         aria-label="Toggle menu"
       >
         {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -128,7 +128,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
 
           <button
             onClick={() => handleNavigation('/')}
-            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            className="text-2xl font-bold text-white hover:text-orange-500 transition-colors duration-300 tracking-wider"
           >
             Home
           </button>
@@ -140,7 +140,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
                 document.getElementById('utilities')?.scrollIntoView({ behavior: 'smooth' });
               }, 100);
             }}
-            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            className="text-2xl font-bold text-white hover:text-orange-500 transition-colors duration-300 tracking-wider"
           >
             deVee Tools
           </button>
@@ -148,7 +148,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             href="https://tube.devee-music.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            className="text-2xl font-bold text-white hover:text-orange-500 transition-colors duration-300 tracking-wider"
             onClick={onClose}
           >
             deVee Tube
@@ -157,14 +157,14 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             href="https://www.instagram.com/devee_prod?igsh=aGNzODI5eXp6YjFq&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            className="text-2xl font-bold text-white hover:text-orange-500 transition-colors duration-300 tracking-wider"
             onClick={onClose}
           >
             Instagram
           </a>
           <button
             onClick={() => handleNavigation('/info')}
-            className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
+            className="text-2xl font-bold text-white hover:text-orange-500 transition-colors duration-300 tracking-wider"
           >
             Info
           </button>
