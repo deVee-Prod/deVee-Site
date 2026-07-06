@@ -64,7 +64,7 @@ export function HeroSection() {
             }}
           >
             <img
-              src="/deVee Vingette 2 sized.PNG"
+              src="/deVee Vingette 2 sized.webp"
               alt="deVee"
               fetchPriority="high"
               loading="eager"
