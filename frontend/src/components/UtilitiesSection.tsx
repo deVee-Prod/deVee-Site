@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
 const premiumTools = [
-  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.webp", color: GOLD, desc: "Automatically generate subtitles for your video." },
-  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.webp", color: GOLD, desc: "The ultimate video editor: cut and create subtitles." },
-  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.webp", color: GOLD, desc: "Add dynamic zoom in and zoom out effects to your video." },
+  { name: "Reels Dubber", link: "https://reels-dubber.devee-music.com/", img: "/reelsdubberlogo.webp", color: GOLD, desc: "Automatically generate subtitles for your Reels & Shorts." },
+  { name: "Reels Cutter", link: "https://reels-cutter.devee-music.com/", img: "/reelscutterlogo.webp", color: GOLD, desc: "The ultimate editor for Reels & Shorts: cut and create subtitles." },
+  { name: "Reels Motion", link: "https://reels-motion.devee-music.com/", img: "/reels-motion-icon.webp", color: GOLD, desc: "Add dynamic zoom in and out effects to your Reels & Shorts." },
 ];
 
 const utilities = [
