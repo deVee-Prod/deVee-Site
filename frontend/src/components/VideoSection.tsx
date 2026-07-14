@@ -3,6 +3,14 @@ import { SiSpotify, SiApplemusic, SiYoutubemusic } from 'react-icons/si';
 
 const tracks = [
   {
+    id: 'track_error404',
+    videoId: 'SlR3joHgCXs',
+    title: 'Error 404 (feat. deVee)',
+    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
+    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
+    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
+  },
+  {
     id: 'track1',
     videoId: 'Hv6yD04iwe0',
     title: 'ניקיתי את הלב (Prod by. deVee)',
