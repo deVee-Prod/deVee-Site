@@ -110,7 +110,6 @@ export function HeroSection() {
           <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1.5 sm:p-2 animate-bounce opacity-70">
             <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-orange-500 rounded-full" />
           </div>
-          <span className="text-[9px] sm:text-[10px] font-semibold tracking-[0.3em] text-white/60 uppercase animate-pulse opacity-70">Scroll</span>
         </div>
       </div>
     </section>
