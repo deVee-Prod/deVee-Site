@@ -145,11 +145,6 @@ html {
   50%      { opacity: 1; }
 }
 
-@keyframes scrollWheel {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(12px); opacity: 0; }
-}
-
 /* ── Video CoverFlow ── */
 .vcf-scene {
   position: relative;
