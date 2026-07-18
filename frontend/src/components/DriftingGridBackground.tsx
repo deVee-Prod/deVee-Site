@@ -8,26 +8,27 @@ const IMGS = [
   '/bg-yali.webp',
   '/bg-fck-that.webp',
   '/bg-cat.webp',
+  '/bg-new-photo.jpg',
 ];
 
-// 3 sets of 16 — 7 images shuffled differently each set
+// 3 sets of 16 — 8 images shuffled differently each set
 const IMAGE_SETS: string[][] = [
   [
-    IMGS[0], IMGS[1], IMGS[2], IMGS[3],
+    IMGS[0], IMGS[7], IMGS[2], IMGS[3],
     IMGS[4], IMGS[5], IMGS[6], IMGS[0],
-    IMGS[2], IMGS[6], IMGS[5], IMGS[4],
+    IMGS[2], IMGS[6], IMGS[7], IMGS[4],
     IMGS[3], IMGS[1], IMGS[6], IMGS[2],
   ],
   [
-    IMGS[3], IMGS[6], IMGS[1], IMGS[0],
+    IMGS[3], IMGS[7], IMGS[1], IMGS[0],
     IMGS[2], IMGS[4], IMGS[3], IMGS[5],
-    IMGS[6], IMGS[2], IMGS[4], IMGS[1],
+    IMGS[6], IMGS[2], IMGS[4], IMGS[7],
     IMGS[5], IMGS[3], IMGS[0], IMGS[6],
   ],
   [
-    IMGS[6], IMGS[4], IMGS[0], IMGS[5],
+    IMGS[6], IMGS[4], IMGS[7], IMGS[5],
     IMGS[1], IMGS[3], IMGS[6], IMGS[2],
-    IMGS[5], IMGS[0], IMGS[1], IMGS[3],
+    IMGS[7], IMGS[0], IMGS[1], IMGS[3],
     IMGS[4], IMGS[6], IMGS[5], IMGS[2],
   ],
 ];
