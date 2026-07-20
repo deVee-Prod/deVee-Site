@@ -35,18 +35,8 @@ export function Error404Article() {
             {/* Divider */}
             <div className="h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent mb-12 sm:mb-16" />
 
-            {/* ── Lead paragraph ── */}
-            <p className="text-xl sm:text-2xl text-white/80 leading-relaxed mb-12 sm:mb-16 border-l-2 border-orange-500/60 pl-5 sm:pl-6">
-              ZOHAR is a 25-year-old singer-songwriter finding her way into the
-              music industry while also navigating life as a wife and a new mother.
-              At the heart of her work is a simple but deeply personal mission: to
-              help people release what they are carrying through music, feel less
-              alone, and find the light at the end of the tunnel through the
-              stories she chooses to tell.
-            </p>
-
             {/* ── YouTube Embed ── */}
-            <div className="mb-14 sm:mb-20">
+            <div className="mb-14 sm:mb-16">
               <div
                 className="relative w-full rounded-xl overflow-hidden border border-white/[0.08] max-w-4xl mx-auto"
                 style={{
@@ -65,6 +55,16 @@ export function Error404Article() {
                 />
               </div>
             </div>
+
+            {/* ── Lead paragraph ── */}
+            <p className="text-xl sm:text-2xl text-white/80 leading-relaxed mb-12 sm:mb-16 border-l-2 border-orange-500/60 pl-5 sm:pl-6">
+              ZOHAR is a 25-year-old singer-songwriter finding her way into the
+              music industry while also navigating life as a wife and a new mother.
+              At the heart of her work is a simple but deeply personal mission: to
+              help people release what they are carrying through music, feel less
+              alone, and find the light at the end of the tunnel through the
+              stories she chooses to tell.
+            </p>
 
             {/* Section: Purpose */}
             <div className="space-y-6 mb-14 sm:mb-20">
