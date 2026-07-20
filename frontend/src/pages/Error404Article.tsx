@@ -38,7 +38,7 @@ export function Error404Article() {
             {/* ── YouTube Embed ── */}
             <div className="mb-14 sm:mb-16">
               <div
-                className="relative w-full rounded-xl overflow-hidden border border-white/[0.08] max-w-4xl mx-auto"
+                className="relative w-[92%] sm:w-full rounded-xl overflow-hidden border border-white/[0.08] max-w-3xl mx-auto"
                 style={{
                   aspectRatio: '16/9',
                   boxShadow:
