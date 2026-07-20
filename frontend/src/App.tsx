@@ -8,6 +8,7 @@ import { PluginsSection } from './components/PluginsSection';
 import { SocialSection } from './components/SocialSection';
 import { Footer } from './components/Footer';
 import { InfoPage } from './pages/InfoPage';
+import { Error404Article } from './pages/Error404Article';
 import { DriftingGridBackground } from './components/DriftingGridBackground';
 
 function App() {
@@ -19,6 +20,10 @@ function App() {
 
   if (path === '/info') {
     return <InfoPage />;
+  }
+
+  if (path === '/releases/error-404') {
+    return <Error404Article />;
   }
 
   return (
