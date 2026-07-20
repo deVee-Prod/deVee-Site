@@ -6,7 +6,7 @@ import { DriftingGridBackground } from '../components/DriftingGridBackground';
 export function Error404Article() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'ZOHAR — Error 404 | deVee Boutique Label';
+    document.title = 'ZOHAR: Turns Pain Into Purpose With "Error 404"';
   }, []);
 
   return (
