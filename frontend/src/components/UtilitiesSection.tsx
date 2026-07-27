@@ -11,7 +11,6 @@ const premiumTools = [
 ];
 
 const utilities = [
-  { name: "Storm Form", link: "https://storm-form.devee-music.com", img: "/stormformicon.webp", color: "rgba(59, 130, 246, 0.85)", desc: "Easily generate info files to send new songs to record labels." },
   { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.webp", color: "rgba(236, 72, 153, 0.85)", desc: "Calculate the exact BPM for any song you input." },
   { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.webp", color: "rgba(239, 68, 68, 0.85)", desc: "Convert files easily: PNG to PDF, WAV to MP3, and much more." },
   { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.webp", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
