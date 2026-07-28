@@ -261,7 +261,7 @@ function SolarSystem() {
 // ─────────────────────────────────────────────
 function MobileTools3D() {
   const [activePremium, setActivePremium] = useState(1);
-  const [activeFree, setActiveFree] = useState(2);
+  const [activeFree, setActiveFree] = useState(0);
 
   const getPremiumVariant = (index: number) => {
     if (index === activePremium) return 'center';
