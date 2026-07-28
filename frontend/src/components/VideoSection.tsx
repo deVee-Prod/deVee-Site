@@ -11,15 +11,6 @@ const tracks = [
     youtubeMusic: 'https://music.youtube.com/watch?v=Hv6yD04iwe0',
   },
   {
-    id: 'track_error404',
-    videoId: 'SlR3joHgCXs',
-    title: 'Error 404 (feat. deVee)',
-    thumbnail: 'https://img.youtube.com/vi/SlR3joHgCXs/hqdefault.jpg',
-    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
-    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
-    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
-  },
-  {
     id: 'track2',
     videoId: 'hRo2y0U-N_k',
     title: 'YALi | יהלי - בראשית (Prod. by deVee)',
@@ -34,6 +25,15 @@ const tracks = [
     spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
     appleMusic: 'https://music.apple.com/il/album/%D7%A7%D7%90%D7%A9/1895594252?i=6764002846',
     youtubeMusic: 'https://music.youtube.com/watch?v=RO1LiMKFBwA',
+  },
+  {
+    id: 'track_error404',
+    videoId: 'SlR3joHgCXs',
+    title: 'Error 404 (feat. deVee)',
+    thumbnail: 'https://img.youtube.com/vi/SlR3joHgCXs/hqdefault.jpg',
+    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
+    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
+    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
   },
   {
     id: 'track4',
