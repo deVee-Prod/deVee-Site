@@ -14,6 +14,7 @@ const tracks = [
     id: 'track_error404',
     videoId: 'SlR3joHgCXs',
     title: 'Error 404 (feat. deVee)',
+    thumbnail: 'https://img.youtube.com/vi/SlR3joHgCXs/hqdefault.jpg',
     spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
     appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
     youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
@@ -138,7 +139,7 @@ export function VideoSection() {
                       <img
                         className="vcf-card-thumb group-hover:opacity-90 transition-opacity"
                         loading="lazy"
-                        src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
+                        src={(track as any).thumbnail || `https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
                         alt={track.title}
                       />
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -154,7 +155,7 @@ export function VideoSection() {
                   <img
                     className="vcf-card-thumb"
                     loading="lazy"
-                    src={`https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
+                    src={(track as any).thumbnail || `https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
                     alt={track.title}
                   />
                 )}
