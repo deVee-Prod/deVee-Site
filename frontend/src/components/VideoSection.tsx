@@ -3,20 +3,20 @@ import { SiSpotify, SiApplemusic, SiYoutubemusic } from 'react-icons/si';
 
 const tracks = [
   {
-    id: 'track_error404',
-    videoId: 'SlR3joHgCXs',
-    title: 'Error 404 (feat. deVee)',
-    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
-    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
-    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
-  },
-  {
     id: 'track1',
     videoId: 'Hv6yD04iwe0',
     title: 'ניקיתי את הלב (Prod by. deVee)',
     spotify: 'https://open.spotify.com/track/0IccXF4g1FcsgLEq82SioC?si=dqop7sCTSqCbQLxjkwWNIQ',
     appleMusic: 'https://music.apple.com/il/album/%D7%A0%D7%99%D7%A7%D7%99%D7%AA%D7%99-%D7%90%D7%AA-%D7%94%D7%9C%D7%91/1794794200?i=1794794278',
     youtubeMusic: 'https://music.youtube.com/watch?v=Hv6yD04iwe0',
+  },
+  {
+    id: 'track_error404',
+    videoId: 'SlR3joHgCXs',
+    title: 'Error 404 (feat. deVee)',
+    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
+    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
+    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
   },
   {
     id: 'track2',
