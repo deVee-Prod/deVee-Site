@@ -13,6 +13,6 @@ jobs:
       - name: Ping Supabase Database
         run: |
           curl -sS --request GET \
-            --url 'https://plndftoilwwgvilkwsun.supabase.co/rest/v1/' \
+            --url 'https://plndftoilwwgvilkwsun.supabase.co/auth/v1/health' \
             --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
             --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs'
