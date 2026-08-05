@@ -2,17 +2,89 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    # Run every 2 days at midnight UTC
-    - cron: "0 0 */2 * *"
+    # Run every day at 06:00 UTC (09:00 Israel time)
+    - cron: "0 6 * * *"
   workflow_dispatch: # Allow manual trigger
 
 jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Database
+      - name: Ping Supabase - Auth Health (GoTrue Service)
         run: |
-          curl -sS --request GET \
+          echo "🔄 Ping 1/2: Checking Supabase Auth service..."
+          
+          RESPONSE=$(curl -sS -w "\n%{http_code}" --request GET \
             --url 'https://plndftoilwwgvilkwsun.supabase.co/auth/v1/health' \
             --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
-            --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs'
+            --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "Auth Health - HTTP: $HTTP_CODE"
+          echo "Response: $BODY"
+          
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "⚠️ Auth health check returned non-200. Will retry below."
+          else
+            echo "✅ Auth service is healthy."
+          fi
+
+      - name: Ping Supabase - Storage API (Database Activity)
+        run: |
+          echo "🔄 Ping 2/2: Querying Supabase Storage API (triggers DB activity)..."
+          
+          RESPONSE=$(curl -sS -w "\n%{http_code}" --request GET \
+            --url 'https://plndftoilwwgvilkwsun.supabase.co/storage/v1/bucket' \
+            --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
+            --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          echo "Storage API - HTTP: $HTTP_CODE"
+          echo "Response: $BODY"
+          
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "⚠️ Storage API returned non-200. Will retry below."
+          else
+            echo "✅ Storage API responded successfully (queries the storage.buckets DB table)."
+          fi
+
+      - name: Verify and Retry if Needed
+        run: |
+          echo "🔍 Final verification ping with retry logic..."
+          
+          # Try auth health as final check
+          RESPONSE=$(curl -sS -w "\n%{http_code}" --request GET \
+            --url 'https://plndftoilwwgvilkwsun.supabase.co/auth/v1/health' \
+            --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
+            --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ All checks passed! Supabase project is alive and active."
+            echo "⏰ Next ping: tomorrow at 09:00 Israel time"
+            exit 0
+          fi
+          
+          echo "⚠️ Final check failed. Retrying in 60 seconds..."
+          sleep 60
+          
+          RETRY=$(curl -sS -w "\n%{http_code}" --request GET \
+            --url 'https://plndftoilwwgvilkwsun.supabase.co/auth/v1/health' \
+            --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
+            --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs')
+          
+          RETRY_CODE=$(echo "$RETRY" | tail -n1)
+          
+          if [ "$RETRY_CODE" -eq 200 ]; then
+            echo "✅ Retry succeeded! Supabase is alive."
+            exit 0
+          fi
+          
+          echo "❌ CRITICAL: All pings failed! Supabase may be paused."
+          echo "Go to https://supabase.com/dashboard and check your project."
+          exit 1
