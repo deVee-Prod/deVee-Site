@@ -94,11 +94,11 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-black border-l border-primary/20 z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-black border-l border-primary/20 z-40 transform transition-transform duration-300 ease-in-out overflow-y-auto overflow-x-hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <nav className="flex flex-col items-center justify-start h-full space-y-8 pt-24">
+        <nav className="flex flex-col items-center justify-start min-h-full space-y-8 pt-20 sm:pt-24 pb-12 md:pb-28 relative">
           
           <div className="flex flex-col items-center mb-4">
             {user ? (
@@ -178,7 +178,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             Info
           </button>
 
-          <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-4">
+          <div className="pt-20 pb-8 md:pt-0 md:pb-0 md:absolute md:bottom-10 md:left-0 md:right-0 flex flex-col items-center gap-4">
             <a
               href="/privacy-he.html"
               className="text-white/40 hover:text-white/80 text-sm transition-colors duration-300 tracking-wider"
