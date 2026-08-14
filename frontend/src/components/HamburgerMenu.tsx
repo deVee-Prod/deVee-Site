@@ -178,7 +178,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             Info
           </button>
 
-          <div className="pt-20 pb-8 md:pt-0 md:pb-0 md:absolute md:bottom-10 md:left-0 md:right-0 flex flex-col items-center gap-4">
+          <div className="pt-36 pb-12 md:pt-0 md:pb-0 md:absolute md:bottom-10 md:left-0 md:right-0 flex flex-col items-center gap-4">
             <a
               href="/privacy-he.html"
               className="text-white/40 hover:text-white/80 text-sm transition-colors duration-300 tracking-wider"
