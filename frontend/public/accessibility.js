@@ -360,7 +360,7 @@
     prefs[feature] = state;
     localStorage.setItem('a11y-prefs', JSON.stringify(prefs));
     
-    const btn = panel.querySelector(\`[data-feature="\${feature}"]\`);
+    const btn = panel.querySelector(`[data-feature="${feature}"]`);
     if (btn) {
       if (state) btn.classList.add('a11y-active');
       else btn.classList.remove('a11y-active');
@@ -369,11 +369,11 @@
     switch (feature) {
       case 'highContrast':
         if (state) {
-          injectFeatureCSS('a11y-css-highcontrast', \`
+          injectFeatureCSS('a11y-css-highcontrast', `
             html { filter: contrast(1.5) !important; }
             body, div, section, header, footer, nav, aside, article, main { background-color: #000000 !important; color: #ffffff !important; }
             h1, h2, h3, h4, h5, h6, p, span, a, li, td, th { color: #ffffff !important; text-shadow: none !important; }
-          \`);
+          `);
         } else {
           removeFeatureCSS('a11y-css-highcontrast');
         }
@@ -402,7 +402,7 @@
       case 'largeCursor':
         if (state) {
           const cursorSvg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><polygon points="12,12 12,52 24,40 32,56 40,52 32,36 48,36" fill="black" stroke="white" stroke-width="2"/></svg>';
-          injectFeatureCSS('a11y-css-cursor', \`* { cursor: url('\${cursorSvg}') 12 12, auto !important; }\`);
+          injectFeatureCSS('a11y-css-cursor', `* { cursor: url('${cursorSvg}') 12 12, auto !important; }`);
         } else {
           removeFeatureCSS('a11y-css-cursor');
         }
@@ -428,7 +428,7 @@
       panel.querySelector('[data-feature="decreaseFont"]').classList.add('a11y-active');
       fontLevel = 0;
     } else {
-      injectFeatureCSS('a11y-css-fontsize', \`html { font-size: \${fontSizes[fontLevel]} !important; }\`);
+      injectFeatureCSS('a11y-css-fontsize', `html { font-size: ${fontSizes[fontLevel]} !important; }`);
       panel.querySelector('[data-feature="increaseFont"]').classList.add('a11y-active');
       panel.querySelector('[data-feature="decreaseFont"]').classList.remove('a11y-active');
     }
