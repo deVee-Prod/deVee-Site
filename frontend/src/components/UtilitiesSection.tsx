@@ -472,8 +472,29 @@ export function UtilitiesSection() {
           <img src="/tools for artists.webp" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 
-        {/* Unified Solar System for Desktop and Mobile */}
-        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16">
+        {/* Screen Reader Only List of Tools */}
+        <div className="sr-only">
+          <h2>deVee Tools for Artists</h2>
+          <ul>
+            {premiumTools.map(tool => (
+              <li key={tool.name}>
+                <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                  {tool.name} (Premium) - {tool.desc}
+                </a>
+              </li>
+            ))}
+            {utilities.map(tool => (
+              <li key={tool.name}>
+                <a href={tool.link} target="_blank" rel="noopener noreferrer">
+                  {tool.name} - {tool.desc}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Unified Solar System for Desktop and Mobile (Hidden from screen readers) */}
+        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16" aria-hidden="true">
           <div className="hidden md:block w-full">
             <SolarSystem />
           </div>

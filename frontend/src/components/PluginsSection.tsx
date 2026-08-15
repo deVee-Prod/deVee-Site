@@ -123,8 +123,20 @@ export function PluginsSection() {
           />
         </div>
 
-        {/* 3D Carousel */}
-        <div className="relative w-full max-w-5xl h-[280px] sm:h-[400px] md:h-[480px] flex justify-center items-center perspective-[1200px] mb-0 transform-gpu mt-[-20px] md:mt-0">
+        {/* Screen Reader Only List of Plugins */}
+        <div className="sr-only">
+          <h2>deVee Plugins for Artists</h2>
+          <ul>
+            {plugins.map(plugin => (
+              <li key={plugin.id}>
+                {plugin.name} - {plugin.description} (Price: {plugin.price})
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* 3D Carousel (Hidden from screen readers) */}
+        <div className="relative w-full max-w-5xl h-[280px] sm:h-[400px] md:h-[480px] flex justify-center items-center perspective-[1200px] mb-0 transform-gpu mt-[-20px] md:mt-0" aria-hidden="true">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';

@@ -18,6 +18,7 @@ export function Footer() {
             href="https://www.instagram.com/devee_prod?igsh=aGNzODI5eXp6YjFq&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Instagram profile"
             className="inline-flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
           >
             <SiInstagram className="w-5 h-5" />
@@ -30,6 +31,7 @@ export function Footer() {
             href="https://soundbetter.com/profiles/650261-devee_prod"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="SoundBetter profile"
           >
             <img
               src="https://d2p6ecj15pyavq.cloudfront.net/assets/SoundBetterBadge-c84cb3e75c4267f5bee41f7f617a81d9.svg"

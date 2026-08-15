@@ -455,3 +455,10 @@ html {
   height: 100%;
   object-fit: cover;
 }
+
+/* Accessibility Focus Styles */
+*:focus-visible {
+  outline: 2px solid #f97316 !important;
+  outline-offset: 2px !important;
+}
+

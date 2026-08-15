@@ -271,8 +271,7 @@
   
   // Panel content
   panel.innerHTML = `
-    <div class="a11y-header">
-      <h2 class="a11y-title">${iconAccessibility} ACCESSIBILITY</h2>
+    <div class="a11y-header" style="justify-content: flex-end;">
       <button class="a11y-close" aria-label="Close accessibility menu">${iconClose}</button>
     </div>
     <div class="a11y-grid">
