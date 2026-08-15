@@ -4,7 +4,7 @@
     #a11y-widget-container {
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      left: 20px;
       z-index: 999999;
       font-family: system-ui, -apple-system, sans-serif;
     }
@@ -46,7 +46,7 @@
     #a11y-panel {
       position: absolute;
       bottom: 60px;
-      right: 0;
+      left: 0;
       width: 320px;
       max-width: calc(100vw - 40px);
       background: rgba(26, 26, 46, 0.95);
