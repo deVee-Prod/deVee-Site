@@ -56,12 +56,18 @@ export function Footer() {
             </a>
           </p>
           {/* הלינק עבור גוגל - שקוף כמעט ולא משנה את העיצוב */}
-          <div className="mt-2">
+          <div className="mt-2 flex items-center justify-center gap-4">
             <a 
               href="/privacy.html" 
               className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
             >
               Privacy Policy
+            </a>
+            <a 
+              href="/nagishut.html" 
+              className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
+            >
+              Accessibility
             </a>
           </div>
         </div>

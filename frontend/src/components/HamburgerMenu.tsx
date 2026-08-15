@@ -191,6 +191,12 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
             >
               תקנון ותנאי שימוש
             </a>
+            <a
+              href="/nagishut.html"
+              className="text-white/40 hover:text-white/80 text-sm transition-colors duration-300 tracking-wider"
+            >
+              הצהרת נגישות
+            </a>
           </div>
         </nav>
       </div>

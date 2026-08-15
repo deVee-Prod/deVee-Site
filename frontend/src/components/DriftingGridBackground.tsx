@@ -57,7 +57,7 @@ export function DriftingGridBackground() {
   const images = IMAGE_SETS[setIndex];
 
   return (
-    <div className="bg-drift-container">
+    <div className="bg-drift-container" aria-hidden="true">
       <div className="bg-drift-overlay-dark" />
       <div className="bg-drift-glow-orange" />
       <div className="bg-drift-overlay-grad" />

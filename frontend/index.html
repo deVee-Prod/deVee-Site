@@ -73,7 +73,9 @@
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link" style="position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:#f97316;color:#000;padding:12px 24px;z-index:100000;font-weight:700;font-size:14px;border-radius:0 0 8px 8px;transition:top 0.2s ease;text-decoration:none;" onfocus="this.style.top='0'" onblur="this.style.top='-100%'">Skip to main content</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script src="/accessibility.js" defer></script>
   </body>
 </html>
