@@ -36,6 +36,14 @@ const tracks = [
     youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
   },
   {
+    id: 'track_coco_basa',
+    videoId: 'kW8ZtkroSMc',
+    title: 'COCO - באסה (Prod by. deVee)',
+    spotify: 'https://open.spotify.com/artist/6BxwlMx56pRg0qDoaZLNWb',
+    appleMusic: 'https://music.apple.com/il/album/באסה/6798815627?i=6798816007',
+    youtubeMusic: 'https://music.youtube.com/watch?v=kW8ZtkroSMc',
+  },
+  {
     id: 'track4',
     videoId: 'eR4GRRwIJVc',
     title: 'Shadow (feat. deVee)',
@@ -50,14 +58,6 @@ const tracks = [
     spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
     appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
     youtubeMusic: 'https://music.youtube.com/watch?v=ZPr1Y7-PAWM',
-  },
-  {
-    id: 'track_coco_basa',
-    videoId: 'kW8ZtkroSMc',
-    title: 'COCO - באסה (Prod by. deVee)',
-    spotify: 'https://open.spotify.com/artist/6BxwlMx56pRg0qDoaZLNWb',
-    appleMusic: 'https://music.apple.com/il/album/באסה/6798815627?i=6798816007',
-    youtubeMusic: 'https://music.youtube.com/watch?v=kW8ZtkroSMc',
   },
 ];
 
