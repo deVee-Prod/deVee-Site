@@ -12,12 +12,23 @@ const premiumTools = [
 
 const utilities = [
   { name: "File Converter", link: "https://file-converter.devee-music.com", img: "/fileconverterlogo.webp", color: "rgba(239, 68, 68, 0.85)", desc: "Convert files easily: PNG to PDF, WAV to MP3, and much more." },
-  { name: "Instant Font", link: "https://instant-font.devee-music.com", img: "/instant-font-logo.png", color: "rgba(59, 130, 246, 0.85)", desc: "Instantly generate unique, aesthetic fonts for Instagram, TikTok, and more." },
-  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Create a fast-paced (sped up) version of any chosen song." },
-  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.webp", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
   { name: "BPM Calculator", link: "https://bpm-calculator.devee-music.com", img: "/bpmcalculatorlogo.webp", color: "rgba(236, 72, 153, 0.85)", desc: "Calculate the exact BPM for any song you input." },
+  { name: "Flash Juice", link: "https://flash-juice.devee-music.com", img: "/flashjuicelogo.png", color: "rgba(249, 115, 22, 0.85)", desc: "Create a fast-paced (sped up) version of any chosen song." },
   { name: "Release Ready", link: "https://release-ready.devee-music.com", img: "/Release%20ready%20icon.webp", color: "rgba(234, 179, 8, 0.85)", desc: "Crop your artwork exactly to 3000x3000 to fit distribution platforms perfectly." },
+  { name: "PDF Killer", link: "https://pdf-killer.devee-music.com", img: "/pdfkillerlogo.webp", color: "rgba(34, 197, 94, 0.85)", desc: "A fast editing tool for filling out PDF forms." },
+  { name: "Instant Font", link: "https://instant-font.devee-music.com", img: "/instant-font-logo.png", color: "rgba(59, 130, 246, 0.85)", desc: "Instantly generate unique, aesthetic fonts for Instagram, TikTok, and more." },
 ];
+
+// Dispersed color order specifically for the desktop orbit circle
+const desktopUtilities = [
+  utilities[0], // File Converter (Red)
+  utilities[5], // Instant Font (Blue)
+  utilities[2], // Flash Juice (Orange)
+  utilities[4], // PDF Killer (Green)
+  utilities[1], // BPM Calculator (Pink)
+  utilities[3], // Release Ready (Yellow)
+];
+
 
 
 // ─────────────────────────────────────────────
@@ -111,7 +122,7 @@ function SolarSystem() {
     premiumTools.map((_, i) => (i * 360) / premiumTools.length)
   );
   const [innerAngles, setInnerAngles] = useState(() =>
-    utilities.map((_, i) => (i * 360) / utilities.length)
+    desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
   );
 
   useEffect(() => {
@@ -151,7 +162,7 @@ function SolarSystem() {
     const pos = toXY(outerAngles[i], OUTER_RX, OUTER_RY);
     return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, i };
   });
-  const innerItems = utilities.map((tool, i) => {
+  const innerItems = desktopUtilities.map((tool, i) => {
     const pos = toXY(innerAngles[i], INNER_RX, INNER_RY);
     return { tool, pos, angle: innerAngles[i], orbit: 'inner' as const, i };
   });
