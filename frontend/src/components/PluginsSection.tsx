@@ -155,17 +155,17 @@ export function PluginsSection() {
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-0 sm:mb-2 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
+        <div className="mb-0 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
             loading="lazy"
-            className="w-[90%] max-w-[320px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
+            className="w-[85%] max-w-[280px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
           />
         </div>
 
         {/* deVee Exclusive Plugin: 360 */}
-        <div className="relative w-full max-w-4xl mx-auto mt-0 md:mt-[-20px] mb-24 flex flex-col items-center">
+        <div className="relative w-full max-w-4xl mx-auto mt-[-15px] md:mt-[-20px] mb-24 flex flex-col items-center">
 
           {/* Plugin Image */}
           <div className="w-full relative px-4 sm:px-12 group">
