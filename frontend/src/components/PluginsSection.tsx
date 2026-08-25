@@ -160,7 +160,7 @@ export function PluginsSection() {
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
             loading="lazy"
-            className="w-[85%] max-w-[250px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
+            className="w-[90%] max-w-[320px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
           />
         </div>
 
@@ -189,10 +189,10 @@ export function PluginsSection() {
 
             <button
               onClick={handleDownloadExclusive}
-              className="group relative flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 rounded-full shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] transition-all duration-300"
+              className="group relative flex items-center gap-2 md:gap-3 px-6 py-3 md:px-10 md:py-5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 rounded-full shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] transition-all duration-300"
             >
-              <Download className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
-              <span className="font-bold uppercase tracking-widest text-sm text-white drop-shadow-md">
+              <Download className="w-4 h-4 md:w-5 md:h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
+              <span className="font-bold uppercase tracking-widest text-xs md:text-sm text-white drop-shadow-md">
                 {user ? 'Download 360' : 'Sign In To Download'}
               </span>
             </button>
