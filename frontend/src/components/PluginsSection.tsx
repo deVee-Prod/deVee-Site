@@ -125,7 +125,7 @@ export function PluginsSection() {
       try {
         // Request a secure signed URL valid for 60 seconds
         const { data, error } = await supabase.storage
-          .from('plugins')
+          .from('devee-plugins')
           .createSignedUrl('360 v1.0.zip', 60);
           
         if (error) throw error;
