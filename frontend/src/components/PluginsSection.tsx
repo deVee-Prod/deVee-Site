@@ -104,6 +104,47 @@ export function PluginsSection() {
     }
   };
 
+  const handleDownloadExclusive = async () => {
+    if (!user) {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'select_account',
+            },
+          }
+        });
+        if (error) throw error;
+      } catch (error) {
+        console.error('Authentication error:', error);
+      }
+    } else {
+      try {
+        // Request a secure signed URL valid for 60 seconds
+        const { data, error } = await supabase.storage
+          .from('plugins')
+          .createSignedUrl('360 v1.0.zip', 60);
+          
+        if (error) throw error;
+        
+        if (data?.signedUrl) {
+          const a = document.createElement('a');
+          a.href = data.signedUrl;
+          a.download = '360 v1.0.zip';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      } catch (error) {
+        console.error('Error downloading plugin:', error);
+        alert('There was an issue downloading the plugin. Make sure the file "360 v1.0.zip" is uploaded in the "plugins" bucket.');
+      }
+    }
+  };
+
   const activePlugin = plugins[activeIndex];
 
   return (
@@ -114,7 +155,7 @@ export function PluginsSection() {
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-0 sm:mb-2 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
+        <div className="mb-8 sm:mb-12 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
@@ -122,6 +163,48 @@ export function PluginsSection() {
             className="w-[85%] max-w-[250px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
           />
         </div>
+
+        {/* deVee Exclusive Plugin: 360 */}
+        <div className="relative w-full max-w-4xl mx-auto mt-4 mb-24 flex flex-col items-center">
+          {/* Badge */}
+          <div className="inline-block px-4 py-1 mb-6 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-md">
+            <span className="text-orange-400 text-[10px] font-bold tracking-[0.2em] uppercase">deVee Exclusive</span>
+          </div>
+
+          {/* Plugin Image */}
+          <div className="w-full relative px-4 sm:px-12 group">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 blur-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
+            <img 
+              src="/plugins/360_plugin.png" 
+              alt="deVee 360 Plugin"
+              className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative z-10 transition-transform duration-700 hover:scale-[1.02]"
+            />
+          </div>
+
+          {/* Text and Actions */}
+          <div className="flex flex-col items-center text-center mt-8 px-4 z-20">
+            <h3 className="text-3xl md:text-4xl font-black text-white tracking-wide mb-2 drop-shadow-md">
+              360° <span className="text-white/40 font-light text-2xl md:text-3xl">— Phase, per note.</span>
+            </h3>
+            <p className="text-white/60 text-sm md:text-base max-w-2xl leading-relaxed mb-8 font-light">
+              A fixed delay in milliseconds is a different phase angle at every note — so it's wrong the moment your bassline moves. <strong className="text-white">360</strong> works in degrees and re-picks the alignment on every kick hit, for whatever note the bass is playing.<br/><br/>
+              With 360 Analyzer, a zero-latency meter for the kick+bass bus. <span className="text-orange-400 font-bold">VST3 · AU · Free.</span>
+            </p>
+
+            <button
+              onClick={handleDownloadExclusive}
+              className="group relative flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 rounded-full shadow-[0_0_30px_rgba(249,115,22,0.4)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] transition-all duration-300"
+            >
+              <Download className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
+              <span className="font-bold uppercase tracking-widest text-sm text-white drop-shadow-md">
+                {user ? 'Download 360 Free' : 'Sign In To Download'}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Divider / Spacer before the carousel */}
+        <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12 hidden md:block mx-auto" />
 
         {/* Screen Reader Only List of Plugins */}
         <div className="sr-only">
