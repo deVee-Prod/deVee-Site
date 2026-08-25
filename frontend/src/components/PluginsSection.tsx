@@ -155,7 +155,7 @@ export function PluginsSection() {
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         
         {/* Section Title Image */}
-        <div className="mb-8 sm:mb-12 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
+        <div className="mb-0 sm:mb-2 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
           <img 
             src="/plugins/title.png" 
             alt="Plugins for Artists" 
@@ -165,11 +165,7 @@ export function PluginsSection() {
         </div>
 
         {/* deVee Exclusive Plugin: 360 */}
-        <div className="relative w-full max-w-4xl mx-auto mt-4 mb-24 flex flex-col items-center">
-          {/* Badge */}
-          <div className="inline-block px-4 py-1 mb-6 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-md">
-            <span className="text-orange-400 text-[10px] font-bold tracking-[0.2em] uppercase">deVee Exclusive</span>
-          </div>
+        <div className="relative w-full max-w-4xl mx-auto mt-0 md:mt-[-20px] mb-24 flex flex-col items-center">
 
           {/* Plugin Image */}
           <div className="w-full relative px-4 sm:px-12 group">
