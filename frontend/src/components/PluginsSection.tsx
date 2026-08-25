@@ -184,7 +184,7 @@ export function PluginsSection() {
             </h3>
             <p className="text-white/60 text-sm md:text-base max-w-2xl leading-relaxed mb-8 font-light">
               A fixed delay in milliseconds is a different phase angle at every note — so it's wrong the moment your bassline moves. <strong className="text-white">360</strong> works in degrees and re-picks the alignment on every kick hit, for whatever note the bass is playing.<br/><br/>
-              With 360 Analyzer, a zero-latency meter for the kick+bass bus. <span className="text-orange-400 font-bold">VST3 · AU · Free.</span>
+              With 360 Analyzer, a zero-latency meter for the kick+bass bus. <span className="text-orange-400 font-bold">VST3 · AU</span>
             </p>
 
             <button
@@ -193,7 +193,7 @@ export function PluginsSection() {
             >
               <Download className="w-5 h-5 text-white group-hover:-translate-y-1 transition-transform duration-300" />
               <span className="font-bold uppercase tracking-widest text-sm text-white drop-shadow-md">
-                {user ? 'Download 360 Free' : 'Sign In To Download'}
+                {user ? 'Download 360' : 'Sign In To Download'}
               </span>
             </button>
           </div>
