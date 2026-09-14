@@ -2,10 +2,10 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { router } from './router';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
+import { VideoSection } from './components/VideoSection';
 import { DriftingGridBackground } from './components/DriftingGridBackground';
 
-// Lazy load below-the-fold components to reduce initial JS bundle size and improve mobile LCP
-const VideoSection = lazy(() => import('./components/VideoSection').then(m => ({ default: m.VideoSection })));
+// Lazy load heavy below-the-fold components to reduce initial JS bundle size and improve mobile LCP
 const UtilitiesSection = lazy(() => import('./components/UtilitiesSection').then(m => ({ default: m.UtilitiesSection })));
 const PluginsSection = lazy(() => import('./components/PluginsSection').then(m => ({ default: m.PluginsSection })));
 const SocialSection = lazy(() => import('./components/SocialSection').then(m => ({ default: m.SocialSection })));
@@ -43,8 +43,8 @@ function App() {
         <Header />
         <main>
           <HeroSection />
+          <VideoSection />
           <Suspense fallback={null}>
-            <VideoSection />
             <UtilitiesSection />
             <PluginsSection />
             <SocialSection />
