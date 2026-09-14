@@ -67,7 +67,7 @@ export function DriftingGridBackground() {
       >
         {images.map((src, i) => (
           <div key={i} className="bg-drift-cell">
-            <img src={src} alt="" />
+            <img src={src} alt="" loading="lazy" decoding="async" />
           </div>
         ))}
       </div>
