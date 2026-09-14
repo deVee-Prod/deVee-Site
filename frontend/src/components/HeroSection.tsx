@@ -66,6 +66,8 @@ export function HeroSection() {
             <img
               src="/deVee Vingette 2 sized.webp"
               alt="deVee"
+              width="725"
+              height="697"
               fetchPriority="high"
               loading="eager"
               className="w-full h-auto mix-blend-screen"

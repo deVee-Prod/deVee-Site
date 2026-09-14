@@ -31,8 +31,10 @@ export function Header() {
           />
         ) : (
           <img
-            src="/deVee Sign Transperent-1.png"
+            src="/deVee-logo.webp"
             alt="deVee Logo"
+            width="48"
+            height="48"
             className="h-10 sm:h-12 w-auto object-contain"
           />
         )}
