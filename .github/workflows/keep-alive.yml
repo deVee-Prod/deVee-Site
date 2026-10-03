@@ -31,26 +31,26 @@ jobs:
             echo "✅ Auth service is healthy."
           fi
 
-      - name: Ping Supabase - Storage API (Database Activity)
+      - name: Ping Supabase - Real Database Query (PostgREST)
         run: |
-          echo "🔄 Ping 2/2: Querying Supabase Storage API (triggers DB activity)..."
+          echo "🔄 Ping 2/2: Running a real SELECT against the Postgres database via REST..."
           
           RESPONSE=$(curl -sS -w "\n%{http_code}" --request GET \
-            --url 'https://plndftoilwwgvilkwsun.supabase.co/storage/v1/bucket' \
+            --url 'https://plndftoilwwgvilkwsun.supabase.co/rest/v1/keepalive?select=id&limit=1' \
             --header 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs' \
             --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsbmRmdG9pbHd3Z3ZpbGt3c3VuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1MzI5NDgsImV4cCI6MjA5MzEwODk0OH0.Zwn4n3r1n7B0QnA9tsVRRq0FbNjzHKcnqGUoLAodCJs')
           
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | sed '$d')
           
-          echo "Storage API - HTTP: $HTTP_CODE"
+          echo "Database query - HTTP: $HTTP_CODE"
           echo "Response: $BODY"
           
           if [ "$HTTP_CODE" -ne 200 ]; then
-            echo "⚠️ Storage API returned non-200. Will retry below."
-          else
-            echo "✅ Storage API responded successfully (queries the storage.buckets DB table)."
+            echo "❌ Database query failed. Does the public.keepalive table exist?"
+            exit 1
           fi
+          echo "✅ Real database query succeeded."
 
       - name: Verify and Retry if Needed
         run: |
