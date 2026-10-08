@@ -157,7 +157,7 @@ export function PluginsSection() {
         {/* Section Title Image */}
         <div className="mb-0 flex justify-center mt-[-40px] md:mt-[-20px] relative z-20">
           <img 
-            src="/plugins/title.png" 
+            src="/plugins/title.webp" 
             alt="Plugins for Artists" 
             loading="lazy"
             className="w-[85%] max-w-[280px] md:max-w-[650px] h-auto object-contain drop-shadow-[0_0_20px_rgba(234,179,8,0.3)] mx-auto" 
@@ -171,8 +171,12 @@ export function PluginsSection() {
           <div className="w-full relative px-4 sm:px-12 group">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-orange-500/10 blur-3xl opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
             <img 
-              src="/plugins/360_plugin.png" 
+              src="/plugins/360_plugin.webp" 
               alt="deVee 360 Plugin"
+              width="1600"
+              height="1024"
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative z-10 transition-transform duration-700 hover:scale-[1.02]"
             />
           </div>

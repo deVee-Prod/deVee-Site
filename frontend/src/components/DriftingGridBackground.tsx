@@ -8,7 +8,7 @@ const IMGS = [
   '/bg-yali.webp',
   '/bg-fck-that.webp',
   '/bg-cat.webp',
-  '/bg-new-photo.jpg',
+  '/bg-new-photo.webp',
 ];
 
 // 3 sets of 16 — 8 images shuffled differently each set

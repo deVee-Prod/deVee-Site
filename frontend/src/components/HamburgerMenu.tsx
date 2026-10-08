@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, Menu } from 'lucide-react';
 import { navigateTo } from '../router';
-import { supabase } from '../supabaseClient'; 
+import { getSupabase } from '../supabaseLazy';
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -13,17 +13,18 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const checkUser = async () => {
+    let unsubscribe = () => {};
+    let cancelled = false;
+    getSupabase().then(async (supabase) => {
+      if (cancelled) return;
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
-    };
-    checkUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null);
+      });
+      unsubscribe = () => subscription.unsubscribe();
     });
-
-    return () => subscription.unsubscribe();
+    return () => { cancelled = true; unsubscribe(); };
   }, []);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
 
   const handleLogin = async () => {
     try {
+      const supabase = await getSupabase();
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -72,6 +74,7 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
 
   // פונקציית התנתקות חדשה
   const handleLogout = async () => {
+    const supabase = await getSupabase();
     await supabase.auth.signOut({ scope: 'global' }).catch(() => {});
     onClose();
   };

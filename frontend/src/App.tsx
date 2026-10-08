@@ -15,6 +15,20 @@ const Error404Article = lazy(() => import('./pages/Error404Article').then(m => (
 
 function App() {
   const [path, setPath] = useState(router.getCurrentPath());
+  // Mount below-the-fold sections only after the page has loaded and the browser is idle,
+  // so their JS (framer-motion etc.) doesn't compete with the hero's first paint.
+  const [belowFold, setBelowFold] = useState(false);
+
+  useEffect(() => {
+    const go = () => {
+      const ric = (window as any).requestIdleCallback as undefined | ((cb: () => void, o?: { timeout: number }) => void);
+      if (ric) ric(() => setBelowFold(true), { timeout: 1500 });
+      else setTimeout(() => setBelowFold(true), 200);
+    };
+    if (document.readyState === 'complete') go();
+    else window.addEventListener('load', go, { once: true });
+    return () => window.removeEventListener('load', go);
+  }, []);
 
   useEffect(() => {
     return router.subscribe(setPath);
@@ -44,15 +58,19 @@ function App() {
         <main>
           <HeroSection />
           <VideoSection />
-          <Suspense fallback={null}>
-            <UtilitiesSection />
-            <PluginsSection />
-            <SocialSection />
-          </Suspense>
+          {belowFold && (
+            <Suspense fallback={null}>
+              <UtilitiesSection />
+              <PluginsSection />
+              <SocialSection />
+            </Suspense>
+          )}
         </main>
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
+        {belowFold && (
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        )}
       </div>
     </div>
   );

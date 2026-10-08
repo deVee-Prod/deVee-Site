@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
 import { HamburgerMenu } from './HamburgerMenu';
 import { SiWhatsapp } from 'react-icons/si';
-import { supabase } from '../supabaseClient';
+import { getSupabase } from '../supabaseLazy';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
+    let unsubscribe = () => {};
+    let cancelled = false;
+    getSupabase().then((supabase) => {
+      if (cancelled) return;
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
+      });
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
+      });
+      unsubscribe = () => subscription.unsubscribe();
     });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setAvatarUrl(session?.user?.user_metadata?.avatar_url ?? null);
-    });
-    return () => subscription.unsubscribe();
+    return () => { cancelled = true; unsubscribe(); };
   }, []);
 
   return (
