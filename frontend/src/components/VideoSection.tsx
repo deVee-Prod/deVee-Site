@@ -233,7 +233,7 @@ export function VideoSection() {
                   aria-label={label}
                   onClick={e => { if (!isActive) { e.preventDefault(); goToPf(i); } }}
                 >
-                  <Icon className="pf-icon" />
+                  <Icon className="pf-icon" aria-hidden="true" />
                 </a>
               );
             })}

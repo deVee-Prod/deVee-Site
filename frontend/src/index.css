@@ -269,20 +269,24 @@ html {
   position: absolute;
   bottom: 1.5rem;
   left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px;
+  display: flex; gap: 0;
   z-index: 10;
 }
+/* 24x24 tap target (WCAG 2.5.8); the visible dot stays 8px via padding + content-box background */
 .vcf-dot {
-  width: 8px; height: 8px;
+  box-sizing: border-box;
+  width: 24px; height: 24px;
+  padding: 8px;
   border-radius: 50%;
   background: rgba(255,255,255,0.18);
-  border: none; padding: 0;
+  background-clip: content-box;
+  border: none;
   cursor: pointer;
-  transition: background 0.25s, transform 0.25s;
+  transition: background 0.25s, padding 0.25s;
 }
 .vcf-dot-active {
-  background: oklch(0.70 0.20 45);
-  transform: scale(1.4);
+  background-color: oklch(0.70 0.20 45);
+  padding: 6.4px; /* visible dot 11.2px = previous scale(1.4) */
 }
 
 @media (max-width: 640px) {
@@ -461,3 +465,9 @@ html {
   outline-offset: 2px !important;
 }
 
+
+/* Skip-link target: <main> is focusable programmatically but shouldn't show a ring */
+main#main-content:focus,
+main#main-content:focus-visible {
+  outline: none !important;
+}

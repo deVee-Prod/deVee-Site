@@ -14,7 +14,7 @@ export function DirectLineBanner() {
           >
             {/* Large Orange Circle with Black WhatsApp Icon */}
             <div className="w-24 h-24 sm:w-30 sm:h-30 rounded-full bg-orange-500 flex items-center justify-center transition-all duration-300 ease-in-out group-hover:bg-orange-600">
-              <SiWhatsapp className="w-10 h-10 sm:w-12 sm:h-12 text-black" />
+              <SiWhatsapp className="w-10 h-10 sm:w-12 sm:h-12 text-black" aria-hidden="true" />
             </div>
             {/* Text Label */}
             <span className="text-orange-500 font-bold text-base sm:text-lg tracking-[2px] uppercase">

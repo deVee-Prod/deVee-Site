@@ -56,7 +56,7 @@ export function Header() {
             aria-label="Contact on WhatsApp"
           >
             {/* Reduced icon size: w-4 h-4 on mobile, w-5 h-5 on larger screens */}
-            <SiWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" />
+            <SiWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
           </a>
 
           {/* Hamburger Menu */}

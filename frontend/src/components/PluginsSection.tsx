@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { supabase } from '../supabaseClient';
+import { useNoTabStop } from '../utils/useNoTabStop';
 
 const plugins = [
   { id: 'phase', name: 'deVee Phase', img: '/plugins/phase.webp', desc: 'Select which channel to invert.' },
@@ -11,6 +12,7 @@ const plugins = [
 ];
 
 export function PluginsSection() {
+  const decorativeRef = useNoTabStop<HTMLDivElement>();
   const [activeIndex, setActiveIndex] = useState(0);
   const [user, setUser] = useState<any>(null);
 
@@ -219,7 +221,7 @@ export function PluginsSection() {
         </div>
 
         {/* 3D Carousel (Hidden from screen readers) */}
-        <div className="relative w-full max-w-5xl h-[280px] sm:h-[400px] md:h-[480px] flex justify-center items-center perspective-[1200px] mb-0 transform-gpu mt-[-20px] md:mt-0" aria-hidden="true">
+        <div ref={decorativeRef} className="relative w-full max-w-5xl h-[280px] sm:h-[400px] md:h-[480px] flex justify-center items-center perspective-[1200px] mb-0 transform-gpu mt-[-20px] md:mt-0" aria-hidden="true">
           {plugins.map((plugin, index) => {
             const variant = getVariant(index);
             const isActive = variant === 'center';

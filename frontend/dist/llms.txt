@@ -1,21 +1,34 @@
-# deVee Studio
+# deVee Music
 
-## About Us
-deVee Studio is an exclusive, high-end recording studio and music production company based in Even Yehuda (Sharon region), Israel. Founded and operated by a professional music producer and sound engineer, the studio is designed to meet the highest industry standards for artists and creators who refuse to compromise on their sound.
+> deVee Music is the official site of David "deVee" Ben David, a music producer and sound engineer based in Even Yehuda, Israel, and home of deVee Boutique Label. It offers recording, production, mixing and mastering services, plus free tools and exclusive plugins for artists.
 
-## Core Services
-1. Music Production: Full-scale music production from scratch for artists and brands.
-2. Recording: Premium vocal and instrument recording in a meticulously acoustically treated environment.
-3. Mixing & Mastering: Heavy-hitting, precise, and tight mixing and mastering tailored to modern streaming standards.
-4. Artist Development: Consulting, global digital distribution, and artistic guidance.
+deVee Music combines analog warmth and digital precision in a personalized boutique studio experience. Tagline: "Let's Do Music."
 
-## Location
-Even Yehuda, HaSharon region, Israel.
+## Services
 
-## Contact & Links
-Website: https://devee-music.com
-Instagram: https://www.instagram.com/devee_prod
-SoundBetter Profile: https://soundbetter.com/profiles/650261-devee_prod
+- [Music Production](https://www.devee-music.com/): Full-scale music production from scratch for artists and brands.
+- [Recording](https://www.devee-music.com/): Premium vocal and instrument recording in an acoustically treated studio.
+- [Mixing & Mastering](https://www.devee-music.com/): Precise, modern mixing and mastering tailored to streaming standards.
+- [Artist Development](https://www.devee-music.com/): Consulting, global digital distribution, and artistic guidance.
 
-## Vibe & Philosophy
-"Let's Do Music." deVee Studio is the ultimate home for creators, prioritizing analog warmth, digital precision, and a personalized boutique experience over mass-produced generic sound.
+## Tools & Plugins
+
+- [Tools for Artists](https://www.devee-music.com/#utilities): Free web tools for music creators.
+- [Plugins for Artists](https://www.devee-music.com/): Audio plugins, including the deVee Exclusive plugin 360 (sign-in required to download).
+
+## Pages
+
+- [Home](https://www.devee-music.com/): Latest releases, tools and plugins.
+- [Info](https://www.devee-music.com/info): About deVee Music.
+- [Accessibility Statement](https://www.devee-music.com/nagishut.html): Accessibility information (Hebrew).
+- [Privacy Policy](https://www.devee-music.com/privacy.html): Privacy policy.
+
+## Contact
+
+- [Instagram](https://www.instagram.com/devee_prod): Updates and releases.
+- [SoundBetter Profile](https://soundbetter.com/profiles/650261-devee_prod): Services and reviews.
+- [WhatsApp](https://wa.me/972542021618): Direct line for inquiries.
+
+## Optional
+
+- [Location](https://www.devee-music.com/): Even Yehuda, HaSharon region, Israel.

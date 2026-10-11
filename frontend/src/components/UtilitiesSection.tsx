@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNoTabStop } from '../utils/useNoTabStop';
 
 const GOLD = "rgba(234, 179, 8, 0.85)";
 
@@ -476,6 +477,7 @@ function MobileTools3D() {
 }
 
 export function UtilitiesSection() {
+  const decorativeRef = useNoTabStop<HTMLDivElement>();
   return (
     <section className="pt-0 pb-12 sm:py-12" id="utilities">
       <div className="container mx-auto px-4">
@@ -507,7 +509,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Unified Solar System for Desktop and Mobile (Hidden from screen readers) */}
-        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16" aria-hidden="true">
+        <div ref={decorativeRef} className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16" aria-hidden="true">
           <div className="hidden md:block w-full">
             <SolarSystem />
           </div>

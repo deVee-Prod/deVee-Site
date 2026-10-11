@@ -21,7 +21,7 @@ export function Footer() {
             aria-label="Instagram profile"
             className="inline-flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
           >
-            <SiInstagram className="w-5 h-5" />
+            <SiInstagram className="w-5 h-5" aria-hidden="true" />
           </a>
         </div>
 

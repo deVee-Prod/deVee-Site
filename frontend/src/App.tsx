@@ -55,7 +55,7 @@ function App() {
       <DriftingGridBackground />
       <div className="relative z-10">
         <Header />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <HeroSection />
           <VideoSection />
           {belowFold && (
