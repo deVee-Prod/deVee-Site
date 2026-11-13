@@ -18,6 +18,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
+        info: path.resolve(__dirname, 'info/index.html'),
         error404: path.resolve(__dirname, 'releases/error-404/index.html')
       }
     }

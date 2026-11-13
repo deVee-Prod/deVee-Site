@@ -174,12 +174,16 @@ export function HamburgerMenu({ isOpen, onClose, onToggle }: HamburgerMenuProps)
           >
             Instagram
           </a>
-          <button
-            onClick={() => handleNavigation('/info')}
+          <a
+            href="/info"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavigation('/info');
+            }}
             className="text-2xl font-bold text-white hover:text-primary transition-colors duration-300 tracking-wider"
           >
             Info
-          </button>
+          </a>
 
           <div className="pt-36 pb-12 md:pt-0 md:pb-0 md:absolute md:bottom-10 md:left-0 md:right-0 flex flex-col items-center gap-4">
             <a

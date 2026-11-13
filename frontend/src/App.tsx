@@ -34,7 +34,7 @@ function App() {
     return router.subscribe(setPath);
   }, []);
 
-  if (path === '/info') {
+  if (path === '/info' || path === '/info/') {
     return (
       <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
         <InfoPage />
