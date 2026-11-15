@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { SiWhatsapp } from 'react-icons/si';
-import { ArrowLeft, ChevronDown, Phone } from 'lucide-react';
+import { ArrowLeft, ChevronDown, Mic, Music, Phone, SlidersHorizontal } from 'lucide-react';
 import { Footer } from '../components/Footer';
 
 const DEFAULT_WHATSAPP_MESSAGE =
@@ -26,23 +26,32 @@ const QUICK_TOPICS = [
 
 const SERVICES = [
   {
+    icon: Mic,
+    tag: 'אירועים ומתנות',
     title: 'שיר לאירועים ומתנות',
     description:
       'בר מצווה, בת מצווה, חתונה או שיר הפתעה במתנה – הקלטה בסבלנות ובאווירה נינוחה, עם הכוונה קולית, עריכה ותיקון זיופים עדין שנשמע טבעי לגמרי.',
+    highlights: ['הכוונה קולית סבלנית', 'תיקון זיופים טבעי'],
     ctaLabel: 'לתיאום שיר לאירוע',
     whatsappText: 'היי, אשמח לפרטים על הקלטת שיר לאירוע / מתנה',
   },
   {
+    icon: Music,
+    tag: 'יוצרים ואמנים',
     title: 'הפקה מוזיקלית ועיבוד',
     description:
       'בניית הפקה מקורית מאפס שמותאמת בדיוק לקול ולכיוון שלך – מהסקיצה הראשונה ועד עיבוד שלם ומדויק שמרגיש נכון מהתו הראשון.',
+    highlights: ['עיבוד מותאם אישית', 'ליווי מהסקיצה למאסטר'],
     ctaLabel: 'לדבר על הפקה',
     whatsappText: 'היי, אשמח לשמוע פרטים על הפקה מוזיקלית',
   },
   {
+    icon: SlidersHorizontal,
+    tag: 'סאונד בינלאומי',
     title: 'הקלטות, מיקס ומאסטרינג',
     description:
       'הקלטת שירה וכלים באקוסטיקה מוקפדת, מיקס עמוק ומאסטרינג בסטנדרט בינלאומי לספוטיפיי, יוטיוב והופעות.',
+    highlights: ['אקוסטיקה מוקפדת', 'מוכן לספוטיפיי ורדיו'],
     ctaLabel: 'לפרטים על הקלטה ומיקס',
     whatsappText: 'היי, אשמח לפרטים על הקלטה / מיקס ומאסטרינג',
   },
@@ -304,28 +313,63 @@ export function InfoPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {SERVICES.map(({ title, description, ctaLabel, whatsappText }) => (
+            {SERVICES.map(({ icon: Icon, tag, title, description, highlights, ctaLabel, whatsappText }) => (
               <article
                 key={title}
-                className="@container group rounded-2xl border border-white/10 bg-white/[0.025] hover:bg-white/[0.045] hover:border-orange-500/35 p-6 sm:p-7 flex flex-col justify-between gap-6 transition-all duration-200"
+                className="@container group relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.055] to-white/[0.015] hover:border-orange-500/45 shadow-[0_18px_50px_rgba(0,0,0,0.65)] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-all duration-200"
               >
-                <div className="space-y-3">
-                  <h3 className="text-xl font-bold text-white leading-snug">{title}</h3>
-                  <p className="text-sm sm:text-base text-white/75 leading-relaxed">
-                    {description}
-                  </p>
+                {/* Top specular highlight + warm corner glow */}
+                <div
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/55 to-transparent"
+                  aria-hidden="true"
+                />
+                <div
+                  className="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-orange-500/12 blur-2xl group-hover:bg-orange-500/20 transition-colors"
+                  aria-hidden="true"
+                />
+
+                <div className="relative z-10 space-y-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/25 to-orange-950/40 text-orange-400 shadow-[0_0_24px_rgba(249,115,22,0.2)]">
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[11px] font-medium text-orange-300">
+                      {tag}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <h3 className="text-xl font-bold text-white leading-snug">{title}</h3>
+                    <p className="text-sm sm:text-base text-white/75 leading-relaxed">
+                      {description}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {highlights.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs text-white/70"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <footer className="pt-3 border-t border-white/[0.07]">
+                <footer className="relative z-10 pt-1">
                   <a
                     href={makeWhatsappUrl(whatsappText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+                    className="flex items-center justify-between w-full rounded-xl border border-orange-500/25 bg-orange-500/[0.08] hover:bg-orange-500/20 px-4 py-2.5 text-sm font-semibold text-orange-200 transition-all duration-200"
                   >
-                    <span>{ctaLabel}</span>
+                    <span className="inline-flex items-center gap-2">
+                      <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                      <span>{ctaLabel}</span>
+                    </span>
                     <ArrowLeft
-                      className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1"
+                      className="w-4 h-4 text-orange-400 transition-transform duration-200 group-hover:-translate-x-1"
                       aria-hidden="true"
                     />
                   </a>
