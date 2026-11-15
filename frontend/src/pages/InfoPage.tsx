@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SiWhatsapp } from 'react-icons/si';
 import { ArrowLeft, Phone } from 'lucide-react';
 import { Header } from '../components/Header';
@@ -35,6 +36,9 @@ const SERVICES = [
 ];
 
 export function InfoPage() {
+  useEffect(() => {
+    document.title = 'deVee Studio - אולפן הקלטות באזור השרון';
+  }, []);
   return (
     <div
       className="relative min-h-screen bg-black text-white overflow-x-clip selection:bg-orange-500 selection:text-black"
