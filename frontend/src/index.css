@@ -471,3 +471,31 @@ main#main-content:focus,
 main#main-content:focus-visible {
   outline: none !important;
 }
+
+/* Info page native FAQ accordion */
+.info-faq details > summary {
+  list-style: none;
+}
+.info-faq details > summary::-webkit-details-marker {
+  display: none;
+}
+.info-faq details .info-faq-chevron {
+  transform: rotate(90deg);
+}
+.info-faq details[open] .info-faq-chevron {
+  transform: rotate(0deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .info-faq details .info-faq-chevron {
+    transition: transform 0.2s ease;
+  }
+  .info-faq details::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+    transition: block-size 0.28s ease-in-out, content-visibility 0.28s ease-in-out allow-discrete;
+  }
+  .info-faq details:not([open])::details-content {
+    block-size: 0;
+  }
+}
