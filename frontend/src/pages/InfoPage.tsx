@@ -168,13 +168,9 @@ export function InfoPage() {
         </header>
 
         {/* Spotlight Hero with Studio Photo Visible Above the Fold (Desktop & Mobile) */}
-        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-3 pb-10 sm:pt-8 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-x-10 lg:gap-y-5 items-start">
+        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-5 pb-10 sm:pt-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-x-10 lg:gap-y-5 items-start">
           {/* Block 1 (Top on Mobile, Top-Right on Desktop): Brand + Headline + Subtitle */}
           <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 text-right space-y-3 sm:space-y-4">
-            <div className="inline-flex items-center rounded-full border border-white/15 bg-black/35 backdrop-blur-md px-3.5 py-1 text-xs sm:text-sm text-orange-100/90">
-              אבן יהודה · נתניה והשרון
-            </div>
-
             <div className="space-y-1.5">
               <p
                 dir="ltr"
