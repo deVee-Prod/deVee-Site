@@ -1,8 +1,8 @@
 # deVee Music
 
-> deVee Music is the official site of David "deVee" Ben David, a music producer and sound engineer based in Even Yehuda, Israel, and home of deVee Boutique Label. It offers recording, production, mixing and mastering services, plus free tools and exclusive plugins for artists.
+> deVee Music is the official international site of David "deVee" Ben David, a music producer and mixing & mastering engineer, and home of deVee Boutique Label — offering music production, releases, free artist tools, and exclusive audio plugins.
 
-deVee Music combines analog warmth and digital precision in a personalized boutique studio experience. Tagline: "Let's Do Music."
+deVee Music combines analog warmth and digital precision with tagline "Let's Do Music."
 
 ## Services
 

@@ -84,7 +84,7 @@ export function InfoPage() {
   const [draftMessage, setDraftMessage] = useState('');
 
   useEffect(() => {
-    document.title = 'deVee Studio - אולפן הקלטות באזור השרון';
+    document.title = 'אולפן הקלטות והפקה באזור השרון | deVee Studio';
   }, []);
 
   const handleConciergeSubmit = (e: FormEvent) => {
