@@ -108,12 +108,12 @@ export function InfoPage() {
             height={937}
             fetchPriority="high"
             loading="eager"
-            className="absolute inset-x-0 -top-12 h-[23rem] sm:inset-0 sm:h-full w-full object-cover object-[50%_28%] sm:object-center scale-105 blur-[3px] sm:blur-[5px] opacity-65 sm:opacity-45"
+            className="absolute inset-0 w-full h-full object-cover object-[50%_15%] sm:object-center scale-105 blur-[2.5px] sm:blur-[5px] opacity-60 sm:opacity-45"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0807]/20 via-[#0a0807]/50 to-[#0a0807] sm:from-[#0a0807]/60 sm:via-[#0a0807]/45" />
-          {/* Subtle square grid */}
+          {/* Subtle square grid (desktop only) */}
           <div
-            className="absolute inset-0 opacity-[0.05]"
+            className="hidden sm:block absolute inset-0 opacity-[0.05]"
             style={{
               backgroundImage:
                 'linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)',
@@ -187,11 +187,11 @@ export function InfoPage() {
         </header>
 
         {/* Centered Hero over Blurred Studio Background */}
-        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-6 pb-7 sm:pt-16 sm:pb-24 text-center space-y-6">
+        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-5 pb-6 sm:pt-16 sm:pb-24 text-center space-y-4 sm:space-y-6">
           <div className="space-y-2">
             <p
               dir="ltr"
-              className="text-center text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+              className="hidden sm:block text-center text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
             >
               deVee <span className="text-orange-500">Studio</span>
             </p>
@@ -213,10 +213,10 @@ export function InfoPage() {
             וגם להקלטות שיר לאירועים ומתנות.
           </p>
 
-          {/* Interactive Dark Glass Quick WhatsApp Concierge */}
+          {/* Interactive Dark Glass Quick WhatsApp Concierge (desktop) */}
           <form
             onSubmit={handleConciergeSubmit}
-            className="max-w-xl mx-auto rounded-2xl border border-white/15 bg-black/65 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.85)] p-3.5 sm:p-4 text-right space-y-3"
+            className="hidden sm:block max-w-xl mx-auto rounded-2xl border border-white/15 bg-black/65 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.85)] p-3.5 sm:p-4 text-right space-y-3"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-white/[0.08]">
               <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-300">
@@ -263,20 +263,20 @@ export function InfoPage() {
             </div>
           </form>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1">
             <a
               href={makeWhatsappUrl(draftMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-950/35 hover:bg-orange-900/50 px-6 py-2.5 text-sm font-medium text-orange-100 transition-colors duration-200"
+              className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-500 sm:bg-orange-950/35 hover:bg-orange-400 sm:hover:bg-orange-900/50 px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-bold sm:font-medium text-black sm:text-orange-100 transition-colors duration-200 shadow-[0_0_24px_rgba(249,115,22,0.35)] sm:shadow-none"
             >
-              <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+              <SiWhatsapp className="w-4 h-4 text-black sm:text-orange-400" aria-hidden="true" />
               <span>פתיחת צ׳אט בוואטסאפ</span>
             </a>
 
             <a
               href="tel:+972542021618"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.08] px-5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-200"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 sm:border-white/12 bg-black/45 sm:bg-white/[0.03] hover:bg-white/[0.08] px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-medium text-white/90 sm:text-white/85 backdrop-blur-md transition-colors duration-200"
             >
               <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
               <span dir="ltr">054-202-1618</span>
@@ -312,39 +312,51 @@ export function InfoPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-5 max-md:rounded-2xl max-md:border max-md:border-white/10 max-md:bg-white/[0.025] max-md:divide-y max-md:divide-white/[0.08] max-md:overflow-hidden">
             {SERVICES.map(({ icon: Icon, tag, title, description, highlights, ctaLabel, whatsappText }) => (
               <article
                 key={title}
-                className="@container group relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.055] to-white/[0.015] hover:border-orange-500/45 shadow-[0_18px_50px_rgba(0,0,0,0.65)] p-4 md:p-7 flex flex-col justify-between gap-3 md:gap-6 transition-all duration-200"
+                className="@container group relative overflow-hidden rounded-none md:rounded-2xl border-0 md:border md:border-white/12 bg-transparent md:bg-gradient-to-b md:from-white/[0.055] md:to-white/[0.015] md:hover:border-orange-500/45 shadow-none md:shadow-[0_18px_50px_rgba(0,0,0,0.65)] p-4 md:p-7 flex flex-col justify-between gap-2 md:gap-6 transition-all duration-200"
               >
-                {/* Top specular highlight + warm corner glow */}
+                {/* Top specular highlight + warm corner glow (desktop only) */}
                 <div
-                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/55 to-transparent"
+                  className="hidden md:block pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/55 to-transparent"
                   aria-hidden="true"
                 />
                 <div
-                  className="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-orange-500/12 blur-2xl group-hover:bg-orange-500/20 transition-colors"
+                  className="hidden md:block pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-orange-500/12 blur-2xl group-hover:bg-orange-500/20 transition-colors"
                   aria-hidden="true"
                 />
 
-                <div className="relative z-10 space-y-2.5 md:space-y-4">
-                  {/* On mobile: icon + title inline on the right, tag pill on the left. On desktop: icon on right, tag on left, title below */}
+                <div className="relative z-10 space-y-1.5 md:space-y-4">
                   <div className="flex items-center justify-between gap-2.5">
                     <div className="flex items-center gap-2.5">
-                      <div className="inline-flex items-center justify-center w-9 h-9 md:w-11 md:h-11 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/25 to-orange-950/40 text-orange-400 shadow-[0_0_24px_rgba(249,115,22,0.2)] shrink-0">
+                      <div className="inline-flex items-center justify-center w-8 h-8 md:w-11 md:h-11 rounded-lg md:rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/25 to-orange-950/40 text-orange-400 md:shadow-[0_0_24px_rgba(249,115,22,0.2)] shrink-0">
                         <Icon className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
                       </div>
-                      <h3 className="md:hidden text-base font-bold text-white leading-snug">{title}</h3>
+                      <h3 className="md:hidden text-[15px] font-bold text-white leading-snug">{title}</h3>
                     </div>
-                    <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[10px] md:text-[11px] font-medium text-orange-300 shrink-0">
+
+                    {/* Desktop category pill */}
+                    <span className="hidden md:inline-flex rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[11px] font-medium text-orange-300 shrink-0">
                       {tag}
                     </span>
+
+                    {/* Mobile compact WhatsApp link */}
+                    <a
+                      href={makeWhatsappUrl(whatsappText)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="md:hidden inline-flex items-center gap-1 text-xs font-semibold text-orange-400 hover:text-orange-300 shrink-0"
+                    >
+                      <span>לתיאום</span>
+                      <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+                    </a>
                   </div>
 
-                  <div className="space-y-1.5 md:space-y-2.5">
+                  <div className="space-y-1.5 md:space-y-2.5 pr-10 md:pr-0">
                     <h3 className="hidden md:block text-xl font-bold text-white leading-snug">{title}</h3>
-                    <p className="text-xs sm:text-sm md:text-base text-white/75 leading-relaxed">
+                    <p className="text-xs sm:text-sm md:text-base text-white/70 md:text-white/75 leading-relaxed">
                       {description}
                     </p>
                   </div>
@@ -361,19 +373,19 @@ export function InfoPage() {
                   </div>
                 </div>
 
-                <footer className="relative z-10 pt-0.5 md:pt-1">
+                <footer className="hidden md:block relative z-10 pt-1">
                   <a
                     href={makeWhatsappUrl(whatsappText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between w-full rounded-xl border border-orange-500/25 bg-orange-500/[0.08] hover:bg-orange-500/20 px-3.5 py-2 md:px-4 md:py-2.5 text-xs md:text-sm font-semibold text-orange-200 transition-all duration-200"
+                    className="flex items-center justify-between w-full rounded-xl border border-orange-500/25 bg-orange-500/[0.08] hover:bg-orange-500/20 px-4 py-2.5 text-sm font-semibold text-orange-200 transition-all duration-200"
                   >
                     <span className="inline-flex items-center gap-2">
-                      <SiWhatsapp className="w-3.5 h-3.5 md:w-4 md:h-4 text-orange-400" aria-hidden="true" />
+                      <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
                       <span>{ctaLabel}</span>
                     </span>
                     <ArrowLeft
-                      className="w-3.5 h-3.5 md:w-4 md:h-4 text-orange-400 transition-transform duration-200 group-hover:-translate-x-1"
+                      className="w-4 h-4 text-orange-400 transition-transform duration-200 group-hover:-translate-x-1"
                       aria-hidden="true"
                     />
                   </a>
