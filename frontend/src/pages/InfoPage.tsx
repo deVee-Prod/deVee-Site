@@ -121,25 +121,23 @@ export function InfoPage() {
         </div>
 
         {/* Dedicated Clean Top Bar */}
-        <header className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-5 pb-3">
+        <header className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-4 pb-2 sm:pt-5 sm:pb-3">
           <nav
             aria-label="ניווט בעמוד"
             className="flex items-center justify-between gap-4"
           >
             <a
               href="#main-content"
-              className="inline-flex items-center gap-2.5 text-white hover:opacity-90 transition-opacity"
+              aria-label="deVee Studio"
+              className="inline-flex items-center hover:opacity-90 transition-opacity"
             >
               <img
                 src="/favicon-48-v2.png"
                 alt="deVee Studio"
-                width={32}
-                height={32}
-                className="w-8 h-8 rounded-lg object-cover border border-white/15"
+                width={36}
+                height={36}
+                className="w-9 h-9 rounded-full object-cover block"
               />
-              <span dir="ltr" className="text-base sm:text-lg font-extrabold tracking-tight">
-                deVee <span className="text-orange-400">Studio</span>
-              </span>
             </a>
 
             <div className="hidden md:flex items-center gap-7 text-sm text-white/80">
@@ -161,40 +159,70 @@ export function InfoPage() {
               href={makeWhatsappUrl(DEFAULT_WHATSAPP_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-orange-400/35 bg-orange-950/50 hover:bg-orange-900/60 px-4 py-2 text-xs sm:text-sm font-medium text-orange-100 backdrop-blur-md transition-colors duration-200"
+              aria-label="דברו איתי בוואטסאפ"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_4px_18px_rgba(37,211,102,0.3)] transition-all duration-200 hover:scale-105"
             >
-              <span>דברו איתי</span>
-              <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
+              <SiWhatsapp className="w-5 h-5" aria-hidden="true" />
             </a>
           </nav>
         </header>
 
-        {/* Spotlight Hero with Studio Photo Above the Fold */}
-        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-6 pb-12 sm:pt-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Right column (RTL first): Headline & Quick WhatsApp Concierge */}
-          <div className="lg:col-span-6 lg:order-1 text-right space-y-5 sm:space-y-6">
-            <div className="inline-flex items-center rounded-full border border-white/15 bg-black/35 backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm text-orange-100/90">
+        {/* Spotlight Hero with Studio Photo Visible Above the Fold (Desktop & Mobile) */}
+        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-3 pb-10 sm:pt-8 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-x-10 lg:gap-y-5 items-start">
+          {/* Block 1 (Top on Mobile, Top-Right on Desktop): Brand + Headline + Subtitle */}
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 text-right space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center rounded-full border border-white/15 bg-black/35 backdrop-blur-md px-3.5 py-1 text-xs sm:text-sm text-orange-100/90">
               אבן יהודה · נתניה והשרון
             </div>
 
-            <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2rem,1.25rem+2.3vw,3.35rem)]">
-              אולפן הקלטות והפקה
-              <br />
-              <span
-                className="text-orange-500 font-black px-1"
-                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
+            <div className="space-y-1.5">
+              <p
+                dir="ltr"
+                className="text-right text-xl sm:text-2xl font-extrabold tracking-tight text-white"
               >
-                בסטנדרט אחר
-              </span>{' '}
-              באזור השרון.
-            </h1>
+                deVee <span className="text-orange-500">Studio</span>
+              </p>
+              <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(1.85rem,1.25rem+2.1vw,3.15rem)]">
+                אולפן הקלטות והפקה
+                <br />
+                <span
+                  className="text-orange-500 font-black px-1"
+                  style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
+                >
+                  בסטנדרט אחר
+                </span>{' '}
+                באזור השרון.
+              </h1>
+            </div>
 
-            <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-lg text-white/80 leading-relaxed max-w-xl">
               מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
               וגם להקלטות שיר לאירועים ומתנות.
             </p>
+          </div>
 
-            {/* Interactive Dark Glass Quick WhatsApp Concierge */}
+          {/* Block 2 (Second on Mobile in Hero, Left Column on Desktop): Real Studio Photo */}
+          <div
+            id="studio"
+            className="lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2 lg:self-center"
+          >
+            <div className="max-w-md sm:max-w-lg mx-auto">
+              <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_24px_75px_rgba(0,0,0,0.9)]">
+                <img
+                  src="/studio-room.jpg"
+                  alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
+                  width={1400}
+                  height={937}
+                  fetchPriority="high"
+                  loading="eager"
+                  className="w-full h-auto aspect-[1400/937] object-cover block"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Block 3 (Below Photo on Mobile, Bottom-Right on Desktop): Interactive WhatsApp Concierge */}
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 text-right space-y-4">
             <form
               onSubmit={handleConciergeSubmit}
               className="max-w-xl rounded-2xl border border-white/15 bg-black/55 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.8)] p-3.5 sm:p-4 text-right space-y-3"
@@ -244,7 +272,7 @@ export function InfoPage() {
               </div>
             </form>
 
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            <div className="flex flex-wrap items-center gap-3">
               <a
                 href={makeWhatsappUrl(draftMessage)}
                 target="_blank"
@@ -262,23 +290,6 @@ export function InfoPage() {
                 <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
                 <span dir="ltr">054-202-1618</span>
               </a>
-            </div>
-          </div>
-
-          {/* Left column (RTL second): Real Studio Photo inside Hero */}
-          <div id="studio" className="lg:col-span-6 lg:order-2">
-            <div className="max-w-md sm:max-w-lg mx-auto">
-              <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_24px_75px_rgba(0,0,0,0.9)]">
-                <img
-                  src="/studio-room.jpg"
-                  alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
-                  width={1400}
-                  height={937}
-                  fetchPriority="high"
-                  loading="eager"
-                  className="w-full h-auto aspect-[1400/937] object-cover block"
-                />
-              </div>
             </div>
           </div>
         </section>
