@@ -120,23 +120,23 @@ export function InfoPage() {
           />
         </div>
 
-        {/* Dedicated Clean Top Bar */}
-        <header className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-4 pb-2 sm:pt-5 sm:pb-3">
+        {/* Dedicated Clean Top Bar — spans to edges on desktop like main Header */}
+        <header className="relative z-30">
           <nav
             aria-label="ניווט בעמוד"
-            className="flex items-center justify-between gap-4"
+            className="container mx-auto md:max-w-none px-4 sm:px-6 pt-4 sm:pt-6 pb-1 sm:pb-2 flex items-center justify-between gap-4"
           >
             <a
               href="#main-content"
               aria-label="deVee Studio"
-              className="inline-flex items-center hover:opacity-90 transition-opacity"
+              className="inline-flex items-center hover:opacity-90 transition-opacity shrink-0"
             >
               <img
-                src="/favicon-48-v2.png"
-                alt="deVee Studio"
-                width={36}
-                height={36}
-                className="w-9 h-9 rounded-full object-cover block"
+                src="/deVee-logo.webp"
+                alt="deVee Logo"
+                width={48}
+                height={48}
+                className="h-10 sm:h-12 w-auto object-contain"
               />
             </a>
 
@@ -160,9 +160,9 @@ export function InfoPage() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="דברו איתי בוואטסאפ"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_4px_18px_rgba(37,211,102,0.3)] transition-all duration-200 hover:scale-105"
+              className="flex items-center justify-center bg-[#25D366] text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-all duration-300 hover:scale-110 active:scale-95 shadow-[0_0_15px_rgba(37,211,102,0.3)] shrink-0"
             >
-              <SiWhatsapp className="w-5 h-5" aria-hidden="true" />
+              <SiWhatsapp className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
             </a>
           </nav>
         </header>
