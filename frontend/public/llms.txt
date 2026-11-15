@@ -20,7 +20,7 @@ deVee Music combines analog warmth and digital precision in a personalized bouti
 ## Pages
 
 - [Home](https://www.devee-music.com/): Latest releases, tools and plugins.
-- [Info](https://www.devee-music.com/info): About deVee Music.
+- [Info & Recording Studio (deVee Studio)](https://www.devee-music.com/info): Hebrew studio overview, event & gift song recordings, and direct WhatsApp contact.
 - [Accessibility Statement](https://www.devee-music.com/nagishut.html): Accessibility information (Hebrew).
 - [Privacy Policy](https://www.devee-music.com/privacy.html): Privacy policy.
 
