@@ -267,7 +267,7 @@ export function InfoPage() {
 
           {/* Left column (RTL second): Real Studio Photo inside Hero */}
           <div id="studio" className="lg:col-span-6 lg:order-2">
-            <div className="max-w-md sm:max-w-lg mx-auto space-y-2.5">
+            <div className="max-w-md sm:max-w-lg mx-auto">
               <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_24px_75px_rgba(0,0,0,0.9)]">
                 <img
                   src="/studio-room.jpg"
@@ -278,10 +278,6 @@ export function InfoPage() {
                   loading="eager"
                   className="w-full h-auto aspect-[1400/937] object-cover block"
                 />
-              </div>
-              <div className="flex items-center justify-between text-xs sm:text-sm text-white/50 px-1">
-                <span>חדר הבקרה וההקלטות · אבן יהודה</span>
-                <span dir="ltr">deVee Studio</span>
               </div>
             </div>
           </div>
