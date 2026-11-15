@@ -66,7 +66,7 @@ const FAQS = [
   {
     question: 'איפה האולפן ממוקם והאם יש חניה?',
     answer:
-      'האולפן נמצא באבן יהודה (דקות נסיעה מנתניה, רעננה, כפר סבא, הרצליה והיישובים מסביב), עם חניה נוחה ופרטית צמודה למקום.',
+      'האולפן נמצא באזור השרון (ליד נתניה, רעננה, כפר סבא והרצליה), עם חניה נוחה ופרטית צמודה למקום.',
   },
   {
     question: 'כמה זמן מראש כדאי לתאם סשן?',
@@ -198,7 +198,7 @@ export function InfoPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-            מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
+            מרחב אקוסטי שקט ועבודה אישית 1 על 1 – להפקות מוזיקליות, מיקס ומאסטרינג,
             וגם להקלטות שיר לאירועים ומתנות.
           </p>
 
@@ -282,7 +282,7 @@ export function InfoPage() {
       >
 
         {/* Services */}
-        <section id="services" aria-labelledby="services-heading" className="order-2 md:order-1 w-full space-y-5 md:space-y-8">
+        <section id="services" aria-labelledby="services-heading" className="w-full space-y-5 md:space-y-8">
           <div className="space-y-1.5 md:space-y-2 text-center">
             <h2
               id="services-heading"
@@ -383,7 +383,7 @@ export function InfoPage() {
         <section
           id="vibe"
           aria-labelledby="atmosphere-heading"
-          className="order-1 md:order-2 w-full max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/[0.02] p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center"
+          className="w-full max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/[0.02] p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center"
         >
           <div className="lg:col-span-5">
             <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
@@ -412,14 +412,14 @@ export function InfoPage() {
               לכל פרט.
             </p>
             <p className="text-sm sm:text-base text-white/75 leading-relaxed border-r-2 border-orange-500/60 pr-4">
-              האולפן נמצא באבן יהודה, דקות נסיעה מנתניה, רעננה, כפר סבא והרצליה – עם חניה נוחה
-              ותיאום אישי מראש.
+              באזור השרון, דקות נסיעה מנתניה, רעננה, כפר סבא והרצליה – עם חניה נוחה ותיאום אישי
+              מראש.
             </p>
           </div>
         </section>
 
         {/* Accessible Native FAQ Accordion */}
-        <section id="faq" aria-labelledby="faq-heading" className="order-3 info-faq w-full max-w-3xl mx-auto space-y-6">
+        <section id="faq" aria-labelledby="faq-heading" className="info-faq w-full max-w-3xl mx-auto space-y-6">
           <h2
             id="faq-heading"
             className="font-bold text-white text-center text-[clamp(1.5rem,1.15rem+1.2vw,2.1rem)]"
@@ -449,7 +449,7 @@ export function InfoPage() {
         </section>
 
         {/* Bottom Spotlight Closing Card */}
-        <section className="order-4 w-full relative overflow-hidden rounded-3xl border border-orange-500/30 bg-black/70 p-7 sm:p-12 text-center space-y-6">
+        <section className="w-full relative overflow-hidden rounded-3xl border border-orange-500/30 bg-black/70 p-7 sm:p-12 text-center space-y-6">
           <div
             className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-64 w-[36rem] opacity-65 blur-2xl"
             style={{
