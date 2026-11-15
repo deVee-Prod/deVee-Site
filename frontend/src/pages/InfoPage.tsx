@@ -124,17 +124,6 @@ export function InfoPage() {
                 'linear-gradient(to bottom, rgba(10, 8, 7, 0.3) 0%, rgba(10, 8, 7, 0.42) 52%, rgba(10, 8, 7, 0.88) 82%, #0a0807 98%)',
             }}
           />
-          {/* Subtle square grid (desktop only) */}
-          <div
-            className="hidden sm:block absolute inset-0 opacity-[0.05]"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)',
-              backgroundSize: '56px 56px',
-              maskImage: 'linear-gradient(to bottom, black 45%, transparent 90%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 45%, transparent 90%)',
-            }}
-          />
           {/* Rich centered overhead spotlight beam */}
           <div
             className="absolute -top-20 left-1/2 -translate-x-1/2 h-[38rem] w-[72rem] max-w-none"
@@ -204,12 +193,7 @@ export function InfoPage() {
           <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2.1rem,1.35rem+2.8vw,3.85rem)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
             אולפן הקלטות והפקה
             <br />
-            <span
-              className="text-orange-500 font-black px-1"
-              style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-            >
-              בסטנדרט אחר
-            </span>{' '}
+            <span className="text-orange-500 px-1">בסטנדרט אחר</span>{' '}
             באזור השרון.
           </h1>
 
@@ -305,12 +289,7 @@ export function InfoPage() {
               className="font-bold text-white text-[clamp(1.5rem,1.15rem+1.4vw,2.4rem)]"
             >
               מה עושים{' '}
-              <span
-                className="text-orange-500 font-black"
-                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-              >
-                באולפן
-              </span>
+              <span className="text-orange-500">באולפן</span>
             </h2>
             <p className="text-xs sm:text-base text-white/65 max-w-xl mx-auto">
               עבודה אישית, ממוקדת ונקייה מרעשי רקע – מהקלטת שיר במתנה ועד סינגל מוכן לשחרור.
@@ -425,12 +404,7 @@ export function InfoPage() {
               className="font-bold text-white text-[clamp(1.55rem,1.15rem+1.3vw,2.2rem)]"
             >
               אווירה נינוחה,{' '}
-              <span
-                className="text-orange-500 font-black"
-                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-              >
-                בלי לחץ
-              </span>
+              <span className="text-orange-500">בלי לחץ</span>
             </h2>
             <p className="text-base sm:text-lg text-white/80 leading-relaxed">
               בין אם זו הקלטה ראשונה לקראת אירוע משפחתי ובין אם זה יום עבודה על סינגל חדש –
