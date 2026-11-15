@@ -43,18 +43,52 @@
           "inLanguage": "en"
         },
         {
-          "@type": "Organization",
-          "@id": "https://www.devee-music.com/#organization",
-          "name": "deVee Music",
-          "alternateName": "deVee Boutique Label",
-          "description": "Official site of David 'deVee' Ben David — music producer, mixing & mastering engineer, and home of deVee Boutique Label, tools & audio plugins.",
+          "@type": "RecordingStudio",
+          "@id": "https://www.devee-music.com/#studio",
+          "name": "deVee Boutique Label",
+          "alternateName": ["deVee Music", "deVee"],
+          "description": "אולפן הקלטות והפקה מוזיקלית מקצועי באבן יהודה (אזור השרון). מתמחים בהקלטות, הפקה, עיבוד, מיקס ומאסטרינג לאמנים ויוצרים ברמה בינלאומית.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "אבן יהודה",
+            "addressRegion": "השרון",
+            "addressCountry": "IL"
+          },
           "url": "https://www.devee-music.com/",
           "logo": "https://www.devee-music.com/favicon-512-v2.png",
           "image": "https://www.devee-music.com/social-preview.jpg",
+          "priceRange": "$$$",
           "sameAs": [
             "https://www.instagram.com/devee_prod",
             "https://soundbetter.com/profiles/650261-devee_prod"
-          ]
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "שירותי אולפן והפקה",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "הפקה מוזיקלית מלאה"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "הקלטות שירה וכלים"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "מיקס ומאסטרינג"
+                }
+              }
+            ]
+          }
         },
         {
           "@type": "Person",
@@ -65,7 +99,7 @@
           "url": "https://www.devee-music.com/",
           "image": "https://www.devee-music.com/social-preview.jpg",
           "worksFor": {
-            "@id": "https://www.devee-music.com/#organization"
+            "@id": "https://www.devee-music.com/#studio"
           },
           "sameAs": [
             "https://www.instagram.com/devee_prod",
@@ -75,8 +109,8 @@
       ]
     }
     </script>
-    <script type="module" crossorigin src="/assets/main-CfHi7VjY.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/main-DkeldzfT.css">
+    <script type="module" crossorigin src="/assets/main-BJ6ze3dX.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/main--V24NqB9.css">
   </head>
   <body>
     <a href="#main-content" class="skip-link" style="position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:#f97316;color:#000;padding:12px 24px;z-index:100000;font-weight:700;font-size:14px;border-radius:0 0 8px 8px;transition:top 0.2s ease;text-decoration:none;" onfocus="this.style.top='0'" onblur="this.style.top='-100%'">Skip to main content</a>
