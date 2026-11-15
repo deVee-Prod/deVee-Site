@@ -89,12 +89,22 @@ export function InfoPage() {
       className="relative min-h-screen bg-[#0a0807] text-white overflow-x-clip selection:bg-orange-500 selection:text-black"
       style={{ fontFamily: "'Heebo', system-ui, -apple-system, sans-serif" }}
     >
-      {/* Top Overhead Orange Spotlight + Crisp Dark Architectural Grid (above the fold) */}
-      <div className="relative overflow-hidden">
+      {/* Top Blurred Studio Background + Overhead Orange Spotlight + Architectural Grid */}
+      <div id="studio" className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <img
+            src="/studio-room.jpg"
+            alt=""
+            width={1400}
+            height={937}
+            fetchPriority="high"
+            loading="eager"
+            className="w-full h-full object-cover object-center scale-105 blur-[4px] sm:blur-[5px] opacity-45"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0807]/60 via-[#0a0807]/45 to-[#0a0807]" />
           {/* Subtle square grid */}
           <div
-            className="absolute inset-0 opacity-[0.07]"
+            className="absolute inset-0 opacity-[0.05]"
             style={{
               backgroundImage:
                 'linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)',
@@ -108,14 +118,14 @@ export function InfoPage() {
             className="absolute -top-20 left-1/2 -translate-x-1/2 h-[38rem] w-[72rem] max-w-none"
             style={{
               background:
-                'radial-gradient(ellipse 46% 62% at 50% 8%, rgba(234, 88, 12, 0.56) 0%, rgba(194, 65, 12, 0.24) 44%, rgba(10, 8, 7, 0) 76%)',
+                'radial-gradient(ellipse 46% 62% at 50% 8%, rgba(234, 88, 12, 0.48) 0%, rgba(194, 65, 12, 0.2) 44%, rgba(10, 8, 7, 0) 76%)',
             }}
           />
           <div
-            className="absolute -top-10 left-1/2 -translate-x-1/2 h-[22rem] w-[40rem] max-w-none blur-2xl opacity-75"
+            className="absolute -top-10 left-1/2 -translate-x-1/2 h-[22rem] w-[40rem] max-w-none blur-2xl opacity-70"
             style={{
               background:
-                'radial-gradient(ellipse 55% 65% at 50% 10%, rgba(251, 146, 60, 0.42) 0%, transparent 72%)',
+                'radial-gradient(ellipse 55% 65% at 50% 10%, rgba(251, 146, 60, 0.36) 0%, transparent 72%)',
             }}
           />
         </div>
@@ -167,126 +177,101 @@ export function InfoPage() {
           </nav>
         </header>
 
-        {/* Spotlight Hero with Studio Photo Visible Above the Fold (Desktop & Mobile) */}
-        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-5 pb-10 sm:pt-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-x-10 lg:gap-y-5 items-start">
-          {/* Block 1 (Top on Mobile, Top-Right on Desktop): Brand + Headline + Subtitle */}
-          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 text-right space-y-3 sm:space-y-4">
-            <div className="space-y-1.5">
-              <p
-                dir="ltr"
-                className="text-right text-xl sm:text-2xl font-extrabold tracking-tight text-white"
-              >
-                deVee <span className="text-orange-500">Studio</span>
-              </p>
-              <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(1.85rem,1.25rem+2.1vw,3.15rem)]">
-                אולפן הקלטות והפקה
-                <br />
-                <span
-                  className="text-orange-500 font-black px-1"
-                  style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-                >
-                  בסטנדרט אחר
-                </span>{' '}
-                באזור השרון.
-              </h1>
-            </div>
-
-            <p className="text-sm sm:text-lg text-white/80 leading-relaxed max-w-xl">
-              מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
-              וגם להקלטות שיר לאירועים ומתנות.
-            </p>
-          </div>
-
-          {/* Block 2 (Second on Mobile in Hero, Left Column on Desktop): Real Studio Photo */}
-          <div
-            id="studio"
-            className="lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2 lg:self-center"
-          >
-            <div className="max-w-md sm:max-w-lg mx-auto">
-              <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_24px_75px_rgba(0,0,0,0.9)]">
-                <img
-                  src="/studio-room.jpg"
-                  alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
-                  width={1400}
-                  height={937}
-                  fetchPriority="high"
-                  loading="eager"
-                  className="w-full h-auto aspect-[1400/937] object-cover block"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Block 3 (Below Photo on Mobile, Bottom-Right on Desktop): Interactive WhatsApp Concierge */}
-          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 text-right space-y-4">
-            <form
-              onSubmit={handleConciergeSubmit}
-              className="max-w-xl rounded-2xl border border-white/15 bg-black/55 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.8)] p-3.5 sm:p-4 text-right space-y-3"
+        {/* Centered Hero over Blurred Studio Background */}
+        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-10 pb-16 sm:pt-16 sm:pb-24 text-center space-y-6">
+          <div className="space-y-2">
+            <p
+              dir="ltr"
+              className="text-center text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-white/[0.08]">
-                <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-300">
-                  <SiWhatsapp className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>הודעה מהירה לאולפן</span>
-                </span>
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {QUICK_TOPICS.map((topic) => (
-                    <button
-                      key={topic.label}
-                      type="button"
-                      onClick={() => setDraftMessage(topic.draft)}
-                      className={`rounded-lg px-2.5 py-1 text-[11px] transition-colors ${
-                        draftMessage === topic.draft
-                          ? 'bg-orange-500/25 text-orange-200 border border-orange-500/40'
-                          : 'bg-white/[0.05] text-white/65 hover:text-white border border-transparent'
-                      }`}
-                    >
-                      {topic.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <label htmlFor="quick-whatsapp-input" className="sr-only">
-                  כתבו הודעה קצרה לוואטסאפ של האולפן
-                </label>
-                <input
-                  id="quick-whatsapp-input"
-                  type="text"
-                  value={draftMessage}
-                  onChange={(e) => setDraftMessage(e.target.value)}
-                  placeholder="היי, אשמח לשמוע פרטים על הקלטה באולפן..."
-                  className="flex-1 bg-transparent text-sm sm:text-base text-white placeholder:text-white/45 px-2 py-2 outline-none"
-                />
-                <button
-                  type="submit"
-                  aria-label="שלחו הודעה בוואטסאפ"
-                  className="shrink-0 inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-500 hover:bg-orange-400 active:scale-95 text-black font-bold transition-all duration-150 shadow-[0_0_24px_rgba(249,115,22,0.4)]"
-                >
-                  <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-                </button>
-              </div>
-            </form>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={makeWhatsappUrl(draftMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-950/35 hover:bg-orange-900/50 px-6 py-2.5 text-sm font-medium text-orange-100 transition-colors duration-200"
+              deVee <span className="text-orange-500">Studio</span>
+            </p>
+            <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2.1rem,1.35rem+2.8vw,3.75rem)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
+              אולפן הקלטות והפקה
+              <br />
+              <span
+                className="text-orange-500 font-black px-1"
+                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
               >
-                <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
-                <span>פתיחת צ׳אט בוואטסאפ</span>
-              </a>
+                בסטנדרט אחר
+              </span>{' '}
+              באזור השרון.
+            </h1>
+          </div>
 
-              <a
-                href="tel:+972542021618"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.08] px-5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-200"
-              >
-                <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
-                <span dir="ltr">054-202-1618</span>
-              </a>
+          <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+            מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
+            וגם להקלטות שיר לאירועים ומתנות.
+          </p>
+
+          {/* Interactive Dark Glass Quick WhatsApp Concierge */}
+          <form
+            onSubmit={handleConciergeSubmit}
+            className="max-w-xl mx-auto rounded-2xl border border-white/15 bg-black/65 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.85)] p-3.5 sm:p-4 text-right space-y-3"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-white/[0.08]">
+              <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-300">
+                <SiWhatsapp className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>הודעה מהירה לאולפן</span>
+              </span>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {QUICK_TOPICS.map((topic) => (
+                  <button
+                    key={topic.label}
+                    type="button"
+                    onClick={() => setDraftMessage(topic.draft)}
+                    className={`rounded-lg px-2.5 py-1 text-[11px] transition-colors ${
+                      draftMessage === topic.draft
+                        ? 'bg-orange-500/25 text-orange-200 border border-orange-500/40'
+                        : 'bg-white/[0.05] text-white/65 hover:text-white border border-transparent'
+                    }`}
+                  >
+                    {topic.label}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            <div className="flex items-center gap-3">
+              <label htmlFor="quick-whatsapp-input" className="sr-only">
+                כתבו הודעה קצרה לוואטסאפ של האולפן
+              </label>
+              <input
+                id="quick-whatsapp-input"
+                type="text"
+                value={draftMessage}
+                onChange={(e) => setDraftMessage(e.target.value)}
+                placeholder="היי, אשמח לשמוע פרטים על הקלטה באולפן..."
+                className="flex-1 bg-transparent text-sm sm:text-base text-white placeholder:text-white/45 px-2 py-2 outline-none"
+              />
+              <button
+                type="submit"
+                aria-label="שלחו הודעה בוואטסאפ"
+                className="shrink-0 inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-500 hover:bg-orange-400 active:scale-95 text-black font-bold transition-all duration-150 shadow-[0_0_24px_rgba(249,115,22,0.4)]"
+              >
+                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
+              </button>
+            </div>
+          </form>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+            <a
+              href={makeWhatsappUrl(draftMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-950/35 hover:bg-orange-900/50 px-6 py-2.5 text-sm font-medium text-orange-100 transition-colors duration-200"
+            >
+              <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+              <span>פתיחת צ׳אט בוואטסאפ</span>
+            </a>
+
+            <a
+              href="tel:+972542021618"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.08] px-5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-200"
+            >
+              <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
+              <span dir="ltr">054-202-1618</span>
+            </a>
           </div>
         </section>
       </div>
@@ -300,7 +285,7 @@ export function InfoPage() {
 
         {/* Services */}
         <section id="services" aria-labelledby="services-heading" className="space-y-8">
-          <div className="space-y-2">
+          <div className="space-y-2 text-center">
             <h2
               id="services-heading"
               className="font-bold text-white text-[clamp(1.65rem,1.2rem+1.4vw,2.4rem)]"
@@ -313,7 +298,7 @@ export function InfoPage() {
                 באולפן
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-white/65 max-w-xl">
+            <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto">
               עבודה אישית, ממוקדת ונקייה מרעשי רקע – מהקלטת שיר במתנה ועד סינגל מוכן לשחרור.
             </p>
           </div>
