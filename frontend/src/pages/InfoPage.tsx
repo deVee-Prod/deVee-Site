@@ -134,13 +134,13 @@ export function InfoPage() {
                   />
                   <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_28px_80px_rgba(0,0,0,0.9)]">
                     <img
-                      src="/devee-studio-room.webp"
+                      src="/devee-studio-main.webp"
                       alt="deVee Studio - חדר הבקרה וההקלטות באבן יהודה"
-                      width={1024}
-                      height={685}
+                      width={1440}
+                      height={963}
                       fetchPriority="high"
                       loading="eager"
-                      className="w-full h-auto aspect-[1024/685] object-cover block"
+                      className="w-full h-auto aspect-[1440/963] object-cover block"
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent pointer-events-none"
@@ -270,7 +270,7 @@ export function InfoPage() {
               </div>
             </section>
 
-            {/* How a session feels (3 calming steps) */}
+            {/* How a session feels + second real studio photo */}
             <section
               aria-labelledby="process-heading"
               className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-10 space-y-8"
@@ -292,22 +292,44 @@ export function InfoPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {STEPS.map(({ step, title, text }) => (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+                <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
+                  <img
+                    src="/devee-studio-vibe.webp"
+                    alt="מבט אינטימי אל תוך עמדת ההפקה ב-deVee Studio"
+                    width={1280}
+                    height={855}
+                    loading="lazy"
+                    className="w-full h-full aspect-[1280/855] object-cover block"
+                  />
                   <div
-                    key={step}
-                    className="relative rounded-2xl border border-white/[0.08] bg-black/50 p-6 space-y-3"
-                  >
-                    <span
-                      dir="ltr"
-                      className="inline-block text-sm font-extrabold tracking-wider text-orange-500 bg-orange-500/10 border border-orange-500/20 rounded-lg px-2.5 py-1"
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"
+                    aria-hidden="true"
+                  />
+                  <p className="absolute bottom-4 right-4 left-4 text-xs sm:text-sm text-white/85 font-medium">
+                    אווירה אינטימית, אקוסטיקה מדויקת ועבודה נינוחה 1 על 1
+                  </p>
+                </div>
+
+                <div className="lg:col-span-7 flex flex-col justify-between gap-4">
+                  {STEPS.map(({ step, title, text }) => (
+                    <div
+                      key={step}
+                      className="relative flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-black/50 p-5"
                     >
-                      {step}
-                    </span>
-                    <h3 className="text-lg font-bold text-white">{title}</h3>
-                    <p className="text-sm text-white/75 leading-relaxed">{text}</p>
-                  </div>
-                ))}
+                      <span
+                        dir="ltr"
+                        className="shrink-0 text-sm font-extrabold tracking-wider text-orange-500 bg-orange-500/10 border border-orange-500/20 rounded-lg px-2.5 py-1 mt-0.5"
+                      >
+                        {step}
+                      </span>
+                      <div className="space-y-1">
+                        <h3 className="text-lg font-bold text-white">{title}</h3>
+                        <p className="text-sm text-white/75 leading-relaxed">{text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 
