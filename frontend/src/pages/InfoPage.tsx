@@ -271,8 +271,8 @@ export function InfoPage() {
         className="container mx-auto max-w-5xl px-4 sm:px-6 pb-20 sm:pb-28 text-right space-y-16 sm:space-y-24"
       >
         {/* Top Real Studio Photo Showcase */}
-        <section id="studio" aria-label="תמונת חדר האולפן" className="space-y-3">
-          <div className="relative rounded-2xl overflow-hidden border border-white/12 bg-zinc-950 shadow-[0_30px_90px_rgba(0,0,0,0.85)]">
+        <section id="studio" aria-label="תמונת חדר האולפן" className="max-w-2xl mx-auto space-y-3">
+          <div className="relative rounded-2xl overflow-hidden border border-white/12 bg-zinc-950 shadow-[0_24px_70px_rgba(0,0,0,0.85)]">
             <img
               src="/studio-room.jpg"
               alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
@@ -345,9 +345,9 @@ export function InfoPage() {
         <section
           id="vibe"
           aria-labelledby="atmosphere-heading"
-          className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center"
+          className="max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
         >
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-5">
             <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
               <img
                 src="/studio-lounge.jpg"
@@ -360,7 +360,7 @@ export function InfoPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-6 space-y-5">
+          <div className="lg:col-span-7 space-y-4">
             <h2
               id="atmosphere-heading"
               className="font-bold text-white text-[clamp(1.55rem,1.15rem+1.3vw,2.2rem)]"

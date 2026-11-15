@@ -71,6 +71,12 @@ export function Footer() {
             >
               Accessibility
             </a>
+            <a
+              href="/info"
+              className="text-white/25 hover:text-white/50 text-[10px] uppercase tracking-[0.2em]"
+            >
+              Studio (IL)
+            </a>
           </div>
         </div>
       </div>
