@@ -98,9 +98,16 @@ export function InfoPage() {
       className="relative min-h-screen bg-[#0a0807] text-white overflow-x-clip selection:bg-orange-500 selection:text-black"
       style={{ fontFamily: "'Heebo', system-ui, -apple-system, sans-serif" }}
     >
-      {/* Top Blurred Studio Background + Overhead Orange Spotlight + Architectural Grid */}
-      <div id="studio" className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+      {/* Full-Viewport Upper Background: Blurred Studio + Overhead Orange Spotlight + Grid with Seamless Bottom Fade */}
+      <div id="studio" className="relative">
+        <div
+          className="pointer-events-none absolute top-0 inset-x-0 h-[44rem] sm:h-[56rem] overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to bottom, black 0%, black 52%, transparent 96%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 52%, transparent 96%)',
+          }}
+          aria-hidden="true"
+        >
           <img
             src="/studio-room.jpg"
             alt=""
@@ -108,9 +115,15 @@ export function InfoPage() {
             height={937}
             fetchPriority="high"
             loading="eager"
-            className="absolute inset-0 w-full h-full object-cover object-[50%_15%] sm:object-center scale-105 blur-[2.5px] sm:blur-[5px] opacity-60 sm:opacity-45"
+            className="absolute inset-0 w-full h-full object-cover object-[50%_18%] sm:object-[50%_30%] scale-105 blur-[2.5px] sm:blur-[5px] opacity-60 sm:opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0807]/20 via-[#0a0807]/50 to-[#0a0807] sm:from-[#0a0807]/60 sm:via-[#0a0807]/45" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, rgba(10, 8, 7, 0.3) 0%, rgba(10, 8, 7, 0.42) 52%, rgba(10, 8, 7, 0.88) 82%, #0a0807 98%)',
+            }}
+          />
           {/* Subtle square grid (desktop only) */}
           <div
             className="hidden sm:block absolute inset-0 opacity-[0.05]"
@@ -118,8 +131,8 @@ export function InfoPage() {
               backgroundImage:
                 'linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)',
               backgroundSize: '56px 56px',
-              maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 45%, transparent 90%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 45%, transparent 90%)',
             }}
           />
           {/* Rich centered overhead spotlight beam */}
@@ -187,26 +200,18 @@ export function InfoPage() {
         </header>
 
         {/* Centered Hero over Blurred Studio Background */}
-        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-5 pb-6 sm:pt-16 sm:pb-24 text-center space-y-4 sm:space-y-6">
-          <div className="space-y-2">
-            <p
-              dir="ltr"
-              className="hidden sm:block text-center text-xl sm:text-2xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-6 pb-6 sm:pt-20 sm:pb-24 text-center space-y-4 sm:space-y-6">
+          <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2.1rem,1.35rem+2.8vw,3.85rem)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
+            אולפן הקלטות והפקה
+            <br />
+            <span
+              className="text-orange-500 font-black px-1"
+              style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
             >
-              deVee <span className="text-orange-500">Studio</span>
-            </p>
-            <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2.1rem,1.35rem+2.8vw,3.75rem)] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
-              אולפן הקלטות והפקה
-              <br />
-              <span
-                className="text-orange-500 font-black px-1"
-                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-              >
-                בסטנדרט אחר
-              </span>{' '}
-              באזור השרון.
-            </h1>
-          </div>
+              בסטנדרט אחר
+            </span>{' '}
+            באזור השרון.
+          </h1>
 
           <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
@@ -289,7 +294,7 @@ export function InfoPage() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="container mx-auto max-w-5xl px-4 sm:px-6 pt-2 sm:pt-6 pb-20 sm:pb-28 text-right flex flex-col gap-10 sm:gap-24"
+        className="relative z-10 container mx-auto max-w-5xl px-4 sm:px-6 pt-2 sm:pt-6 pb-20 sm:pb-28 text-right flex flex-col gap-10 sm:gap-24"
       >
 
         {/* Services */}
