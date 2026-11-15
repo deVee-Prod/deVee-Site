@@ -169,97 +169,121 @@ export function InfoPage() {
           </nav>
         </header>
 
-        {/* Centered Spotlight Hero */}
-        <section className="relative z-10 container mx-auto max-w-4xl px-4 sm:px-6 pt-12 pb-16 sm:pt-16 sm:pb-24 text-center space-y-7">
-          <div className="inline-flex items-center rounded-full border border-white/15 bg-black/35 backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm text-orange-100/90">
-            אבן יהודה · נתניה והשרון
+        {/* Spotlight Hero with Studio Photo Above the Fold */}
+        <section className="relative z-10 container mx-auto max-w-6xl px-4 sm:px-6 pt-6 pb-12 sm:pt-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Right column (RTL first): Headline & Quick WhatsApp Concierge */}
+          <div className="lg:col-span-6 lg:order-1 text-right space-y-5 sm:space-y-6">
+            <div className="inline-flex items-center rounded-full border border-white/15 bg-black/35 backdrop-blur-md px-4 py-1.5 text-xs sm:text-sm text-orange-100/90">
+              אבן יהודה · נתניה והשרון
+            </div>
+
+            <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2rem,1.25rem+2.3vw,3.35rem)]">
+              אולפן הקלטות והפקה
+              <br />
+              <span
+                className="text-orange-500 font-black px-1"
+                style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
+              >
+                בסטנדרט אחר
+              </span>{' '}
+              באזור השרון.
+            </h1>
+
+            <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-xl">
+              מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
+              וגם להקלטות שיר לאירועים ומתנות.
+            </p>
+
+            {/* Interactive Dark Glass Quick WhatsApp Concierge */}
+            <form
+              onSubmit={handleConciergeSubmit}
+              className="max-w-xl rounded-2xl border border-white/15 bg-black/55 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.8)] p-3.5 sm:p-4 text-right space-y-3"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-white/[0.08]">
+                <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-300">
+                  <SiWhatsapp className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>הודעה מהירה לאולפן</span>
+                </span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {QUICK_TOPICS.map((topic) => (
+                    <button
+                      key={topic.label}
+                      type="button"
+                      onClick={() => setDraftMessage(topic.draft)}
+                      className={`rounded-lg px-2.5 py-1 text-[11px] transition-colors ${
+                        draftMessage === topic.draft
+                          ? 'bg-orange-500/25 text-orange-200 border border-orange-500/40'
+                          : 'bg-white/[0.05] text-white/65 hover:text-white border border-transparent'
+                      }`}
+                    >
+                      {topic.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label htmlFor="quick-whatsapp-input" className="sr-only">
+                  כתבו הודעה קצרה לוואטסאפ של האולפן
+                </label>
+                <input
+                  id="quick-whatsapp-input"
+                  type="text"
+                  value={draftMessage}
+                  onChange={(e) => setDraftMessage(e.target.value)}
+                  placeholder="היי, אשמח לשמוע פרטים על הקלטה באולפן..."
+                  className="flex-1 bg-transparent text-sm sm:text-base text-white placeholder:text-white/45 px-2 py-2 outline-none"
+                />
+                <button
+                  type="submit"
+                  aria-label="שלחו הודעה בוואטסאפ"
+                  className="shrink-0 inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-500 hover:bg-orange-400 active:scale-95 text-black font-bold transition-all duration-150 shadow-[0_0_24px_rgba(249,115,22,0.4)]"
+                >
+                  <ArrowLeft className="w-5 h-5" aria-hidden="true" />
+                </button>
+              </div>
+            </form>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href={makeWhatsappUrl(draftMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-950/35 hover:bg-orange-900/50 px-6 py-2.5 text-sm font-medium text-orange-100 transition-colors duration-200"
+              >
+                <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                <span>פתיחת צ׳אט בוואטסאפ</span>
+              </a>
+
+              <a
+                href="tel:+972542021618"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.08] px-5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-200"
+              >
+                <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
+                <span dir="ltr">054-202-1618</span>
+              </a>
+            </div>
           </div>
 
-          <h1 className="font-extrabold text-white tracking-tight leading-[1.1] text-[clamp(2.2rem,1.3rem+3vw,3.9rem)]">
-            אולפן הקלטות והפקה
-            <br />
-            <span
-              className="text-orange-500 font-black px-1"
-              style={{ fontFamily: "'Frank Ruhl Libre', serif" }}
-            >
-              בסטנדרט אחר
-            </span>{' '}
-            באזור השרון.
-          </h1>
-
-          <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-xl mx-auto">
-            מרחב אקוסטי שקט ועבודה אישית 1 על 1 באבן יהודה – להפקות מוזיקליות, מיקס ומאסטרינג,
-            וגם להקלטות שיר לאירועים ומתנות.
-          </p>
-
-          {/* Interactive Dark Glass Quick WhatsApp Concierge */}
-          <form
-            onSubmit={handleConciergeSubmit}
-            className="max-w-xl mx-auto rounded-2xl border border-white/15 bg-black/55 backdrop-blur-xl shadow-[0_24px_75px_rgba(0,0,0,0.8)] p-3.5 sm:p-4 text-right space-y-3"
-          >
-            <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-white/[0.08]">
-              <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-300">
-                <SiWhatsapp className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>הודעה מהירה לאולפן</span>
-              </span>
-              <div className="flex flex-wrap items-center gap-1.5">
-                {QUICK_TOPICS.map((topic) => (
-                  <button
-                    key={topic.label}
-                    type="button"
-                    onClick={() => setDraftMessage(topic.draft)}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] transition-colors ${
-                      draftMessage === topic.draft
-                        ? 'bg-orange-500/25 text-orange-200 border border-orange-500/40'
-                        : 'bg-white/[0.05] text-white/65 hover:text-white border border-transparent'
-                    }`}
-                  >
-                    {topic.label}
-                  </button>
-                ))}
+          {/* Left column (RTL second): Real Studio Photo inside Hero */}
+          <div id="studio" className="lg:col-span-6 lg:order-2">
+            <div className="max-w-md sm:max-w-lg mx-auto space-y-2.5">
+              <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_24px_75px_rgba(0,0,0,0.9)]">
+                <img
+                  src="/studio-room.jpg"
+                  alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
+                  width={1400}
+                  height={937}
+                  fetchPriority="high"
+                  loading="eager"
+                  className="w-full h-auto aspect-[1400/937] object-cover block"
+                />
+              </div>
+              <div className="flex items-center justify-between text-xs sm:text-sm text-white/50 px-1">
+                <span>חדר הבקרה וההקלטות · אבן יהודה</span>
+                <span dir="ltr">deVee Studio</span>
               </div>
             </div>
-
-            <div className="flex items-center gap-3">
-              <label htmlFor="quick-whatsapp-input" className="sr-only">
-                כתבו הודעה קצרה לוואטסאפ של האולפן
-              </label>
-              <input
-                id="quick-whatsapp-input"
-                type="text"
-                value={draftMessage}
-                onChange={(e) => setDraftMessage(e.target.value)}
-                placeholder="היי, אשמח לשמוע פרטים על הקלטה באולפן..."
-                className="flex-1 bg-transparent text-sm sm:text-base text-white placeholder:text-white/45 px-2 py-2 outline-none"
-              />
-              <button
-                type="submit"
-                aria-label="שלחו הודעה בוואטסאפ"
-                className="shrink-0 inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-orange-500 hover:bg-orange-400 active:scale-95 text-black font-bold transition-all duration-150 shadow-[0_0_24px_rgba(249,115,22,0.4)]"
-              >
-                <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-              </button>
-            </div>
-          </form>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-            <a
-              href={makeWhatsappUrl(draftMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-orange-500/35 bg-orange-950/35 hover:bg-orange-900/50 px-6 py-2.5 text-sm font-medium text-orange-100 transition-colors duration-200"
-            >
-              <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
-              <span>פתיחת צ׳אט בוואטסאפ</span>
-            </a>
-
-            <a
-              href="tel:+972542021618"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] hover:bg-white/[0.08] px-5 py-2.5 text-sm font-medium text-white/85 transition-colors duration-200"
-            >
-              <Phone className="w-3.5 h-3.5 text-orange-400" aria-hidden="true" />
-              <span dir="ltr">054-202-1618</span>
-            </a>
           </div>
         </section>
       </div>
@@ -268,26 +292,8 @@ export function InfoPage() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="container mx-auto max-w-5xl px-4 sm:px-6 pb-20 sm:pb-28 text-right space-y-16 sm:space-y-24"
+        className="container mx-auto max-w-5xl px-4 sm:px-6 pt-4 sm:pt-6 pb-20 sm:pb-28 text-right space-y-16 sm:space-y-24"
       >
-        {/* Top Real Studio Photo Showcase */}
-        <section id="studio" aria-label="תמונת חדר האולפן" className="max-w-2xl mx-auto space-y-3">
-          <div className="relative rounded-2xl overflow-hidden border border-white/12 bg-zinc-950 shadow-[0_24px_70px_rgba(0,0,0,0.85)]">
-            <img
-              src="/studio-room.jpg"
-              alt="חדר הבקרה וההקלטות ב-deVee Studio באבן יהודה"
-              width={1400}
-              height={937}
-              fetchPriority="high"
-              loading="eager"
-              className="w-full h-auto aspect-[1400/937] object-cover block"
-            />
-          </div>
-          <div className="flex items-center justify-between text-xs sm:text-sm text-white/50 px-1">
-            <span>חדר הבקרה וההקלטות · אבן יהודה</span>
-            <span dir="ltr">deVee Studio</span>
-          </div>
-        </section>
 
         {/* Services */}
         <section id="services" aria-labelledby="services-heading" className="space-y-8">
