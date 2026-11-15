@@ -99,9 +99,9 @@ export function InfoPage() {
             height={937}
             fetchPriority="high"
             loading="eager"
-            className="w-full h-full object-cover object-center scale-105 blur-[4px] sm:blur-[5px] opacity-45"
+            className="absolute inset-x-0 -top-12 h-[23rem] sm:inset-0 sm:h-full w-full object-cover object-[50%_28%] sm:object-center scale-105 blur-[3px] sm:blur-[5px] opacity-65 sm:opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0807]/60 via-[#0a0807]/45 to-[#0a0807]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0807]/20 via-[#0a0807]/50 to-[#0a0807] sm:from-[#0a0807]/60 sm:via-[#0a0807]/45" />
           {/* Subtle square grid */}
           <div
             className="absolute inset-0 opacity-[0.05]"
@@ -178,7 +178,7 @@ export function InfoPage() {
         </header>
 
         {/* Centered Hero over Blurred Studio Background */}
-        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-10 pb-16 sm:pt-16 sm:pb-24 text-center space-y-6">
+        <section className="relative z-10 container mx-auto max-w-3xl px-4 sm:px-6 pt-6 pb-7 sm:pt-16 sm:pb-24 text-center space-y-6">
           <div className="space-y-2">
             <p
               dir="ltr"
@@ -280,11 +280,11 @@ export function InfoPage() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="container mx-auto max-w-5xl px-4 sm:px-6 pt-4 sm:pt-6 pb-20 sm:pb-28 text-right space-y-16 sm:space-y-24"
+        className="container mx-auto max-w-5xl px-4 sm:px-6 pt-2 sm:pt-6 pb-20 sm:pb-28 text-right flex flex-col gap-10 sm:gap-24"
       >
 
         {/* Services */}
-        <section id="services" aria-labelledby="services-heading" className="space-y-8">
+        <section id="services" aria-labelledby="services-heading" className="order-2 md:order-1 w-full space-y-8">
           <div className="space-y-2 text-center">
             <h2
               id="services-heading"
@@ -339,7 +339,7 @@ export function InfoPage() {
         <section
           id="vibe"
           aria-labelledby="atmosphere-heading"
-          className="max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
+          className="order-1 md:order-2 w-full max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/[0.02] p-5 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-center"
         >
           <div className="lg:col-span-5">
             <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
@@ -380,7 +380,7 @@ export function InfoPage() {
         </section>
 
         {/* Accessible Native FAQ Accordion */}
-        <section id="faq" aria-labelledby="faq-heading" className="info-faq max-w-3xl mx-auto space-y-6">
+        <section id="faq" aria-labelledby="faq-heading" className="order-3 info-faq w-full max-w-3xl mx-auto space-y-6">
           <h2
             id="faq-heading"
             className="font-bold text-white text-center text-[clamp(1.5rem,1.15rem+1.2vw,2.1rem)]"
@@ -410,7 +410,7 @@ export function InfoPage() {
         </section>
 
         {/* Bottom Spotlight Closing Card */}
-        <section className="relative overflow-hidden rounded-3xl border border-orange-500/30 bg-black/70 p-7 sm:p-12 text-center space-y-6">
+        <section className="order-4 w-full relative overflow-hidden rounded-3xl border border-orange-500/30 bg-black/70 p-7 sm:p-12 text-center space-y-6">
           <div
             className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-64 w-[36rem] opacity-65 blur-2xl"
             style={{
