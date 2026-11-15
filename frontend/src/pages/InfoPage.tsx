@@ -293,11 +293,11 @@ export function InfoPage() {
       >
 
         {/* Services */}
-        <section id="services" aria-labelledby="services-heading" className="order-2 md:order-1 w-full space-y-8">
-          <div className="space-y-2 text-center">
+        <section id="services" aria-labelledby="services-heading" className="order-2 md:order-1 w-full space-y-5 md:space-y-8">
+          <div className="space-y-1.5 md:space-y-2 text-center">
             <h2
               id="services-heading"
-              className="font-bold text-white text-[clamp(1.65rem,1.2rem+1.4vw,2.4rem)]"
+              className="font-bold text-white text-[clamp(1.5rem,1.15rem+1.4vw,2.4rem)]"
             >
               מה עושים{' '}
               <span
@@ -307,16 +307,16 @@ export function InfoPage() {
                 באולפן
               </span>
             </h2>
-            <p className="text-sm sm:text-base text-white/65 max-w-xl mx-auto">
+            <p className="text-xs sm:text-base text-white/65 max-w-xl mx-auto">
               עבודה אישית, ממוקדת ונקייה מרעשי רקע – מהקלטת שיר במתנה ועד סינגל מוכן לשחרור.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5">
             {SERVICES.map(({ icon: Icon, tag, title, description, highlights, ctaLabel, whatsappText }) => (
               <article
                 key={title}
-                className="@container group relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.055] to-white/[0.015] hover:border-orange-500/45 shadow-[0_18px_50px_rgba(0,0,0,0.65)] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-all duration-200"
+                className="@container group relative overflow-hidden rounded-2xl border border-white/12 bg-gradient-to-b from-white/[0.055] to-white/[0.015] hover:border-orange-500/45 shadow-[0_18px_50px_rgba(0,0,0,0.65)] p-4 md:p-7 flex flex-col justify-between gap-3 md:gap-6 transition-all duration-200"
               >
                 {/* Top specular highlight + warm corner glow */}
                 <div
@@ -328,24 +328,28 @@ export function InfoPage() {
                   aria-hidden="true"
                 />
 
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/25 to-orange-950/40 text-orange-400 shadow-[0_0_24px_rgba(249,115,22,0.2)]">
-                      <Icon className="w-5 h-5" aria-hidden="true" />
+                <div className="relative z-10 space-y-2.5 md:space-y-4">
+                  {/* On mobile: icon + title inline on the right, tag pill on the left. On desktop: icon on right, tag on left, title below */}
+                  <div className="flex items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="inline-flex items-center justify-center w-9 h-9 md:w-11 md:h-11 rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/25 to-orange-950/40 text-orange-400 shadow-[0_0_24px_rgba(249,115,22,0.2)] shrink-0">
+                        <Icon className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+                      </div>
+                      <h3 className="md:hidden text-base font-bold text-white leading-snug">{title}</h3>
                     </div>
-                    <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[11px] font-medium text-orange-300">
+                    <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[10px] md:text-[11px] font-medium text-orange-300 shrink-0">
                       {tag}
                     </span>
                   </div>
 
-                  <div className="space-y-2.5">
-                    <h3 className="text-xl font-bold text-white leading-snug">{title}</h3>
-                    <p className="text-sm sm:text-base text-white/75 leading-relaxed">
+                  <div className="space-y-1.5 md:space-y-2.5">
+                    <h3 className="hidden md:block text-xl font-bold text-white leading-snug">{title}</h3>
+                    <p className="text-xs sm:text-sm md:text-base text-white/75 leading-relaxed">
                       {description}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5 pt-1">
+                  <div className="hidden md:flex flex-wrap gap-1.5 pt-1">
                     {highlights.map((item) => (
                       <span
                         key={item}
@@ -357,19 +361,19 @@ export function InfoPage() {
                   </div>
                 </div>
 
-                <footer className="relative z-10 pt-1">
+                <footer className="relative z-10 pt-0.5 md:pt-1">
                   <a
                     href={makeWhatsappUrl(whatsappText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between w-full rounded-xl border border-orange-500/25 bg-orange-500/[0.08] hover:bg-orange-500/20 px-4 py-2.5 text-sm font-semibold text-orange-200 transition-all duration-200"
+                    className="flex items-center justify-between w-full rounded-xl border border-orange-500/25 bg-orange-500/[0.08] hover:bg-orange-500/20 px-3.5 py-2 md:px-4 md:py-2.5 text-xs md:text-sm font-semibold text-orange-200 transition-all duration-200"
                   >
                     <span className="inline-flex items-center gap-2">
-                      <SiWhatsapp className="w-4 h-4 text-orange-400" aria-hidden="true" />
+                      <SiWhatsapp className="w-3.5 h-3.5 md:w-4 md:h-4 text-orange-400" aria-hidden="true" />
                       <span>{ctaLabel}</span>
                     </span>
                     <ArrowLeft
-                      className="w-4 h-4 text-orange-400 transition-transform duration-200 group-hover:-translate-x-1"
+                      className="w-3.5 h-3.5 md:w-4 md:h-4 text-orange-400 transition-transform duration-200 group-hover:-translate-x-1"
                       aria-hidden="true"
                     />
                   </a>
