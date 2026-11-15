@@ -22,10 +22,10 @@ export function InfoPage() {
           {/* Studio Hero Image */}
           <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.85)]">
             <img
-              src="/studio-hero.webp"
-              alt="deVee Studio - אולפן הקלטות והפקה מוזיקלית באבן יהודה"
-              width={1376}
-              height={768}
+              src="/devee-studio.webp"
+              alt="deVee Studio - אולפן הקלטות והפקה מוזיקלית באזור השרון"
+              width={1024}
+              height={576}
               className="w-full h-auto aspect-video object-cover block"
             />
             <div
