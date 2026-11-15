@@ -134,13 +134,13 @@ export function InfoPage() {
                   />
                   <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-zinc-950 shadow-[0_28px_80px_rgba(0,0,0,0.9)]">
                     <img
-                      src="/devee-studio.webp"
+                      src="/devee-studio-room.webp"
                       alt="deVee Studio - חדר הבקרה וההקלטות באבן יהודה"
                       width={1024}
-                      height={576}
+                      height={685}
                       fetchPriority="high"
                       loading="eager"
-                      className="w-full h-auto aspect-video object-cover block"
+                      className="w-full h-auto aspect-[1024/685] object-cover block"
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent pointer-events-none"
