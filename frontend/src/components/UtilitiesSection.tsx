@@ -93,53 +93,68 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
 }
 
 // ─────────────────────────────────────────────
-// Desktop Solar System (Unchanged)
+// Desktop Solar System (True 3D Perspective)
 // ─────────────────────────────────────────────
 function SolarSystem() {
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
   const [selectedTool, setSelectedTool] = useState<typeof premiumTools[0] | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [stageWidth, setStageWidth] = useState(1360);
+  const stageRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const updateWidth = () => {
+      const vw = typeof window !== 'undefined' ? window.innerWidth : 1360;
+      const measured = stageRef.current?.getBoundingClientRect().width || vw;
+      // Wide cinematic feel while safely staying inside the viewport & scrollbar
+      setStageWidth(Math.min(1440, Math.max(740, Math.min(vw - 24, measured))));
+    };
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const OUTER_RX = isMobile ? 110 : 720;
-  const OUTER_RY = isMobile ? 220 : 200;
-  const INNER_RX = isMobile ? 55 : 450;
-  const INNER_RY = isMobile ? 120 : 120;
-  const SPEED = isMobile ? 0.025 : 0.018;
-  const W = isMobile ? 390 : 1600;
-  const H = isMobile ? 550 : 650;
+  const W = stageWidth;
+  const H = 560;
   const CX = W / 2;
-  const CY = H / 2;
+  const CY = 265;
+  const OUTER_RX = Math.min(620, Math.max(320, W * 0.44));
+  const OUTER_RY = 192;
+  const INNER_RX = OUTER_RX * 0.62;
+  const INNER_RY = 112;
+  const SPEED = 0.015;
 
+  // Mirror-symmetric starting phases (left/right balanced from frame 1)
   const [outerAngles, setOuterAngles] = useState(() =>
-    premiumTools.map((_, i) => (i * 360) / premiumTools.length)
+    premiumTools.map((_, i) => (30 + (i * 360) / premiumTools.length) % 360)
   );
   const [innerAngles, setInnerAngles] = useState(() =>
     desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
   );
 
   useEffect(() => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
     let paused = false;
-    const onVisibility = () => { paused = document.hidden; };
+    const onVisibility = () => {
+      paused = document.hidden;
+      if (!paused) lastTimeRef.current = 0;
+    };
     document.addEventListener('visibilitychange', onVisibility);
 
     const tick = (time: number) => {
       if (!lastTimeRef.current) lastTimeRef.current = time;
-      const delta = time - lastTimeRef.current;
+      const delta = Math.min(40, time - lastTimeRef.current);
       lastTimeRef.current = time;
 
       if (!paused && !hoveredTool && !selectedTool) {
         const step = SPEED * delta;
         setOuterAngles(prev => prev.map(a => (a + step) % 360));
-        setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360));
+        setInnerAngles(prev => prev.map(a => (a - step * 0.68 + 360) % 360));
       }
       animRef.current = requestAnimationFrame(tick);
     };
@@ -169,80 +184,181 @@ function SolarSystem() {
   });
   const allItems = [...outerItems, ...innerItems].sort((a, b) => a.pos.y - b.pos.y);
 
-  const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
-    const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? (isMobile ? 55 : 58) : (isMobile ? 45 : 50);
-    const amplitude = isMobile ? 8 : 7;
-    return base + sinVal * amplitude;
+  // Stronger 3D perspective size curve: noticeably larger in front (bottom), smaller behind sun (top)
+  const iconSize = (orbit: 'outer' | 'inner', depth: number) => {
+    if (orbit === 'outer') {
+      return 44 + depth * 32; // 44px back -> 76px front
+    }
+    return 36 + depth * 26; // 36px back -> 62px front
   };
 
   return (
-    <div className="relative select-none w-full" style={{ height: H, marginTop: '-30px' }}>
-      <div style={{ position: 'absolute', width: W, height: H, left: '50%', transform: 'translateX(-50%)' }}>
-        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+    <div ref={stageRef} className="relative select-none w-full" style={{ height: H }}>
+      <div
+        style={{
+          position: 'absolute',
+          width: W,
+          height: H,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        {/* Layer 1: Continuous 3D Orbit Rings (dimmer in back, brighter in front, never detached at edges) */}
+        <svg
+          width={W}
+          height={H}
+          viewBox={`0 0 ${W} ${H}`}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }}
+        >
           <defs>
-            <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-              <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
-              <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
-              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+            <linearGradient id="orbitDepthOuter" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(234,179,8,0.11)" />
+              <stop offset="50%" stopColor="rgba(234,179,8,0.24)" />
+              <stop offset="100%" stopColor="rgba(245,158,11,0.46)" />
             </linearGradient>
-            <linearGradient id="orbitGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-              <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
-              <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
-              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+            <linearGradient id="orbitDepthInner" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(234,179,8,0.08)" />
+              <stop offset="50%" stopColor="rgba(234,179,8,0.17)" />
+              <stop offset="100%" stopColor="rgba(249,115,22,0.34)" />
             </linearGradient>
+          </defs>
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitDepthOuter)" strokeWidth="1.15" />
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX + 3} ry={OUTER_RY + 1.5} fill="none" stroke="rgba(234,179,8,0.06)" strokeWidth="0.6" />
+          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitDepthInner)" strokeWidth="1" />
+        </svg>
+
+        {/* Layer 2: Central Sun at zIndex = CY so back planets pass BEHIND it and front planets pass IN FRONT of it */}
+        <svg
+          width={W}
+          height={H}
+          viewBox={`0 0 ${W} ${H}`}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: Math.round(CY) }}
+        >
+          <defs>
             <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="12" result="blur" />
+              <feGaussianBlur stdDeviation="14" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
             <radialGradient id="sunGradientOrange">
-              <stop offset="0%" stopColor="#fff" />
+              <stop offset="0%" stopColor="#fff7ed" />
               <stop offset="30%" stopColor="#f97316" />
               <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
             </radialGradient>
           </defs>
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX + (isMobile ? 1 : 2)} ry={OUTER_RY + 1} fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
-          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
-          <circle cx={CX} cy={CY} r={isMobile ? 24 : 48} fill="rgba(234,179,8,0.06)" />
-          <circle cx={CX} cy={CY} r={isMobile ? 12 : 24} fill="rgba(234,179,8,0.13)" />
+          <circle cx={CX} cy={CY} r={54} fill="rgba(234,179,8,0.055)" />
+          <circle cx={CX} cy={CY} r={28} fill="rgba(249,115,22,0.13)" />
           <g filter="url(#starGlow)">
-            <circle cx={CX} cy={CY} r={isMobile ? 22 : 35} fill="rgba(249, 115, 22, 0.15)">
-              <animate attributeName="r" values={isMobile ? "18;24;18" : "32;38;32"} dur="3s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+            <circle cx={CX} cy={CY} r={36} fill="rgba(249, 115, 22, 0.16)">
+              <animate attributeName="r" values="32;39;32" dur="3.2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.32;0.62;0.32" dur="3.2s" repeatCount="indefinite" />
             </circle>
-            <circle cx={CX} cy={CY} r={isMobile ? 10 : 12} fill="url(#sunGradientOrange)" />
+            <circle cx={CX} cy={CY} r={13} fill="url(#sunGradientOrange)" />
           </g>
         </svg>
 
+        {/* Layer 3: Orbiting Planets with Real 3D Depth (size, opacity, subtle depth-of-field blur, Z-occlusion) */}
         {allItems.map(({ tool, pos, orbit, angle, i }) => {
-          const size = iconSize(orbit, angle);
-          const isHovered = hoveredTool === `${orbit}-${i}`;
+          const itemKey = `${orbit}-${i}`;
+          const isHovered = hoveredTool === itemKey;
           const isPremium = orbit === 'outer';
           const sinVal = Math.sin((angle * Math.PI) / 180);
-          const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
+          const depth = (sinVal + 1) / 2; // 0 = far back, 1 = close front
+          const size = iconSize(orbit, depth);
+
+          // Subtle depth-of-field on the far-back arc, crisp on front arc & hover
+          const backBlur = isHovered ? 0 : depth < 0.35 ? ((0.35 - depth) / 0.35) * 1.15 : 0;
+          const depthOpacity = isHovered ? 1 : 0.5 + depth * 0.5;
+          const depthBrightness = isHovered ? 1.06 : 0.78 + depth * 0.24;
+
           return (
-            <div key={`${orbit}-${i}`} 
+            <div
+              key={itemKey}
               onClick={() => setSelectedTool(tool)}
-              onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)} onMouseLeave={() => setHoveredTool(null)}
-              style={{ position: 'absolute', left: pos.x, top: pos.y, transform: 'translate(-50%, -50%)', zIndex: Math.round(pos.y), opacity, transition: 'opacity 0.2s', cursor: 'pointer' }}
-              className="group flex flex-col items-center">
-              <div className="relative">
-                <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
-                  <img src={tool.img} alt={tool.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              onMouseEnter={() => setHoveredTool(itemKey)}
+              onMouseLeave={() => setHoveredTool(null)}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                transform: `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`,
+                zIndex: isHovered ? 900 : Math.round(pos.y),
+                opacity: depthOpacity,
+                transition: 'opacity 0.22s ease',
+                willChange: 'transform',
+                cursor: 'pointer',
+              }}
+              className="group flex flex-col items-center"
+            >
+              <div
+                className="relative transition-transform duration-200 ease-out"
+                style={{
+                  transform: isHovered ? 'scale(1.14)' : 'scale(1)',
+                  filter: `blur(${backBlur.toFixed(2)}px) brightness(${depthBrightness.toFixed(2)})`,
+                  transition: 'transform 0.22s ease-out, filter 0.22s ease-out',
+                }}
+              >
+                <div
+                  style={{
+                    width: size,
+                    height: size,
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    border: `1.5px solid ${
+                      isHovered
+                        ? tool.color
+                        : isPremium
+                          ? `rgba(245,158,11,${(0.2 + depth * 0.3).toFixed(2)})`
+                          : `rgba(255,255,255,${(0.1 + depth * 0.16).toFixed(2)})`
+                    }`,
+                    boxShadow: isHovered
+                      ? `0 0 24px ${tool.color}, 0 0 48px ${tool.color.replace('0.85', '0.35')}`
+                      : isPremium
+                        ? `0 ${Math.round(4 + depth * 8)}px ${Math.round(14 + depth * 14)}px rgba(234,179,8,${(0.12 + depth * 0.16).toFixed(2)})`
+                        : `0 ${Math.round(4 + depth * 8)}px ${Math.round(12 + depth * 12)}px rgba(0,0,0,${(0.35 + depth * 0.3).toFixed(2)})`,
+                    transition: 'box-shadow 0.25s ease, border-color 0.25s ease',
+                    flexShrink: 0,
+                  }}
+                >
+                  <img
+                    src={tool.img}
+                    alt={tool.name}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
                 {isPremium && <PremiumCrown />}
+
+                {/* Discreet Hover-Only Name Pill (invisible when idle) */}
+                {isHovered && (
+                  <div
+                    className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2.5 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md border border-white/15 text-white text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap shadow-xl"
+                  >
+                    {tool.name}
+                  </div>
+                )}
               </div>
             </div>
           );
         })}
 
-        <div style={{ position: 'absolute', top: CY + OUTER_RY + (isMobile ? 45 : 80), left: '50%', transform: 'translateX(-50%)', fontSize: isMobile ? 7 : 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        {/* Symmetrically Spaced Caption Below Outer Orbit */}
+        <div
+          style={{
+            position: 'absolute',
+            top: CY + OUTER_RY + 52,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontSize: 9,
+            letterSpacing: '0.35em',
+            color: 'rgba(255,255,255,0.5)',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+          }}
+        >
           Free Tools
         </div>
-
       </div>
 
       {/* Modal moved outside the transform div so fixed positioning works relative to the viewport */}
@@ -509,7 +625,7 @@ export function UtilitiesSection() {
         </div>
 
         {/* Unified Solar System for Desktop and Mobile (Hidden from screen readers) */}
-        <div ref={decorativeRef} className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16" aria-hidden="true">
+        <div ref={decorativeRef} className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 md:-mt-8" aria-hidden="true">
           <div className="hidden md:block w-full">
             <SolarSystem />
           </div>
