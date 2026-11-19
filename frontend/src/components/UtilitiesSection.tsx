@@ -121,16 +121,16 @@ function SolarSystem() {
   const CY = 265;
   const OUTER_RX = Math.min(620, Math.max(320, W * 0.44));
   const OUTER_RY = 192;
-  const INNER_RX = OUTER_RX * 0.62;
-  const INNER_RY = 112;
+  const INNER_RX = OUTER_RX * 0.58;
+  const INNER_RY = 110;
   const SPEED = 0.015;
 
-  // Mirror-symmetric starting phases (left/right balanced from frame 1)
+  // Mirror-symmetric starting phases: 6 free tools on wide outer ring, 3 VIP Reels tools on inner ring
   const [outerAngles, setOuterAngles] = useState(() =>
-    premiumTools.map((_, i) => (30 + (i * 360) / premiumTools.length) % 360)
+    desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
   );
   const [innerAngles, setInnerAngles] = useState(() =>
-    desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
+    premiumTools.map((_, i) => (30 + (i * 360) / premiumTools.length) % 360)
   );
 
   useEffect(() => {
@@ -153,8 +153,9 @@ function SolarSystem() {
 
       if (!paused && !hoveredTool && !selectedTool) {
         const step = SPEED * delta;
-        setOuterAngles(prev => prev.map(a => (a + step) % 360));
-        setInnerAngles(prev => prev.map(a => (a - step * 0.68 + 360) % 360));
+        // Outer ring glides slower, inner ring orbits slightly faster (natural orbital rhythm)
+        setOuterAngles(prev => prev.map(a => (a + step * 0.72) % 360));
+        setInnerAngles(prev => prev.map(a => (a - step + 360) % 360));
       }
       animRef.current = requestAnimationFrame(tick);
     };
@@ -174,20 +175,20 @@ function SolarSystem() {
     };
   };
 
-  const outerItems = premiumTools.map((tool, i) => {
+  const outerItems = desktopUtilities.map((tool, i) => {
     const pos = toXY(outerAngles[i], OUTER_RX, OUTER_RY);
-    return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, i };
+    return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, isPremium: false, i };
   });
-  const innerItems = desktopUtilities.map((tool, i) => {
+  const innerItems = premiumTools.map((tool, i) => {
     const pos = toXY(innerAngles[i], INNER_RX, INNER_RY);
-    return { tool, pos, angle: innerAngles[i], orbit: 'inner' as const, i };
+    return { tool, pos, angle: innerAngles[i], orbit: 'inner' as const, isPremium: true, i };
   });
   const allItems = [...outerItems, ...innerItems].sort((a, b) => a.pos.y - b.pos.y);
 
-  // Stronger 3D perspective size curve: noticeably larger in front (bottom), smaller behind sun (top)
-  const iconSize = (orbit: 'outer' | 'inner', depth: number) => {
-    if (orbit === 'outer') {
-      return 44 + depth * 32; // 44px back -> 76px front
+  // Stronger 3D perspective size curve: flagship Reels tools stay larger & bolder on the inner core
+  const iconSize = (isPremium: boolean, depth: number) => {
+    if (isPremium) {
+      return 46 + depth * 30; // 46px back -> 76px front
     }
     return 36 + depth * 26; // 36px back -> 62px front
   };
@@ -212,19 +213,19 @@ function SolarSystem() {
         >
           <defs>
             <linearGradient id="orbitDepthOuter" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="rgba(234,179,8,0.11)" />
-              <stop offset="50%" stopColor="rgba(234,179,8,0.24)" />
-              <stop offset="100%" stopColor="rgba(245,158,11,0.46)" />
-            </linearGradient>
-            <linearGradient id="orbitDepthInner" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="rgba(234,179,8,0.08)" />
-              <stop offset="50%" stopColor="rgba(234,179,8,0.17)" />
+              <stop offset="50%" stopColor="rgba(234,179,8,0.18)" />
               <stop offset="100%" stopColor="rgba(249,115,22,0.34)" />
             </linearGradient>
+            <linearGradient id="orbitDepthInner" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(234,179,8,0.14)" />
+              <stop offset="50%" stopColor="rgba(234,179,8,0.28)" />
+              <stop offset="100%" stopColor="rgba(245,158,11,0.52)" />
+            </linearGradient>
           </defs>
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitDepthOuter)" strokeWidth="1.15" />
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX + 3} ry={OUTER_RY + 1.5} fill="none" stroke="rgba(234,179,8,0.06)" strokeWidth="0.6" />
-          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitDepthInner)" strokeWidth="1" />
+          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitDepthOuter)" strokeWidth="1" />
+          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitDepthInner)" strokeWidth="1.2" />
+          <ellipse cx={CX} cy={CY} rx={INNER_RX + 3} ry={INNER_RY + 1.5} fill="none" stroke="rgba(234,179,8,0.08)" strokeWidth="0.6" />
         </svg>
 
         {/* Layer 2: Central Sun at zIndex = CY so back planets pass BEHIND it and front planets pass IN FRONT of it */}
@@ -257,13 +258,12 @@ function SolarSystem() {
         </svg>
 
         {/* Layer 3: Orbiting Planets with Real 3D Depth (size, opacity, subtle depth-of-field blur, Z-occlusion) */}
-        {allItems.map(({ tool, pos, orbit, angle, i }) => {
+        {allItems.map(({ tool, pos, orbit, angle, isPremium, i }) => {
           const itemKey = `${orbit}-${i}`;
           const isHovered = hoveredTool === itemKey;
-          const isPremium = orbit === 'outer';
           const sinVal = Math.sin((angle * Math.PI) / 180);
           const depth = (sinVal + 1) / 2; // 0 = far back, 1 = close front
-          const size = iconSize(orbit, depth);
+          const size = iconSize(isPremium, depth);
 
           // Subtle depth-of-field on the far-back arc, crisp on front arc & hover
           const backBlur = isHovered ? 0 : depth < 0.35 ? ((0.35 - depth) / 0.35) * 1.15 : 0;
