@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useRef, useEffect, useState, useId } from 'react';
+import { ChevronLeft, ChevronRight, Pause, Play, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNoTabStop } from '../utils/useNoTabStop';
 
@@ -37,8 +37,7 @@ const desktopUtilities = [
 // ─────────────────────────────────────────────
 const PremiumCrown = () => (
   <div 
-    className="absolute -top-3 -right-2 z-20 pointer-events-none drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]"
-    style={{ animation: 'floatCrown 4s ease-in-out infinite' }}
+    className="crown-float absolute -top-3 -right-2 z-20 pointer-events-none drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]"
   >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-[18px] h-[18px] md:w-[20px] md:h-[20px]">
       <defs>
@@ -93,53 +92,118 @@ function ToolIcon({ tool, compact = false, isPremium = false }: { tool: typeof u
 }
 
 // ─────────────────────────────────────────────
-// Desktop Solar System (Unchanged)
+// Desktop Solar System (Upgraded 2.0)
 // ─────────────────────────────────────────────
+type ToolItem = typeof utilities[0];
+
 function SolarSystem() {
-  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
-  const [selectedTool, setSelectedTool] = useState<typeof premiumTools[0] | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'outer' | 'inner'>('all');
+  const [selectedTool, setSelectedTool] = useState<(ToolItem & { isPremium: boolean }) | null>(null);
+  const [isPaused, setIsPaused] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  );
+  const [stageWidth, setStageWidth] = useState(1120);
+
+  const stageRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const animRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
+  const dialogTitleId = useId();
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const el = stageRef.current;
+    if (!el) return;
+    const updateWidth = () => {
+      const measured = el.getBoundingClientRect().width;
+      if (measured > 0) setStageWidth(Math.min(1180, measured));
+    };
+    updateWidth();
+    const ro = new ResizeObserver(updateWidth);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
-  const OUTER_RX = isMobile ? 110 : 720;
-  const OUTER_RY = isMobile ? 220 : 200;
-  const INNER_RX = isMobile ? 55 : 450;
-  const INNER_RY = isMobile ? 120 : 120;
-  const SPEED = isMobile ? 0.025 : 0.018;
-  const W = isMobile ? 390 : 1600;
-  const H = isMobile ? 550 : 650;
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (selectedTool) {
+      if (!dialog.open) dialog.showModal();
+    } else if (dialog.open) {
+      dialog.close();
+    }
+  }, [selectedTool]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const handleClose = () => {
+      dialog.returnValue = '';
+      setSelectedTool(null);
+    };
+    dialog.addEventListener('close', handleClose);
+
+    // Light-dismiss fallback for browsers without native dialog closedby="any" (e.g. Safari)
+    let pressedOutside = false;
+    const isOutside = (e: PointerEvent) => {
+      const r = dialog.getBoundingClientRect();
+      return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      if (!('closedBy' in HTMLDialogElement.prototype)) {
+        pressedOutside = isOutside(e);
+      }
+    };
+    const onPointerUp = (e: PointerEvent) => {
+      if (!('closedBy' in HTMLDialogElement.prototype) && pressedOutside && isOutside(e)) {
+        dialog.close();
+      }
+      pressedOutside = false;
+    };
+
+    dialog.addEventListener('pointerdown', onPointerDown);
+    dialog.addEventListener('pointerup', onPointerUp);
+    return () => {
+      dialog.removeEventListener('close', handleClose);
+      dialog.removeEventListener('pointerdown', onPointerDown);
+      dialog.removeEventListener('pointerup', onPointerUp);
+    };
+  }, []);
+
+  const W = stageWidth;
+  const H = 500;
   const CX = W / 2;
-  const CY = H / 2;
+  const CY = H / 2 - 8;
+  const OUTER_RX = Math.min(485, Math.max(300, W * 0.42));
+  const OUTER_RY = 182;
+  const INNER_RX = OUTER_RX * 0.62;
+  const INNER_RY = 108;
+  const SPEED = 0.014;
 
   const [outerAngles, setOuterAngles] = useState(() =>
-    premiumTools.map((_, i) => (i * 360) / premiumTools.length)
+    premiumTools.map((_, i) => 25 + (i * 360) / premiumTools.length)
   );
   const [innerAngles, setInnerAngles] = useState(() =>
-    desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
+    desktopUtilities.map((_, i) => 15 + (i * 360) / desktopUtilities.length)
   );
 
   useEffect(() => {
-    let paused = false;
-    const onVisibility = () => { paused = document.hidden; };
+    let tabHidden = false;
+    const onVisibility = () => {
+      tabHidden = document.hidden;
+      if (!tabHidden) lastTimeRef.current = 0;
+    };
     document.addEventListener('visibilitychange', onVisibility);
 
     const tick = (time: number) => {
       if (!lastTimeRef.current) lastTimeRef.current = time;
-      const delta = time - lastTimeRef.current;
+      const delta = Math.min(40, time - lastTimeRef.current);
       lastTimeRef.current = time;
 
-      if (!paused && !hoveredTool && !selectedTool) {
+      if (!tabHidden && !isPaused && !hoveredKey && !selectedTool) {
         const step = SPEED * delta;
         setOuterAngles(prev => prev.map(a => (a + step) % 360));
-        setInnerAngles(prev => prev.map(a => (a - step * 0.7) % 360));
+        setInnerAngles(prev => prev.map(a => (a - step * 0.68 + 360) % 360));
       }
       animRef.current = requestAnimationFrame(tick);
     };
@@ -149,7 +213,7 @@ function SolarSystem() {
       cancelAnimationFrame(animRef.current);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [hoveredTool, selectedTool, SPEED]);
+  }, [hoveredKey, selectedTool, isPaused, SPEED]);
 
   const toXY = (angleDeg: number, rx: number, ry: number) => {
     const rad = (angleDeg * Math.PI) / 180;
@@ -159,112 +223,403 @@ function SolarSystem() {
     };
   };
 
-  const outerItems = premiumTools.map((tool, i) => {
-    const pos = toXY(outerAngles[i], OUTER_RX, OUTER_RY);
-    return { tool, pos, angle: outerAngles[i], orbit: 'outer' as const, i };
-  });
-  const innerItems = desktopUtilities.map((tool, i) => {
-    const pos = toXY(innerAngles[i], INNER_RX, INNER_RY);
-    return { tool, pos, angle: innerAngles[i], orbit: 'inner' as const, i };
-  });
+  const outerItems = premiumTools.map((tool, i) => ({
+    key: `outer-${i}`,
+    tool,
+    pos: toXY(outerAngles[i], OUTER_RX, OUTER_RY),
+    angle: outerAngles[i],
+    orbit: 'outer' as const,
+    isPremium: true,
+  }));
+
+  const innerItems = desktopUtilities.map((tool, i) => ({
+    key: `inner-${i}`,
+    tool,
+    pos: toXY(innerAngles[i], INNER_RX, INNER_RY),
+    angle: innerAngles[i],
+    orbit: 'inner' as const,
+    isPremium: false,
+  }));
+
   const allItems = [...outerItems, ...innerItems].sort((a, b) => a.pos.y - b.pos.y);
+  const hoveredItem = hoveredKey ? allItems.find((item) => item.key === hoveredKey) ?? null : null;
 
   const iconSize = (orbit: 'outer' | 'inner', angle: number) => {
     const sinVal = Math.sin((angle * Math.PI) / 180);
-    const base = orbit === 'outer' ? (isMobile ? 55 : 58) : (isMobile ? 45 : 50);
-    const amplitude = isMobile ? 8 : 7;
-    return base + sinVal * amplitude;
+    const base = orbit === 'outer' ? 66 : 56;
+    return base + sinVal * 6;
   };
 
+  const outerRingOpacity = activeFilter === 'inner' ? 0.16 : hoveredItem?.orbit === 'outer' ? 0.85 : 0.45;
+  const innerRingOpacity = activeFilter === 'outer' ? 0.14 : hoveredItem?.orbit === 'inner' ? 0.8 : 0.35;
+
   return (
-    <div className="relative select-none w-full" style={{ height: H, marginTop: '-30px' }}>
-      <div style={{ position: 'absolute', width: W, height: H, left: '50%', transform: 'translateX(-50%)' }}>
-        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+    <div ref={stageRef} className="relative select-none w-full max-w-[1180px] mx-auto">
+      {/* Soft dark radial backdrop to separate planets cleanly from background grid */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-x-10 -inset-y-6 rounded-full"
+        style={{
+          background:
+            'radial-gradient(ellipse 68% 64% at 50% 46%, rgba(8, 6, 5, 0.86) 0%, rgba(8, 6, 5, 0.56) 58%, rgba(8, 6, 5, 0) 100%)',
+        }}
+      />
+
+      {/* Orbital Stage */}
+      <div className="relative mx-auto" style={{ width: W, height: H }}>
+        <svg
+          width={W}
+          height={H}
+          viewBox={`0 0 ${W} ${H}`}
+          className="absolute inset-0 pointer-events-none"
+        >
           <defs>
             <linearGradient id="orbitGradOuter" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-              <stop offset="40%" stopColor="rgba(234,179,8,0.35)" />
-              <stop offset="60%" stopColor="rgba(234,179,8,0.35)" />
-              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+              <stop offset="0%" stopColor="rgba(234,179,8,0.08)" />
+              <stop offset="28%" stopColor="rgba(245,158,11,0.55)" />
+              <stop offset="50%" stopColor="rgba(253,224,71,0.65)" />
+              <stop offset="72%" stopColor="rgba(245,158,11,0.55)" />
+              <stop offset="100%" stopColor="rgba(234,179,8,0.08)" />
             </linearGradient>
             <linearGradient id="orbitGradInner" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(234,179,8,0)" />
-              <stop offset="40%" stopColor="rgba(234,179,8,0.2)" />
-              <stop offset="60%" stopColor="rgba(234,179,8,0.2)" />
-              <stop offset="100%" stopColor="rgba(234,179,8,0)" />
+              <stop offset="0%" stopColor="rgba(255,255,255,0.05)" />
+              <stop offset="35%" stopColor="rgba(249,115,22,0.42)" />
+              <stop offset="65%" stopColor="rgba(249,115,22,0.42)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0.05)" />
             </linearGradient>
             <filter id="starGlow" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="12" result="blur" />
+              <feGaussianBlur stdDeviation="14" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
             <radialGradient id="sunGradientOrange">
-              <stop offset="0%" stopColor="#fff" />
-              <stop offset="30%" stopColor="#f97316" />
+              <stop offset="0%" stopColor="#fff7ed" />
+              <stop offset="32%" stopColor="#fb923c" />
+              <stop offset="68%" stopColor="rgba(249, 115, 22, 0.35)" />
               <stop offset="100%" stopColor="rgba(249, 115, 22, 0)" />
             </radialGradient>
           </defs>
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX} ry={OUTER_RY} fill="none" stroke="url(#orbitGradOuter)" strokeWidth="1" />
-          <ellipse cx={CX} cy={CY} rx={OUTER_RX + (isMobile ? 1 : 2)} ry={OUTER_RY + 1} fill="none" stroke="rgba(234,179,8,0.07)" strokeWidth="0.5" />
-          <ellipse cx={CX} cy={CY} rx={INNER_RX} ry={INNER_RY} fill="none" stroke="url(#orbitGradInner)" strokeWidth="1" />
-          <circle cx={CX} cy={CY} r={isMobile ? 24 : 48} fill="rgba(234,179,8,0.06)" />
-          <circle cx={CX} cy={CY} r={isMobile ? 12 : 24} fill="rgba(234,179,8,0.13)" />
+
+          {/* Outer Orbit (Reels Suite) */}
+          <ellipse
+            cx={CX}
+            cy={CY}
+            rx={OUTER_RX}
+            ry={OUTER_RY}
+            fill="none"
+            stroke="url(#orbitGradOuter)"
+            strokeWidth={hoveredItem?.orbit === 'outer' ? 1.5 : 1}
+            style={{ opacity: outerRingOpacity, transition: 'opacity 0.3s ease' }}
+          />
+          <ellipse
+            cx={CX}
+            cy={CY}
+            rx={OUTER_RX + 4}
+            ry={OUTER_RY + 2}
+            fill="none"
+            stroke="rgba(234,179,8,0.1)"
+            strokeWidth="0.6"
+            strokeDasharray="3 8"
+            style={{ opacity: outerRingOpacity, transition: 'opacity 0.3s ease' }}
+          />
+
+          {/* Inner Orbit (Free Utilities) */}
+          <ellipse
+            cx={CX}
+            cy={CY}
+            rx={INNER_RX}
+            ry={INNER_RY}
+            fill="none"
+            stroke="url(#orbitGradInner)"
+            strokeWidth={hoveredItem?.orbit === 'inner' ? 1.5 : 1}
+            style={{ opacity: innerRingOpacity, transition: 'opacity 0.3s ease' }}
+          />
+
+          {/* Central Sun */}
+          <circle
+            cx={CX}
+            cy={CY}
+            r={62}
+            fill={hoveredItem ? hoveredItem.tool.color.replace('0.85', '0.09') : 'rgba(249,115,22,0.07)'}
+            style={{ transition: 'fill 0.35s ease' }}
+          />
+          <circle
+            cx={CX}
+            cy={CY}
+            r={32}
+            fill={hoveredItem ? hoveredItem.tool.color.replace('0.85', '0.18') : 'rgba(249,115,22,0.15)'}
+            style={{ transition: 'fill 0.35s ease' }}
+          />
           <g filter="url(#starGlow)">
-            <circle cx={CX} cy={CY} r={isMobile ? 22 : 35} fill="rgba(249, 115, 22, 0.15)">
-              <animate attributeName="r" values={isMobile ? "18;24;18" : "32;38;32"} dur="3s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" />
+            <circle cx={CX} cy={CY} r={34} fill="rgba(249, 115, 22, 0.16)">
+              {!isPaused && (
+                <>
+                  <animate attributeName="r" values="30;38;30" dur="3.4s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.3;0.65;0.3" dur="3.4s" repeatCount="indefinite" />
+                </>
+              )}
             </circle>
-            <circle cx={CX} cy={CY} r={isMobile ? 10 : 12} fill="url(#sunGradientOrange)" />
+            <circle cx={CX} cy={CY} r={14} fill="url(#sunGradientOrange)" />
           </g>
         </svg>
 
-        {allItems.map(({ tool, pos, orbit, angle, i }) => {
+        {/* Orbiting Tool Nodes (GPU compositor translate3d positioning) */}
+        {allItems.map(({ key, tool, pos, orbit, angle, isPremium }) => {
           const size = iconSize(orbit, angle);
-          const isHovered = hoveredTool === `${orbit}-${i}`;
-          const isPremium = orbit === 'outer';
+          const isHovered = hoveredKey === key;
+          const isDimmedByFilter = activeFilter !== 'all' && activeFilter !== orbit;
+          const isDimmedByHover = Boolean(hoveredKey) && !isHovered;
           const sinVal = Math.sin((angle * Math.PI) / 180);
-          const opacity = 0.55 + 0.45 * ((sinVal + 1) / 2);
+          const depthOpacity = 0.68 + 0.32 * ((sinVal + 1) / 2);
+          const finalOpacity = isHovered
+            ? 1
+            : isDimmedByFilter
+              ? 0.22
+              : isDimmedByHover
+                ? 0.42
+                : depthOpacity;
+
           return (
-            <div key={`${orbit}-${i}`} 
-              onClick={() => setSelectedTool(tool)}
-              onMouseEnter={() => setHoveredTool(`${orbit}-${i}`)} onMouseLeave={() => setHoveredTool(null)}
-              style={{ position: 'absolute', left: pos.x, top: pos.y, transform: 'translate(-50%, -50%)', zIndex: Math.round(pos.y), opacity, transition: 'opacity 0.2s', cursor: 'pointer' }}
-              className="group flex flex-col items-center">
-              <div className="relative">
-                <div style={{ width: size, height: size, borderRadius: '50%', overflow: 'hidden', border: `1.5px solid ${isHovered ? tool.color : 'rgba(255,255,255,0.12)'}`, boxShadow: isHovered ? `0 0 20px ${tool.color}, 0 0 40px ${tool.color.replace('0.85', '0.3')}` : isPremium ? '0 0 10px rgba(234,179,8,0.2)' : 'none', transition: 'box-shadow 0.3s, border-color 0.3s, width 0.2s, height 0.2s', flexShrink: 0 }}>
-                  <img src={tool.img} alt={tool.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <button
+              key={key}
+              type="button"
+              onClick={() => setSelectedTool({ ...tool, isPremium })}
+              onMouseEnter={() => setHoveredKey(key)}
+              onMouseLeave={() => setHoveredKey(null)}
+              onFocus={() => setHoveredKey(key)}
+              onBlur={() => setHoveredKey(null)}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                transform: `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`,
+                zIndex: isHovered ? 900 : Math.round(pos.y),
+                opacity: finalOpacity,
+                transition: 'opacity 0.25s ease',
+                willChange: 'transform',
+              }}
+              className="group flex flex-col items-center cursor-pointer bg-transparent border-0 p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-2xl"
+            >
+              <div
+                className="flex flex-col items-center transition-transform duration-200 ease-out"
+                style={{ transform: isHovered ? 'scale(1.14)' : 'scale(1)' }}
+              >
+                <div className="relative">
+                  <div
+                    style={{
+                      width: size,
+                      height: size,
+                      borderRadius: '50%',
+                      overflow: 'hidden',
+                      border: `1.5px solid ${
+                        isHovered
+                          ? tool.color
+                          : isPremium
+                            ? 'rgba(245, 158, 11, 0.45)'
+                            : 'rgba(255, 255, 255, 0.18)'
+                      }`,
+                      boxShadow: isHovered
+                        ? `0 0 26px ${tool.color}, 0 0 54px ${tool.color.replace('0.85', '0.35')}`
+                        : isPremium
+                          ? '0 0 18px rgba(234, 179, 8, 0.24)'
+                          : '0 8px 22px rgba(0, 0, 0, 0.55)',
+                      transition: 'box-shadow 0.25s ease, border-color 0.25s ease',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={tool.img}
+                      alt={tool.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {isPremium && <PremiumCrown />}
                 </div>
-                {isPremium && <PremiumCrown />}
+
+                {/* Clean Pill Label Under Every Planet */}
+                <span
+                  className={`mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-[0.14em] whitespace-nowrap backdrop-blur-sm transition-colors duration-200 ${
+                    isHovered
+                      ? 'bg-black/85 text-white border border-white/25 shadow-lg'
+                      : 'bg-black/55 text-white/70 border border-white/10'
+                  }`}
+                >
+                  {tool.name}
+                </span>
               </div>
-            </div>
+            </button>
           );
         })}
-
-        <div style={{ position: 'absolute', top: CY + OUTER_RY + (isMobile ? 45 : 80), left: '50%', transform: 'translateX(-50%)', fontSize: isMobile ? 7 : 9, letterSpacing: '0.35em', color: 'rgba(255,255,255,0.5)', fontWeight: 700, textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-          Free Tools
-        </div>
-
       </div>
 
-      {/* Modal moved outside the transform div so fixed positioning works relative to the viewport */}
-      {selectedTool && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/70 backdrop-blur-md" style={{ pointerEvents: 'auto' }} onClick={() => setSelectedTool(null)}>
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-8 max-w-[320px] md:max-w-[380px] w-full shadow-2xl relative flex flex-col items-center text-center animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setSelectedTool(null)} className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-white/10 mb-6 shadow-lg" style={{ boxShadow: `0 0 35px ${selectedTool.color.replace('0.85', '0.4')}` }}>
-              <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
+      {/* Live Preview & Controls Glass Bar (Fixed Height — Zero Layout Shift) */}
+      <div className="relative z-20 mt-2 flex justify-center px-4">
+        <div
+          className="w-full max-w-[740px] min-h-[70px] rounded-2xl bg-[#0d0b0a]/85 backdrop-blur-md border border-white/10 px-5 py-3 flex items-center justify-between gap-4 shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-colors duration-300"
+          style={{
+            borderColor: hoveredItem
+              ? hoveredItem.tool.color.replace('0.85', '0.45')
+              : 'rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          {hoveredItem ? (
+            <div className="flex items-center justify-between w-full gap-4">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div
+                  className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border border-white/15"
+                  style={{ boxShadow: `0 0 18px ${hoveredItem.tool.color.replace('0.85', '0.45')}` }}
+                >
+                  <img
+                    src={hoveredItem.tool.img}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="min-w-0 text-left">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-black tracking-[0.12em] uppercase text-white truncate">
+                      {hoveredItem.tool.name}
+                    </span>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-[0.16em] ${
+                        hoveredItem.isPremium
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-400/35'
+                          : 'bg-white/10 text-white/75 border border-white/15'
+                      }`}
+                    >
+                      {hoveredItem.isPremium ? 'Reels Pro' : 'Free Tool'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-white/65 truncate mt-0.5">
+                    {hoveredItem.tool.desc}
+                  </p>
+                </div>
+              </div>
+              <span className="flex-shrink-0 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.16em] text-orange-400">
+                Open
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
             </div>
-            <h3 className="text-2xl md:text-3xl font-black text-white tracking-widest uppercase mb-3 drop-shadow-md">{selectedTool.name}</h3>
-            <p className="text-white/50 text-sm md:text-base font-medium mb-8 leading-relaxed px-2">
+          ) : (
+            <div className="flex items-center justify-between w-full gap-4">
+              {/* Orbit Filter Pills */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setActiveFilter('all')}
+                  className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] transition-colors ${
+                    activeFilter === 'all'
+                      ? 'bg-white text-black'
+                      : 'text-white/55 hover:text-white bg-white/5'
+                  }`}
+                >
+                  All (9)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveFilter(activeFilter === 'outer' ? 'all' : 'outer')}
+                  className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] transition-colors ${
+                    activeFilter === 'outer'
+                      ? 'bg-amber-400/25 text-amber-200 border border-amber-400/45'
+                      : 'text-amber-300/75 hover:text-amber-200 bg-amber-500/10 border border-amber-500/20'
+                  }`}
+                >
+                  Reels Suite (3)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveFilter(activeFilter === 'inner' ? 'all' : 'inner')}
+                  className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] transition-colors ${
+                    activeFilter === 'inner'
+                      ? 'bg-orange-500/25 text-orange-200 border border-orange-400/45'
+                      : 'text-white/60 hover:text-white bg-white/5 border border-white/10'
+                  }`}
+                >
+                  Free Utilities (6)
+                </button>
+              </div>
+
+              {/* Subtle Hint + WCAG Pause/Play Control */}
+              <div className="flex items-center gap-3">
+                <span className="hidden lg:inline text-[11px] text-white/40 tracking-wide">
+                  Hover to preview · Click to launch
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsPaused((p) => !p)}
+                  aria-label={isPaused ? 'Play orbit animation' : 'Pause orbit animation'}
+                  title={isPaused ? 'Play orbit' : 'Pause orbit'}
+                  className="w-8 h-8 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/15 border border-white/10 text-white/70 hover:text-white transition-colors"
+                >
+                  {isPaused ? <Play className="w-3.5 h-3.5 ml-0.5" /> : <Pause className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Native Top-Layer Modal Dialog */}
+      <dialog
+        ref={dialogRef}
+        {...({ closedby: 'any' } as any)}
+        aria-labelledby={dialogTitleId}
+        className="solar-tool-dialog bg-transparent p-0 m-auto max-w-[380px] w-[calc(100%-2.5rem)] overflow-visible"
+      >
+        {selectedTool && (
+          <div className="bg-[#0a0a0a] border border-white/12 rounded-3xl p-8 w-full shadow-2xl relative flex flex-col items-center text-center">
+            <form method="dialog">
+              <button
+                type="submit"
+                aria-label="Close tool details"
+                className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors p-1"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </form>
+            <div className="relative mb-6">
+              <div
+                className="w-28 h-28 rounded-full overflow-hidden border border-white/15 shadow-lg"
+                style={{ boxShadow: `0 0 38px ${selectedTool.color.replace('0.85', '0.45')}` }}
+              >
+                <img src={selectedTool.img} alt={selectedTool.name} className="w-full h-full object-cover" />
+              </div>
+              {selectedTool.isPremium && <PremiumCrown />}
+            </div>
+            <span
+              className={`mb-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-[0.18em] ${
+                selectedTool.isPremium
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-400/35'
+                  : 'bg-white/10 text-white/70 border border-white/15'
+              }`}
+            >
+              {selectedTool.isPremium ? 'Reels Suite' : 'Free Utility'}
+            </span>
+            <h3
+              id={dialogTitleId}
+              className="text-3xl font-black text-white tracking-widest uppercase mb-3 drop-shadow-md"
+            >
+              {selectedTool.name}
+            </h3>
+            <p className="text-white/55 text-base font-medium mb-8 leading-relaxed px-2">
               {selectedTool.desc}
             </p>
-            <a href={selectedTool.link} target="_blank" rel="noopener noreferrer" onClick={() => setSelectedTool(null)} className="block w-full py-4 rounded-2xl font-bold uppercase tracking-[0.25em] text-[12px] md:text-[13px] text-black bg-white hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+            <a
+              href={selectedTool.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              autoFocus
+              onClick={() => dialogRef.current?.close()}
+              className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold uppercase tracking-[0.22em] text-[13px] text-black bg-white hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_24px_rgba(255,255,255,0.2)]"
+            >
               Get in!
+              <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>
-        </div>
-      )}
+        )}
+      </dialog>
     </div>
   );
 }
@@ -487,8 +842,8 @@ export function UtilitiesSection() {
           <img src="/tools for artists.webp" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 
-        {/* Screen Reader Only List of Tools */}
-        <div className="sr-only">
+        {/* Screen Reader Only List of Tools (Mobile fallback; desktop solar system uses native controls) */}
+        <div className="sr-only md:hidden">
           <h2>deVee Tools for Artists</h2>
           <ul>
             {premiumTools.map(tool => (
@@ -508,12 +863,12 @@ export function UtilitiesSection() {
           </ul>
         </div>
 
-        {/* Unified Solar System for Desktop and Mobile (Hidden from screen readers) */}
-        <div ref={decorativeRef} className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-16" aria-hidden="true">
+        {/* Desktop Interactive Solar System + Mobile 3D Carousel */}
+        <div className="flex flex-col items-center justify-center overflow-hidden sm:overflow-visible -mx-4 sm:mx-0 -mt-10 sm:-mt-10">
           <div className="hidden md:block w-full">
             <SolarSystem />
           </div>
-          <div className="block md:hidden w-full mt-4">
+          <div ref={decorativeRef} className="block md:hidden w-full mt-4" aria-hidden="true">
             <MobileTools3D />
           </div>
         </div>
@@ -536,6 +891,23 @@ export function UtilitiesSection() {
         @keyframes floatCrown {
           0%, 100% { transform: translateY(0) rotate(15deg); }
           50% { transform: translateY(-2px) rotate(15deg); }
+        }
+        .crown-float {
+          transform: rotate(15deg);
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .crown-float {
+            animation: floatCrown 4s ease-in-out infinite;
+          }
+        }
+        dialog.solar-tool-dialog:modal {
+          overscroll-behavior: contain;
+        }
+        dialog.solar-tool-dialog::backdrop {
+          background: rgba(0, 0, 0, 0.72);
+          backdrop-filter: blur(10px);
+          overflow: hidden;
+          overscroll-behavior: contain;
         }
       `}} />
     </section>
