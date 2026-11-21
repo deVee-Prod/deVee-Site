@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowLeft, CheckCircle2, Download, ShieldCheck } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 import { EXCLUSIVE_PLUGINS, type ExclusivePlugin } from '../data/exclusivePlugins';
+import { DownloadNoticeDialog, type PendingDownload } from '../components/DownloadNoticeDialog';
 
 interface ExclusivePluginPageProps {
   plugin: ExclusivePlugin;
@@ -10,6 +11,7 @@ interface ExclusivePluginPageProps {
 export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
   const [user, setUser] = useState<any>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [pendingDownload, setPendingDownload] = useState<PendingDownload | null>(null);
 
   useEffect(() => {
     document.title = plugin.seoTitle;
@@ -53,18 +55,26 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
       return;
     }
 
+    setPendingDownload({
+      name: plugin.name,
+      fileName: plugin.storageFile,
+      bucket: plugin.bucket,
+    });
+  };
+
+  const handleConfirmDownload = async (item: PendingDownload) => {
     setIsDownloading(true);
     try {
       const { data, error } = await supabase.storage
-        .from(plugin.bucket)
-        .createSignedUrl(plugin.storageFile, 60);
+        .from(item.bucket)
+        .createSignedUrl(item.fileName, 60);
 
       if (error) throw error;
 
       if (data?.signedUrl) {
         const a = document.createElement('a');
         a.href = data.signedUrl;
-        a.download = plugin.storageFile;
+        a.download = item.fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -72,7 +82,7 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
     } catch (error) {
       console.error('Error downloading plugin:', error);
       alert(
-        `There was an issue downloading "${plugin.storageFile}". Please make sure the file is uploaded in the "${plugin.bucket}" bucket or try again shortly.`
+        `There was an issue downloading "${item.fileName}". Please make sure the file is uploaded in the "${item.bucket}" bucket or try again shortly.`
       );
     } finally {
       setIsDownloading(false);
@@ -331,6 +341,13 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
           </div>
         </div>
       </footer>
+
+      <DownloadNoticeDialog
+        pending={pendingDownload}
+        isDownloading={isDownloading}
+        onConfirm={handleConfirmDownload}
+        onClose={() => setPendingDownload(null)}
+      />
 
       <style dangerouslySetInnerHTML={{ __html: `
         .plugin-faq-summary {

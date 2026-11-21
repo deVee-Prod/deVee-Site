@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 import { useNoTabStop } from '../utils/useNoTabStop';
 import { EXCLUSIVE_PLUGINS, type ExclusivePlugin } from '../data/exclusivePlugins';
+import { DownloadNoticeDialog, type PendingDownload } from './DownloadNoticeDialog';
 
 const classicPlugins = [
   { id: 'phase', name: 'deVee Phase', img: '/plugins/phase.webp', desc: 'Select which channel to invert.' },
@@ -21,6 +22,7 @@ export function PluginsSection() {
   const [classicIndex, setClassicIndex] = useState(0);
   const [user, setUser] = useState<any>(null);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [pendingDownload, setPendingDownload] = useState<PendingDownload | null>(null);
 
   const exclusiveTouchStartX = useRef<number | null>(null);
   const classicTouchStartX = useRef<number | null>(null);
@@ -213,7 +215,11 @@ export function PluginsSection() {
       await signInWithGoogle();
       return;
     }
-    await triggerSignedDownload(plugin.bucket, plugin.storageFile, `exclusive-${plugin.id}`);
+    setPendingDownload({
+      name: plugin.name,
+      fileName: plugin.storageFile,
+      bucket: plugin.bucket,
+    });
   };
 
   const handleDownloadClassic = async (plugin: typeof classicPlugins[0]) => {
@@ -229,7 +235,15 @@ export function PluginsSection() {
     };
     const fileName = fileNameMap[plugin.id];
     if (!fileName) return;
-    await triggerSignedDownload('devee-plugins', fileName, `classic-${plugin.id}`);
+    setPendingDownload({
+      name: plugin.name,
+      fileName,
+      bucket: 'devee-plugins',
+    });
+  };
+
+  const handleConfirmPendingDownload = async (item: PendingDownload) => {
+    await triggerSignedDownload(item.bucket, item.fileName, item.fileName);
   };
 
   const activeExclusive = EXCLUSIVE_PLUGINS[exclusiveIndex];
@@ -591,32 +605,32 @@ export function PluginsSection() {
             <h4 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase">
               {activeClassic.name}
             </h4>
-            <p className="text-white/45 text-xs mb-3 mt-0.5">
+            <p className="text-white/45 text-xs mb-4 mt-0.5">
               {activeClassic.desc}
-            </p>
-            <p className="text-white/30 text-[10px] max-w-sm text-balance leading-relaxed mb-4 px-4">
-              Note: As a newly released plugin, your browser may display a standard security warning. It is 100% safe to download.
             </p>
 
             <button
               type="button"
-              disabled={downloadingId === `classic-${activeClassic.id}`}
+              disabled={downloadingId !== null}
               onClick={() => handleDownloadClassic(activeClassic)}
               className="group relative flex items-center gap-2.5 px-6 py-3 bg-white/5 hover:bg-white/10 disabled:opacity-60 border border-white/15 rounded-full transition-all duration-300 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Download className="w-4 h-4 text-white group-hover:-translate-y-0.5 transition-transform duration-300" />
               <span className="font-bold uppercase tracking-wider text-xs">
-                {downloadingId === `classic-${activeClassic.id}`
-                  ? 'Preparing...'
-                  : user
-                    ? `Download ${activeClassic.name}`
-                    : 'Sign In To Download'}
+                {user ? `Download ${activeClassic.name}` : 'Sign In To Download'}
               </span>
             </button>
           </div>
         </div>
       </div>
+
+      <DownloadNoticeDialog
+        pending={pendingDownload}
+        isDownloading={downloadingId !== null}
+        onConfirm={handleConfirmPendingDownload}
+        onClose={() => setPendingDownload(null)}
+      />
     </section>
   );
 }
