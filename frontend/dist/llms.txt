@@ -14,7 +14,10 @@ deVee Music combines analog warmth and digital precision in a personalized bouti
 ## Tools & Plugins
 
 - [Tools for Artists](https://www.devee-music.com/#utilities): Free web tools for music creators.
-- [Plugins for Artists](https://www.devee-music.com/): Audio plugins, including the deVee Exclusive plugin 360 (sign-in required to download).
+- [deVee 360° Plugin](https://www.devee-music.com/plugins/360): Per-note kick & bass phase aligner working in degrees on every kick hit, bundled with the zero-latency 360 Analyzer (VST3 / AU).
+- [deVee Slap01 Plugin](https://www.devee-music.com/plugins/slap): Monophonic 3-layer bass synthesizer (SUB, BODY, CLICK/TOP) with 1,000 authored factory presets including 144 808s and 3D displays (VST3 / AU / Standalone).
+- [deVee Pitcher Plugin](https://www.devee-music.com/plugins/pitch): 3D pitch shifter and beat-synced Loop Freeze riser (1/2 to 1/64) with Clean/Tape/Grain engines, Sub Split crossover protection, and Formant control (VST3 / AU / Standalone).
+- [Classic Mini-Plugins](https://www.devee-music.com/#plugins): deVee Phase, deVee Hole, deVee Blend, and deVee Haunt (sign-in required to download).
 
 ## Pages
 

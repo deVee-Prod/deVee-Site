@@ -19,6 +19,13 @@ supabase.auth.onAuthStateChange((_event, session) => {
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     document.cookie = `devee_auth=1; domain=.devee-music.com; path=/; expires=${expires.toUTCString()}; SameSite=Lax; Secure`;
+    try {
+      const returnTo = sessionStorage.getItem('devee_return_to');
+      if (returnTo && returnTo.startsWith('/plugins/') && window.location.pathname !== returnTo) {
+        sessionStorage.removeItem('devee_return_to');
+        window.location.replace(returnTo);
+      }
+    } catch {}
   } else {
     document.cookie = `devee_auth=; domain=.devee-music.com; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax; Secure`;
   }

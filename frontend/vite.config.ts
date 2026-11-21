@@ -19,6 +19,9 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         info: path.resolve(__dirname, 'info/index.html'),
+        plugin360: path.resolve(__dirname, 'plugins/360/index.html'),
+        pluginSlap: path.resolve(__dirname, 'plugins/slap/index.html'),
+        pluginPitch: path.resolve(__dirname, 'plugins/pitch/index.html'),
         error404: path.resolve(__dirname, 'releases/error-404/index.html')
       }
     }

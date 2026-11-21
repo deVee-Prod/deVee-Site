@@ -71,6 +71,25 @@ export function Footer() {
             >
               Accessibility
             </a>
+            <span className="text-white/10 text-[10px] select-none" aria-hidden="true">·</span>
+            <a
+              href="/plugins/360"
+              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+            >
+              360°
+            </a>
+            <a
+              href="/plugins/slap"
+              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+            >
+              Slap01
+            </a>
+            <a
+              href="/plugins/pitch"
+              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+            >
+              Pitcher
+            </a>
           </div>
         </div>
       </div>
