@@ -208,7 +208,7 @@ export function DownloadNoticeDialog({
                 autoFocus
                 disabled={isDownloading}
                 onClick={handleConfirmClick}
-                className="w-full h-12 rounded-xl flex items-center justify-center gap-2.5 font-bold uppercase tracking-[0.2em] text-[11.5px] text-white transition-all duration-200 disabled:opacity-55 cursor-pointer hover:brightness-110 active:scale-[0.99]"
+                className="w-full h-12 rounded-xl flex items-center justify-center gap-2.5 font-bold tracking-[0.08em] text-[12.5px] text-white transition-all duration-200 disabled:opacity-55 cursor-pointer hover:brightness-110 active:scale-[0.99]"
                 style={{
                   background:
                     'linear-gradient(180deg, #ea580c 0%, #c2410c 100%)',

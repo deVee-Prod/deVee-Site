@@ -605,7 +605,7 @@ export function PluginsSection() {
 
           {/* Active Compact Plugin Info & Download */}
           <div className="flex flex-col items-center text-center mt-1 relative z-20">
-            <h4 className="text-sm sm:text-base font-bold text-white tracking-wider uppercase">
+            <h4 className="text-sm sm:text-base font-bold text-white tracking-wide">
               {activeClassic.name}
             </h4>
             <p className="text-white/45 text-xs mb-4 mt-0.5">
@@ -620,7 +620,7 @@ export function PluginsSection() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <Download className="w-4 h-4 text-white group-hover:-translate-y-0.5 transition-transform duration-300" />
-              <span className="font-bold uppercase tracking-wider text-xs">
+              <span className="font-bold tracking-wide text-xs">
                 {user ? `Download ${activeClassic.name}` : 'Sign In To Download'}
               </span>
             </button>
