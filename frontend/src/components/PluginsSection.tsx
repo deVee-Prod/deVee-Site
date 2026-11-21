@@ -219,6 +219,8 @@ export function PluginsSection() {
       name: plugin.name,
       fileName: plugin.storageFile,
       bucket: plugin.bucket,
+      img: plugin.img,
+      formats: plugin.formats,
     });
   };
 
@@ -239,6 +241,7 @@ export function PluginsSection() {
       name: plugin.name,
       fileName,
       bucket: 'devee-plugins',
+      img: plugin.img,
     });
   };
 

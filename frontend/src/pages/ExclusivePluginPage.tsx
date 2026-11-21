@@ -59,6 +59,8 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
       name: plugin.name,
       fileName: plugin.storageFile,
       bucket: plugin.bucket,
+      img: plugin.img,
+      formats: plugin.formats,
     });
   };
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useId, useRef } from 'react';
-import { Download, ShieldCheck, X } from 'lucide-react';
+import { ArrowDownToLine, X } from 'lucide-react';
 
 export interface PendingDownload {
   name: string;
   fileName: string;
   bucket: string;
+  img?: string;
+  formats?: string;
 }
 
 interface DownloadNoticeDialogProps {
@@ -91,69 +93,143 @@ export function DownloadNoticeDialog({
         ref={dialogRef}
         {...({ closedby: 'any' } as any)}
         aria-labelledby={titleId}
-        className="devee-download-dialog bg-transparent p-0 m-auto max-w-[440px] w-[calc(100%-2rem)] overflow-visible text-white"
+        className="devee-download-dialog bg-transparent p-0 m-auto max-w-[460px] w-[calc(100%-2rem)] overflow-visible text-white"
       >
         {pending && (
-          <div className="relative rounded-3xl bg-[#0e0c0b] border border-white/12 p-6 sm:p-8 shadow-[0_30px_90px_rgba(0,0,0,0.85)] text-left">
-            <form method="dialog">
-              <button
-                type="submit"
-                aria-label="Close download notice"
-                className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors p-1 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </form>
+          <div
+            className="relative rounded-2xl overflow-hidden text-left border border-white/[0.11] shadow-[0_40px_110px_rgba(0,0,0,0.92)]"
+            style={{
+              background:
+                'linear-gradient(180deg, #15161a 0%, #0d0e11 45%, #09090b 100%)',
+            }}
+          >
+            {/* Subtle top aluminum bevel highlight */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent z-30"
+            />
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/12 border border-orange-500/30 text-orange-300 text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>100% Free &amp; Safe</span>
+            {/* Top Hardware Header Bar */}
+            <div className="relative z-20 flex items-center justify-between px-6 h-12 border-b border-white/[0.07] bg-black/35">
+              <div className="flex items-center gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.9)]"
+                />
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/55">
+                  deVee Exclusive · Release Notice
+                </span>
+              </div>
+              <form method="dialog">
+                <button
+                  type="submit"
+                  aria-label="Close download notice"
+                  className="text-white/35 hover:text-white transition-colors p-1 -mr-1"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </form>
             </div>
 
-            <h3
-              id={titleId}
-              className="text-xl sm:text-2xl font-black tracking-tight text-white mb-3 pr-6"
-            >
-              Before you download {pending.name}
-            </h3>
+            {/* Optional Subtle Plugin Visual Strip */}
+            {pending.img && (
+              <div className="relative h-28 overflow-hidden border-b border-white/[0.06] bg-[#0b0b0d]">
+                <img
+                  src={pending.img}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-full h-full object-cover object-center opacity-55 scale-[1.03] saturate-[1.05]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-[#0d0e11] via-[#0d0e11]/45 to-black/35"
+                />
+                <div className="absolute bottom-3.5 inset-x-6 flex items-end justify-between gap-4">
+                  <h3
+                    id={titleId}
+                    className="text-2xl font-black tracking-tight text-white leading-none drop-shadow-md"
+                  >
+                    {pending.name}
+                  </h3>
+                  {pending.formats && (
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-orange-400/90">
+                      {pending.formats}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
 
-            <p className="text-sm text-white/70 leading-relaxed mb-4">
-              All deVee plugins are <strong className="text-white">completely free</strong>. To keep them free without paying annual Apple/Windows code-signing fees, the installers aren&apos;t notarized — so your browser or OS may show a standard warning. There is nothing to worry about.
-            </p>
+            {/* Main Content */}
+            <div className="px-6 pt-5 pb-6">
+              {!pending.img && (
+                <h3
+                  id={titleId}
+                  className="text-2xl font-black tracking-tight text-white mb-3"
+                >
+                  {pending.name}
+                </h3>
+              )}
 
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2.5 text-xs sm:text-[13px] text-white/65 leading-relaxed mb-6">
-              <p>
-                <strong className="text-orange-300">Chrome / Browser:</strong>{' '}
-                If you see a &ldquo;suspicious&rdquo; or &ldquo;unverified&rdquo; download alert, simply click <strong className="text-white">Keep</strong> (or <strong className="text-white">Download anyway</strong>).
+              <p className="text-[13.5px] text-white/65 leading-relaxed mb-5">
+                All deVee plugins are{' '}
+                <span className="text-white font-medium">completely free</span>. To keep them free without annual Apple or Windows code-signing fees, these builds aren&apos;t notarized — so you&apos;ll see standard unsigned-file prompts. Safe to install.
               </p>
-              <p>
-                <strong className="text-orange-300">macOS:</strong>{' '}
-                If blocked on first open, go to <strong className="text-white">System Settings → Privacy &amp; Security → Open Anyway</strong>.
-              </p>
-            </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+              {/* Hairline Hardware Spec Rows (No nested boxes) */}
+              <div className="border-t border-b border-white/[0.07] divide-y divide-white/[0.06] mb-6">
+                <div className="py-3 flex items-baseline gap-4">
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-orange-400/90 shrink-0 w-16">
+                    01 · WEB
+                  </span>
+                  <p className="text-xs text-white/60 leading-relaxed">
+                    If Chrome flags the archive, click{' '}
+                    <span className="text-white font-medium">Keep</span> or{' '}
+                    <span className="text-white font-medium">Download anyway</span>.
+                  </p>
+                </div>
+                <div className="py-3 flex items-baseline gap-4">
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-orange-400/90 shrink-0 w-16">
+                    02 · OS
+                  </span>
+                  <p className="text-xs text-white/60 leading-relaxed">
+                    On macOS first launch: open{' '}
+                    <span className="text-white font-medium">
+                      System Settings → Privacy &amp; Security → Open Anyway
+                    </span>
+                    .
+                  </p>
+                </div>
+              </div>
+
+              {/* Hardware ENGAGE-style CTA */}
               <button
                 type="button"
                 autoFocus
                 disabled={isDownloading}
                 onClick={handleConfirmClick}
-                className="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-gradient-to-r from-orange-600 to-red-600 hover:brightness-110 disabled:opacity-60 font-bold uppercase tracking-[0.16em] text-xs text-white shadow-[0_0_26px_rgba(249,115,22,0.4)] transition-all"
+                className="w-full h-12 rounded-xl flex items-center justify-center gap-2.5 font-bold uppercase tracking-[0.2em] text-[11.5px] text-white transition-all duration-200 disabled:opacity-55 cursor-pointer hover:brightness-110 active:scale-[0.99]"
+                style={{
+                  background:
+                    'linear-gradient(180deg, #ea580c 0%, #c2410c 100%)',
+                  boxShadow:
+                    'inset 0 1px 0 rgba(255,255,255,0.26), 0 10px 28px -8px rgba(234,88,12,0.55)',
+                  border: '1px solid rgba(251,146,60,0.45)',
+                }}
               >
-                <Download className="w-4 h-4" />
+                <ArrowDownToLine className="w-4 h-4" />
                 <span>
-                  {isDownloading ? 'Preparing...' : `Download ${pending.name}`}
+                  {isDownloading
+                    ? 'Preparing Download...'
+                    : `Download ${pending.name}`}
                 </span>
               </button>
+            </div>
 
-              <form method="dialog" className="sm:w-auto">
-                <button
-                  type="submit"
-                  className="w-full px-5 py-3.5 rounded-full bg-white/[0.04] hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-[0.16em] text-white/60 hover:text-white transition-colors"
-                >
-                  Cancel
-                </button>
-              </form>
+            {/* Bottom Hardware Telemetry Strip */}
+            <div className="px-6 h-10 border-t border-white/[0.06] bg-black/45 flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.14em] text-white/35">
+              <span className="truncate">{pending.fileName}</span>
+              <span className="shrink-0 uppercase text-white/40">Free · Unsigned</span>
             </div>
           </div>
         )}
@@ -164,8 +240,8 @@ export function DownloadNoticeDialog({
           overscroll-behavior: contain;
         }
         dialog.devee-download-dialog::backdrop {
-          background: rgba(0, 0, 0, 0.76);
-          backdrop-filter: blur(10px);
+          background: rgba(4, 4, 6, 0.8);
+          backdrop-filter: blur(12px);
           overflow: hidden;
           overscroll-behavior: contain;
         }
