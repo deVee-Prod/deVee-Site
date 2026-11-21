@@ -1,9 +1,10 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { ArrowDownToLine, X } from 'lucide-react';
 
 export interface PendingDownload {
   name: string;
   fileName: string;
+  windowsFileName?: string;
   bucket: string;
   img?: string;
   formats?: string;
@@ -12,8 +13,15 @@ export interface PendingDownload {
 interface DownloadNoticeDialogProps {
   pending: PendingDownload | null;
   isDownloading: boolean;
-  onConfirm: (item: PendingDownload) => Promise<void> | void;
+  onConfirm: (item: PendingDownload, resolvedFileName: string) => Promise<void> | void;
   onClose: () => void;
+}
+
+function detectInitialPlatform(): 'macos' | 'windows' {
+  if (typeof navigator !== 'undefined' && /Windows/i.test(navigator.userAgent)) {
+    return 'windows';
+  }
+  return 'macos';
 }
 
 export function DownloadNoticeDialog({
@@ -24,11 +32,17 @@ export function DownloadNoticeDialog({
 }: DownloadNoticeDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const [selectedPlatform, setSelectedPlatform] = useState<'macos' | 'windows'>(
+    detectInitialPlatform
+  );
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (pending) {
+      setSelectedPlatform(
+        pending.windowsFileName ? detectInitialPlatform() : 'macos'
+      );
       if (!dialog.open) dialog.showModal();
     } else if (dialog.open) {
       dialog.close();
@@ -81,9 +95,16 @@ export function DownloadNoticeDialog({
     };
   }, [onClose]);
 
+  const hasPlatformChoice = Boolean(pending?.windowsFileName);
+  const activeFileName = pending
+    ? hasPlatformChoice && selectedPlatform === 'windows' && pending.windowsFileName
+      ? pending.windowsFileName
+      : pending.fileName
+    : '';
+
   const handleConfirmClick = async () => {
-    if (!pending || isDownloading) return;
-    await onConfirm(pending);
+    if (!pending || isDownloading || !activeFileName) return;
+    await onConfirm(pending, activeFileName);
     dialogRef.current?.close();
   };
 
@@ -131,7 +152,7 @@ export function DownloadNoticeDialog({
               </form>
             </div>
 
-            {/* Optional Subtle Plugin Visual Strip */}
+            {/* Subtle Plugin Visual Strip */}
             {pending.img && (
               <div className="relative h-28 overflow-hidden border-b border-white/[0.06] bg-[#0b0b0d]">
                 <img
@@ -153,7 +174,9 @@ export function DownloadNoticeDialog({
                   </h3>
                   {pending.formats && (
                     <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-orange-400/90">
-                      {pending.formats}
+                      {hasPlatformChoice && selectedPlatform === 'windows'
+                        ? 'VST3 · Standalone'
+                        : pending.formats}
                     </span>
                   )}
                 </div>
@@ -171,12 +194,48 @@ export function DownloadNoticeDialog({
                 </h3>
               )}
 
+              {/* Hardware OS Selector (macOS / Windows) when both builds exist */}
+              {hasPlatformChoice && (
+                <div
+                  role="radiogroup"
+                  aria-label="Choose operating system"
+                  className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-black/50 border border-white/[0.08] mb-4"
+                >
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={selectedPlatform === 'macos'}
+                    onClick={() => setSelectedPlatform('macos')}
+                    className={`py-2 px-3 rounded-lg font-mono text-[11px] uppercase tracking-[0.16em] transition-all ${
+                      selectedPlatform === 'macos'
+                        ? 'bg-white/[0.11] text-white border border-orange-500/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]'
+                        : 'text-white/45 hover:text-white/80 border border-transparent'
+                    }`}
+                  >
+                    macOS
+                  </button>
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={selectedPlatform === 'windows'}
+                    onClick={() => setSelectedPlatform('windows')}
+                    className={`py-2 px-3 rounded-lg font-mono text-[11px] uppercase tracking-[0.16em] transition-all ${
+                      selectedPlatform === 'windows'
+                        ? 'bg-white/[0.11] text-white border border-orange-500/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]'
+                        : 'text-white/45 hover:text-white/80 border border-transparent'
+                    }`}
+                  >
+                    Windows
+                  </button>
+                </div>
+              )}
+
               <p className="text-[13.5px] text-white/65 leading-relaxed mb-5">
                 All deVee plugins are{' '}
                 <span className="text-white font-medium">completely free</span>. To keep them free without annual Apple or Windows code-signing fees, these builds aren&apos;t notarized — so you&apos;ll see standard unsigned-file prompts. Safe to install.
               </p>
 
-              {/* Hairline Hardware Spec Rows (No nested boxes) */}
+              {/* Hairline Hardware Spec Rows */}
               <div className="border-t border-b border-white/[0.07] divide-y divide-white/[0.06] mb-6">
                 <div className="py-3 flex items-baseline gap-4">
                   <span className="font-mono text-[10px] tracking-[0.2em] text-orange-400/90 shrink-0 w-16">
@@ -192,13 +251,21 @@ export function DownloadNoticeDialog({
                   <span className="font-mono text-[10px] tracking-[0.2em] text-orange-400/90 shrink-0 w-16">
                     02 · OS
                   </span>
-                  <p className="text-xs text-white/60 leading-relaxed">
-                    On macOS first launch: open{' '}
-                    <span className="text-white font-medium">
-                      System Settings → Privacy &amp; Security → Open Anyway
-                    </span>
-                    .
-                  </p>
+                  {hasPlatformChoice && selectedPlatform === 'windows' ? (
+                    <p className="text-xs text-white/60 leading-relaxed">
+                      On Windows SmartScreen click{' '}
+                      <span className="text-white font-medium">More info → Run anyway</span>, and copy the <code className="text-white/85">.vst3</code> into{' '}
+                      <code className="text-white/85">C:\Program Files\Common Files\VST3</code>.
+                    </p>
+                  ) : (
+                    <p className="text-xs text-white/60 leading-relaxed">
+                      On macOS first launch: open{' '}
+                      <span className="text-white font-medium">
+                        System Settings → Privacy &amp; Security → Open Anyway
+                      </span>
+                      .
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -221,14 +288,16 @@ export function DownloadNoticeDialog({
                 <span>
                   {isDownloading
                     ? 'Preparing Download...'
-                    : `Download ${pending.name}`}
+                    : hasPlatformChoice
+                      ? `Download ${pending.name} (${selectedPlatform === 'windows' ? 'Windows' : 'macOS'})`
+                      : `Download ${pending.name}`}
                 </span>
               </button>
             </div>
 
             {/* Bottom Hardware Telemetry Strip */}
             <div className="px-6 h-10 border-t border-white/[0.06] bg-black/45 flex items-center justify-between gap-3 font-mono text-[10px] tracking-[0.14em] text-white/35">
-              <span className="truncate">{pending.fileName}</span>
+              <span className="truncate">{activeFileName}</span>
               <span className="shrink-0 uppercase text-white/40">Free · Unsigned</span>
             </div>
           </div>

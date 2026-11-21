@@ -58,25 +58,29 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
     setPendingDownload({
       name: plugin.name,
       fileName: plugin.storageFile,
+      windowsFileName: plugin.windowsStorageFile,
       bucket: plugin.bucket,
       img: plugin.img,
       formats: plugin.formats,
     });
   };
 
-  const handleConfirmDownload = async (item: PendingDownload) => {
+  const handleConfirmDownload = async (
+    item: PendingDownload,
+    resolvedFileName: string
+  ) => {
     setIsDownloading(true);
     try {
       const { data, error } = await supabase.storage
         .from(item.bucket)
-        .createSignedUrl(item.fileName, 60);
+        .createSignedUrl(resolvedFileName, 60);
 
       if (error) throw error;
 
       if (data?.signedUrl) {
         const a = document.createElement('a');
         a.href = data.signedUrl;
-        a.download = item.fileName;
+        a.download = resolvedFileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -84,7 +88,7 @@ export function ExclusivePluginPage({ plugin }: ExclusivePluginPageProps) {
     } catch (error) {
       console.error('Error downloading plugin:', error);
       alert(
-        `There was an issue downloading "${item.fileName}". Please make sure the file is uploaded in the "${item.bucket}" bucket or try again shortly.`
+        `There was an issue downloading "${resolvedFileName}". Please make sure the file is uploaded in the "${item.bucket}" bucket or try again shortly.`
       );
     } finally {
       setIsDownloading(false);

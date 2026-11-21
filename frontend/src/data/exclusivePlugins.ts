@@ -34,6 +34,7 @@ export interface ExclusivePlugin {
   ogImg: string;
   bucket: string;
   storageFile: string;
+  windowsStorageFile?: string;
   downloadLabel: string;
   seoTitle: string;
   seoDescription: string;
@@ -62,17 +63,18 @@ export const EXCLUSIVE_PLUGINS: ExclusivePlugin[] = [
       'Slap01 is a purpose-built monophonic bass instrument by deVee Exclusive. Every patch combines an independent mono SUB, a rich Slap FM / Saw / Pulse BODY with resonant filter and stereo high-pass width, and a crisp CLICK / TOP transient layer — calibrated out of the box across 1,000 factory presets.',
     formats: 'VST3 · AU · Standalone',
     version: 'v1.0.0',
-    platform: 'macOS 12+ (Apple Silicon & Intel)',
+    platform: 'macOS 12+ (Apple Silicon & Intel) & Windows 10/11 (64-bit)',
     img: '/plugins/slap01_plugin.jpg',
     imgWidth: 1600,
     imgHeight: 1087,
     ogImg: '/plugins/slap01_og.jpg',
     bucket: 'devee-plugins',
     storageFile: 'Slap01-1.0.0-macOS.zip',
+    windowsStorageFile: 'Slap01-1.0.0-Windows.zip',
     downloadLabel: 'Download Slap01',
     seoTitle: 'deVee Slap01 — Monophonic Bass Synth Plugin (1,000 Presets, VST3 / AU)',
     seoDescription:
-      'Download deVee Slap01, a 3-layer monophonic bass instrument (VST3, AU & Standalone) with 1,000 factory presets including 144 808s, Slap FM, Formant Colour, and 3D displays.',
+      'Download deVee Slap01 for macOS & Windows — a 3-layer monophonic bass instrument (VST3, AU & Standalone) with 1,000 factory presets including 144 808s, Slap FM, and 3D displays.',
     accentFrom: 'from-orange-500',
     accentTo: 'to-amber-600',
     highlights: [
@@ -104,20 +106,20 @@ export const EXCLUSIVE_PLUGINS: ExclusivePlugin[] = [
     specs: [
       { label: 'Plugin Type', value: 'Monophonic Bass Synthesizer (Instrument)' },
       { label: 'Formats', value: 'VST3 · AU · Standalone App' },
-      { label: 'Platform', value: 'macOS 12 or later (Universal: Apple Silicon & Intel 64-bit)' },
+      { label: 'Platform', value: 'macOS 12+ (Apple Silicon & Intel) & Windows 10/11 (64-bit)' },
       { label: 'Factory Bank', value: '1,000 embedded presets (144 × 808) — no external sample pack needed' },
       { label: 'Version', value: '1.0.0 (Free with deVee account sign-in)' },
     ],
     installSteps: [
-      'Sign in with Google and download Slap01-1.0.0-macOS.zip, then unzip it.',
-      'Quit your DAW (Cubase, Logic, Ableton, FL Studio) and run Slap01-1.0.0.pkg to install VST3, AU, and Standalone automatically.',
-      'If macOS blocks the locally signed installer, go to System Settings → Privacy & Security → Open Anyway, then reopen your DAW and load Slap 01 as an instrument.',
+      'Sign in with Google, choose macOS or Windows in the download window, and unzip the archive.',
+      'macOS: Run Slap01-1.0.0.pkg to install VST3, AU, and Standalone automatically. Windows: Copy Slap 01.vst3 into C:\\Program Files\\Common Files\\VST3\\.',
+      'Approve the unsigned freeware prompt if shown (macOS: Privacy & Security → Open Anyway; Windows SmartScreen: More info → Run anyway), then reopen your DAW and load Slap 01 as an instrument.',
     ],
     faqs: [
       {
-        question: 'Which DAWs work with deVee Slap01?',
+        question: 'Which DAWs and operating systems work with deVee Slap01?',
         answer:
-          'Slap01 ships as VST3, Audio Unit (AU), and a macOS Standalone app — compatible with Logic Pro, Cubase, Ableton Live, FL Studio, Studio One, and Reaper on macOS 12+ (Apple Silicon and Intel).',
+          'Slap01 supports both macOS 12+ (Universal Apple Silicon & Intel: VST3, AU & Standalone) and Windows 10/11 64-bit (VST3 & Standalone) — compatible with Logic Pro, Cubase, Ableton Live, FL Studio, Studio One, and Reaper.',
       },
       {
         question: 'Do I need to download a separate sample library for the 1,000 presets?',
@@ -242,17 +244,18 @@ export const EXCLUSIVE_PLUGINS: ExclusivePlugin[] = [
       'Pitcher (deVee Pitch) combines expressive zero-centred pitch bending with a tempo-locked Loop Freeze beat-repeat riser. Switch between Clean, Tape, and Grain engines, keep your low end rock-solid below the Sub Split crossover, shape tone with Formant and Width, and watch every move on a live 3D wave terrain.',
     formats: 'VST3 · AU · Standalone',
     version: 'v1.0.0',
-    platform: 'macOS 12+ (Apple Silicon & Intel)',
+    platform: 'macOS 12+ (Apple Silicon & Intel) & Windows 10/11 (64-bit)',
     img: '/plugins/pitcher_plugin.jpg',
     imgWidth: 1600,
     imgHeight: 954,
     ogImg: '/plugins/pitcher_og.jpg',
     bucket: 'devee-plugins',
     storageFile: 'Pitcher-1.0.0-macOS.zip',
+    windowsStorageFile: 'Pitcher-1.0.0-Windows.zip',
     downloadLabel: 'Download Pitcher',
     seoTitle: 'deVee Pitcher — 3D Pitch Shifter & Beat-Repeat Loop Riser Plugin (VST3 / AU)',
     seoDescription:
-      'Download deVee Pitcher (deVee Pitch), a 3D pitch shifter and beat-synced Loop Freeze riser plugin (VST3, AU & Standalone) with Clean/Tape/Grain engines, Sub Split, and Formant control.',
+      'Download deVee Pitcher (deVee Pitch) for macOS & Windows — a 3D pitch shifter and beat-synced Loop Freeze riser plugin (VST3, AU & Standalone) with Clean/Tape/Grain engines and Sub Split.',
     accentFrom: 'from-orange-500',
     accentTo: 'to-red-600',
     highlights: [
@@ -286,13 +289,13 @@ export const EXCLUSIVE_PLUGINS: ExclusivePlugin[] = [
       { label: 'Pitch Engines', value: 'CLEAN · TAPE · GRAIN' },
       { label: 'Loop Divisions', value: 'Host-synced 1/2 · 1/4 · 1/8 · 1/16 · 1/32 · 1/64' },
       { label: 'Formats', value: 'VST3 · AU · Standalone App' },
-      { label: 'Platform', value: 'macOS 12+ (Universal: Apple Silicon & Intel 64-bit)' },
+      { label: 'Platform', value: 'macOS 12+ (Apple Silicon & Intel) & Windows 10/11 (64-bit)' },
       { label: 'Version', value: '1.0.0 (Free with deVee account sign-in)' },
     ],
     installSteps: [
-      'Sign in with Google and download Pitcher-1.0.0-macOS.zip, then unzip the folder.',
-      'Quit your DAW and copy Pitcher.vst3 into /Library/Audio/Plug-Ins/VST3/, Pitcher.component into /Library/Audio/Plug-Ins/Components/, and optionally Pitcher.app into /Applications/.',
-      'If macOS displays an unverified developer warning on first launch, open System Settings → Privacy & Security → Open Anyway, then reopen your DAW.',
+      'Sign in with Google, select macOS or Windows in the download window, and unzip the folder.',
+      'macOS: Copy Pitcher.vst3 to /Library/Audio/Plug-Ins/VST3/ and Pitcher.component to /Library/Audio/Plug-Ins/Components/. Windows: Copy Pitcher.vst3 to C:\\Program Files\\Common Files\\VST3\\.',
+      'Approve the unsigned freeware prompt if shown (macOS: Privacy & Security → Open Anyway; Windows SmartScreen: More info → Run anyway), then reopen your DAW.',
     ],
     faqs: [
       {
@@ -306,9 +309,9 @@ export const EXCLUSIVE_PLUGINS: ExclusivePlugin[] = [
           'Engaging Loop Freeze captures a beat-synced slice locked to your DAW tempo (1/2 through 1/64). Combine it with the central pitch wheel and RISE/DROP triggers to build instant risers.',
       },
       {
-        question: 'Which DAWs and macOS versions are supported?',
+        question: 'Which DAWs and operating systems are supported?',
         answer:
-          'Pitcher is a Universal macOS binary (Apple Silicon & Intel) available as VST3, AU, and Standalone — compatible with Logic Pro, Cubase, Ableton Live, FL Studio, Studio One, and Reaper.',
+          'Pitcher supports both macOS 12+ (Universal Apple Silicon & Intel: VST3, AU & Standalone) and Windows 10/11 64-bit (VST3 & Standalone) — compatible with Logic Pro, Cubase, Ableton Live, FL Studio, Studio One, and Reaper.',
       },
       {
         question: 'Is deVee Pitcher free to download?',

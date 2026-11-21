@@ -218,6 +218,7 @@ export function PluginsSection() {
     setPendingDownload({
       name: plugin.name,
       fileName: plugin.storageFile,
+      windowsFileName: plugin.windowsStorageFile,
       bucket: plugin.bucket,
       img: plugin.img,
       formats: plugin.formats,
@@ -245,8 +246,11 @@ export function PluginsSection() {
     });
   };
 
-  const handleConfirmPendingDownload = async (item: PendingDownload) => {
-    await triggerSignedDownload(item.bucket, item.fileName, item.fileName);
+  const handleConfirmPendingDownload = async (
+    item: PendingDownload,
+    resolvedFileName: string
+  ) => {
+    await triggerSignedDownload(item.bucket, resolvedFileName, resolvedFileName);
   };
 
   const activeExclusive = EXCLUSIVE_PLUGINS[exclusiveIndex];
