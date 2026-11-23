@@ -64,42 +64,42 @@ export function HeroSection() {
             }}
           >
             <img
-              src="/deVee Vingette 2 sized.webp"
+              src="/deVee-hero-v3.jpg"
               alt="deVee"
               width="725"
               height="697"
               fetchPriority="high"
               loading="eager"
-              className="w-full h-auto mix-blend-screen"
+              className="relative z-10 w-full h-auto mix-blend-screen"
               style={{ maskImage: 'radial-gradient(circle, black 45%, transparent 72%)', WebkitMaskImage: 'radial-gradient(circle, black 45%, transparent 72%)' }}
             />
             {/* Orange glow on LEFT side */}
             <div
-              className="absolute top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
+              className="absolute -z-10 pointer-events-none top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
               style={{
                 left: '-40%',
                 width: '50%',
-                background: 'radial-gradient(ellipse at 70% 50%, rgba(234,88,12,0.12) 0%, rgba(234,88,12,0.05) 40%, transparent 70%)',
+                background: 'radial-gradient(ellipse at 70% 50%, rgba(240,62,21,0.12) 0%, rgba(240,62,21,0.05) 40%, transparent 70%)',
                 opacity: tilt.scale > 1 ? 1 : 0,
                 filter: 'blur(14px)',
               }}
             />
             {/* Orange glow on RIGHT side */}
             <div
-              className="absolute top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
+              className="absolute -z-10 pointer-events-none top-[-10%] bottom-[-10%] hidden md:block transition-opacity duration-500 ease-out"
               style={{
                 right: '-40%',
                 width: '50%',
-                background: 'radial-gradient(ellipse at 30% 50%, rgba(234,88,12,0.12) 0%, rgba(234,88,12,0.05) 40%, transparent 70%)',
+                background: 'radial-gradient(ellipse at 30% 50%, rgba(240,62,21,0.12) 0%, rgba(240,62,21,0.05) 40%, transparent 70%)',
                 opacity: tilt.scale > 1 ? 1 : 0,
                 filter: 'blur(14px)',
               }}
             />
-            {/* Mobile: always-on subtle glow around logo (hidden on desktop) */}
+            {/* Mobile: always-on subtle outer halo glow around logo (transparent center so portrait colors stay true) */}
             <div
-              className="absolute inset-[-12%] rounded-full block md:hidden"
+              className="absolute -z-10 pointer-events-none inset-[-12%] rounded-full block md:hidden"
               style={{
-                background: 'radial-gradient(circle, rgba(234,88,12,0.13) 0%, rgba(234,88,12,0.05) 40%, transparent 65%)',
+                background: 'radial-gradient(circle, transparent 0%, transparent 36%, rgba(240,62,21,0.14) 50%, rgba(240,62,21,0.05) 64%, transparent 78%)',
                 filter: 'blur(10px)',
                 animation: 'mobileGlowPulse 4s ease-in-out infinite',
               }}
