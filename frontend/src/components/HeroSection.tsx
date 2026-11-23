@@ -64,7 +64,7 @@ export function HeroSection() {
             }}
           >
             <img
-              src="/deVee-hero-v3.jpg"
+              src="/deVee-hero-v4.jpg"
               alt="deVee"
               width="725"
               height="697"
