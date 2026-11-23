@@ -417,29 +417,8 @@ export function PluginsSection() {
             </button>
           </div>
 
-          {/* Selector Pills (Slap01 · 360° · Pitcher) */}
-          <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6 z-20">
-            {EXCLUSIVE_PLUGINS.map((plugin, index) => {
-              const isSelected = index === exclusiveIndex;
-              return (
-                <button
-                  key={plugin.id}
-                  type="button"
-                  onClick={() => setExclusiveIndex(index)}
-                  className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
-                    isSelected
-                      ? 'bg-orange-500/20 text-orange-300 border border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.25)]'
-                      : 'bg-white/[0.03] text-white/45 hover:text-white/80 border border-white/10'
-                  }`}
-                >
-                  {plugin.name}
-                </button>
-              );
-            })}
-          </div>
-
           {/* Active Flagship Copy & Download CTA */}
-          <div className="flex flex-col items-center text-center mt-6 px-4 z-20 min-h-[220px]">
+          <div className="flex flex-col items-center text-center mt-6 sm:mt-8 px-4 z-20 min-h-[220px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeExclusive.id}
