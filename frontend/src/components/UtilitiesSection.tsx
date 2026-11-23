@@ -125,13 +125,15 @@ function SolarSystem() {
   const INNER_RY = 110;
   const SPEED = 0.015;
 
-  // Mirror-symmetric starting phases: 6 free tools on wide outer ring, 3 VIP Reels tools on inner ring
-  const [outerAngles, setOuterAngles] = useState(() =>
-    desktopUtilities.map((_, i) => (i * 360) / desktopUtilities.length)
-  );
-  const [innerAngles, setInnerAngles] = useState(() =>
-    premiumTools.map((_, i) => (30 + (i * 360) / premiumTools.length) % 360)
-  );
+  // Subtle organic (non-symmetric) starting phases: 6 free tools on wide outer ring, 3 VIP Reels tools on inner ring
+  const [outerAngles, setOuterAngles] = useState(() => {
+    const organicOuter = [8, 56, 126, 178, 246, 304];
+    return desktopUtilities.map((_, i) => organicOuter[i] ?? (i * 360) / desktopUtilities.length);
+  });
+  const [innerAngles, setInnerAngles] = useState(() => {
+    const organicInner = [22, 134, 264];
+    return premiumTools.map((_, i) => organicInner[i] ?? (30 + (i * 360) / premiumTools.length) % 360);
+  });
 
   useEffect(() => {
     const prefersReduced =
