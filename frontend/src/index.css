@@ -762,19 +762,6 @@ main#main-content:focus-visible {
   border: 1.5px solid rgba(255, 255, 255, 0.35);
 }
 
-.ac-fade-left,
-.ac-fade-right {
-  position: absolute;
-  top: 0;
-  bottom: 2rem;
-  width: 14%;
-  pointer-events: none;
-  z-index: 9;
-}
-
-.ac-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0, 0, 0, 0.92), transparent); }
-.ac-fade-right { right: 0; background: linear-gradient(to left,  rgba(0, 0, 0, 0.92), transparent); }
-
 .ac-btn-prev { left:  max(0.5rem, calc(50% - min(390px, 46vw))); }
 .ac-btn-next { right: max(0.5rem, calc(50% - min(390px, 46vw))); }
 
@@ -848,9 +835,5 @@ main#main-content:focus-visible {
   .ac-card.ac-next-3 {
     opacity: 0;
     pointer-events: none;
-  }
-  .ac-fade-left,
-  .ac-fade-right {
-    display: none;
   }
 }

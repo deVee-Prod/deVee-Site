@@ -556,9 +556,6 @@ export function VideoSection() {
               })}
             </div>
 
-            <div className="ac-fade-left"  aria-hidden="true" />
-            <div className="ac-fade-right" aria-hidden="true" />
-
             {/* Desktop tall sleek 3D stage arrows matching the site's visual language */}
             <button
               type="button"
