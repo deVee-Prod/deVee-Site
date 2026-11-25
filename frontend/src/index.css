@@ -504,98 +504,132 @@ main#main-content:focus-visible {
 .ac-scene {
   position: relative;
   width: 100%;
-  padding: 0.5rem 0 2.5rem;
-  overflow: visible;
+  padding: 0.25rem 0 2.75rem;
+  overflow: hidden;
 }
 
 .ac-track {
   position: relative;
-  height: 310px;
-  perspective: 1300px;
-  perspective-origin: 50% 45%;
+  height: 315px;
+  perspective: 880px;
+  perspective-origin: 50% 48%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transform-style: preserve-3d;
 }
 
 .ac-card {
   position: absolute;
-  width: 236px;
-  height: 236px;
+  width: 250px;
+  height: 250px;
   transform-style: preserve-3d;
   cursor: pointer;
   transition:
-    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.55s ease,
-    filter 0.55s ease;
+    transform 0.58s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.52s ease,
+    filter 0.52s ease;
   will-change: transform, opacity;
 }
 
 .ac-card.ac-active {
-  transform: translateX(0) rotateY(0deg) translateZ(46px) scale(1);
+  transform: translateX(0) rotateY(0deg) translateZ(65px) scale(1);
   opacity: 1;
   filter: brightness(1);
-  z-index: 6;
+  z-index: 8;
   cursor: default;
 }
 
 .ac-card.ac-active.ac-is-playing {
-  transform: translateX(-18%) rotateY(0deg) translateZ(56px) scale(1.02);
+  transform: translateX(-14%) rotateY(0deg) translateZ(72px) scale(1.01);
 }
 
 .ac-card.ac-prev-1 {
-  transform: translateX(-108%) rotateY(42deg) translateZ(-70px) scale(0.85);
-  opacity: 0.64;
-  filter: brightness(0.62);
-  z-index: 4;
+  transform: translateX(-66%) rotateY(54deg) translateZ(-40px) scale(0.88);
+  opacity: 0.72;
+  filter: brightness(0.68);
+  z-index: 6;
 }
 
 .ac-card.ac-next-1 {
-  transform: translateX(108%) rotateY(-42deg) translateZ(-70px) scale(0.85);
-  opacity: 0.64;
-  filter: brightness(0.62);
-  z-index: 4;
+  transform: translateX(66%) rotateY(-54deg) translateZ(-40px) scale(0.88);
+  opacity: 0.72;
+  filter: brightness(0.68);
+  z-index: 6;
 }
 
 .ac-card.ac-prev-1:hover,
 .ac-card.ac-next-1:hover {
-  opacity: 0.86;
-  filter: brightness(0.85);
+  opacity: 0.92;
+  filter: brightness(0.88);
 }
 
 .ac-card.ac-prev-2 {
-  transform: translateX(-184%) rotateY(56deg) translateZ(-175px) scale(0.7);
-  opacity: 0.28;
-  filter: brightness(0.38);
-  z-index: 2;
+  transform: translateX(-108%) rotateY(62deg) translateZ(-130px) scale(0.76);
+  opacity: 0.42;
+  filter: brightness(0.45);
+  z-index: 4;
 }
 
 .ac-card.ac-next-2 {
-  transform: translateX(184%) rotateY(-56deg) translateZ(-175px) scale(0.7);
-  opacity: 0.28;
-  filter: brightness(0.38);
-  z-index: 2;
+  transform: translateX(108%) rotateY(-62deg) translateZ(-130px) scale(0.76);
+  opacity: 0.42;
+  filter: brightness(0.45);
+  z-index: 4;
 }
 
 .ac-card.ac-prev-2:hover,
 .ac-card.ac-next-2:hover {
-  opacity: 0.48;
-  filter: brightness(0.55);
+  opacity: 0.62;
+  filter: brightness(0.65);
+}
+
+.ac-card.ac-prev-3 {
+  transform: translateX(-144%) rotateY(68deg) translateZ(-215px) scale(0.65);
+  opacity: 0.18;
+  filter: brightness(0.28);
+  z-index: 2;
+}
+
+.ac-card.ac-next-3 {
+  transform: translateX(144%) rotateY(-68deg) translateZ(-215px) scale(0.65);
+  opacity: 0.18;
+  filter: brightness(0.28);
+  z-index: 2;
 }
 
 .ac-card.ac-hidden-left {
-  transform: translateX(-230%) rotateY(65deg) translateZ(-260px) scale(0.55);
+  transform: translateX(-175%) rotateY(72deg) translateZ(-280px) scale(0.52);
   opacity: 0;
   pointer-events: none;
   z-index: 1;
 }
 
 .ac-card.ac-hidden-right {
-  transform: translateX(230%) rotateY(-65deg) translateZ(-260px) scale(0.55);
+  transform: translateX(175%) rotateY(-72deg) translateZ(-280px) scale(0.52);
   opacity: 0;
   pointer-events: none;
   z-index: 1;
+}
+
+/* Directional 3D shading across angled side covers for real physical depth */
+.ac-prev-1 .ac-sleeve::after,
+.ac-prev-2 .ac-sleeve::after,
+.ac-prev-3 .ac-sleeve::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.06) 0%, rgba(0, 0, 0, 0.12) 35%, rgba(0, 0, 0, 0.58) 100%);
+  pointer-events: none;
+}
+
+.ac-next-1 .ac-sleeve::after,
+.ac-next-2 .ac-sleeve::after,
+.ac-next-3 .ac-sleeve::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.06) 0%, rgba(0, 0, 0, 0.12) 35%, rgba(0, 0, 0, 0.58) 100%);
+  pointer-events: none;
 }
 
 /* Album sleeve with glossy studio floor reflection */
@@ -617,29 +651,29 @@ main#main-content:focus-visible {
   background: #0b0b0d;
   border: 1px solid rgba(255, 255, 255, 0.11);
   box-shadow:
-    0 26px 56px -14px rgba(0, 0, 0, 0.9),
+    0 28px 60px -14px rgba(0, 0, 0, 0.92),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-  -webkit-box-reflect: below 12px linear-gradient(transparent 62%, rgba(255, 255, 255, 0.16));
+  -webkit-box-reflect: below 10px linear-gradient(transparent 60%, rgba(255, 255, 255, 0.17));
   transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .ac-active .ac-sleeve {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(234, 88, 12, 0.38);
   box-shadow:
-    0 34px 72px -14px rgba(0, 0, 0, 0.92),
-    0 0 42px -12px rgba(249, 115, 22, 0.22),
+    0 34px 76px -12px rgba(0, 0, 0, 0.94),
+    0 0 46px -10px rgba(234, 88, 12, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .ac-active.ac-is-playing .ac-sleeve {
-  border-color: rgba(249, 115, 22, 0.48);
+  border-color: rgba(249, 115, 22, 0.55);
   box-shadow:
-    0 36px 76px -14px rgba(0, 0, 0, 0.95),
-    0 0 54px -10px rgba(249, 115, 22, 0.32),
+    0 36px 80px -12px rgba(0, 0, 0, 0.95),
+    0 0 58px -8px rgba(249, 115, 22, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
-/* Realistic grooved 3D Vinyl Record peeking out behind active sleeve */
+/* Realistic grooved 3D Vinyl Record — hidden cleanly inside sleeve until hovered or playing */
 .ac-vinyl-slot {
   position: absolute;
   inset: 3%;
@@ -648,22 +682,17 @@ main#main-content:focus-visible {
   transform: translateX(0) scale(0.92);
   opacity: 0;
   transition:
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease;
-}
-
-.ac-active .ac-vinyl-slot {
-  transform: translateX(12%) scale(0.96);
-  opacity: 0.72;
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
 }
 
 .ac-active:hover .ac-vinyl-slot {
-  transform: translateX(18%) scale(0.97);
-  opacity: 0.9;
+  transform: translateX(16%) scale(0.96);
+  opacity: 0.85;
 }
 
 .ac-active.ac-is-playing .ac-vinyl-slot {
-  transform: translateX(46%) scale(0.99);
+  transform: translateX(44%) scale(0.99);
   opacity: 1;
 }
 
@@ -738,13 +767,16 @@ main#main-content:focus-visible {
   position: absolute;
   top: 0;
   bottom: 2rem;
-  width: 13%;
+  width: 14%;
   pointer-events: none;
-  z-index: 8;
+  z-index: 9;
 }
 
-.ac-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent); }
-.ac-fade-right { right: 0; background: linear-gradient(to left,  rgba(0, 0, 0, 0.9), transparent); }
+.ac-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0, 0, 0, 0.92), transparent); }
+.ac-fade-right { right: 0; background: linear-gradient(to left,  rgba(0, 0, 0, 0.92), transparent); }
+
+.ac-btn-prev { left:  max(0.5rem, calc(50% - min(390px, 46vw))); }
+.ac-btn-next { right: max(0.5rem, calc(50% - min(390px, 46vw))); }
 
 .ac-dot {
   box-sizing: border-box;
@@ -793,6 +825,9 @@ main#main-content:focus-visible {
     width: 184px;
     height: 184px;
   }
+  .ac-card.ac-active {
+    transform: translateX(0) rotateY(0deg) translateZ(46px) scale(1);
+  }
   .ac-card.ac-active.ac-is-playing {
     transform: translateX(-14%) rotateY(0deg) translateZ(40px) scale(1.01);
   }
@@ -808,7 +843,9 @@ main#main-content:focus-visible {
     opacity: 0.45;
   }
   .ac-card.ac-prev-2,
-  .ac-card.ac-next-2 {
+  .ac-card.ac-next-2,
+  .ac-card.ac-prev-3,
+  .ac-card.ac-next-3 {
     opacity: 0;
     pointer-events: none;
   }

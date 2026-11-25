@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, ElementType } from 'react';
 import { SiSpotify, SiApplemusic, SiYoutubemusic } from 'react-icons/si';
 
 interface VideoTrack {
@@ -130,6 +130,12 @@ const discographyReleases: DiscographyRelease[] = [
   },
 ];
 
+const PLATFORMS: { key: 'spotify' | 'appleMusic' | 'youtubeMusic'; Icon: ElementType; label: string }[] = [
+  { key: 'spotify',      Icon: SiSpotify,      label: 'Spotify' },
+  { key: 'appleMusic',   Icon: SiApplemusic,   label: 'Apple Music' },
+  { key: 'youtubeMusic', Icon: SiYoutubemusic, label: 'YouTube Music' },
+];
+
 function normalizeOffset(raw: number, total: number): number {
   let o = raw % total;
   if (o > Math.floor(total / 2)) o -= total;
@@ -145,10 +151,12 @@ export function VideoSection() {
 
   // Bottom 3D Album CoverFlow & Vinyl state
   const [albumIndex, setAlbumIndex]       = useState(0);
+  const [activePf, setActivePf]           = useState(0);
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
   const [audioProgress, setAudioProgress] = useState(0);
   const [sleeveTilt, setSleeveTilt]       = useState({ rx: 0, ry: 0, sx: 50, sy: 50, active: false });
   const albumTouchX = useRef(0);
+  const pfTouchX    = useRef(0);
   const audioRef    = useRef<HTMLAudioElement | null>(null);
 
   const stopAudio = useCallback(() => {
@@ -257,11 +265,19 @@ export function VideoSection() {
     if (offset === 1)  return 'ac-next-1';
     if (offset === -2) return 'ac-prev-2';
     if (offset === 2)  return 'ac-next-2';
+    if (offset === -3) return 'ac-prev-3';
+    if (offset === 3)  return 'ac-next-3';
     return offset < 0  ? 'ac-hidden-left' : 'ac-hidden-right';
   }
 
   const currentVideo = videoTracks[active];
   const currentAlbum = discographyReleases[albumIndex];
+  const albumPlatforms = PLATFORMS.filter(({ key }) => Boolean(currentAlbum[key]));
+  const safeActivePf = activePf % albumPlatforms.length;
+
+  const goToPf = useCallback((index: number, count: number) => {
+    setActivePf(((index % count) + count) % count);
+  }, []);
 
   return (
     <section id="releases" className="relative pt-4 sm:pt-6 pb-8 sm:pb-12 z-20 overflow-hidden">
@@ -548,7 +564,7 @@ export function VideoSection() {
               type="button"
               onClick={() => goToAlbum(albumIndex - 1)}
               aria-label="Previous release"
-              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] left-2 md:left-6 z-20 p-2 text-white/35 hover:text-orange-400 hover:-translate-x-1.5 transition-all duration-300 cursor-pointer"
+              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] ac-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-1.5 transition-all duration-300 cursor-pointer"
             >
               <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[22px] h-[64px] md:w-[28px] md:h-[74px] drop-shadow-[0_0_10px_currentColor]" aria-hidden="true">
                 <path d="M25 5 L5 40 L25 75" />
@@ -559,7 +575,7 @@ export function VideoSection() {
               type="button"
               onClick={() => goToAlbum(albumIndex + 1)}
               aria-label="Next release"
-              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] right-2 md:right-6 z-20 p-2 text-white/35 hover:text-orange-400 hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
+              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] ac-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
             >
               <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[22px] h-[64px] md:w-[28px] md:h-[74px] drop-shadow-[0_0_10px_currentColor]" aria-hidden="true">
                 <path d="M5 5 L25 40 L5 75" />
@@ -567,50 +583,46 @@ export function VideoSection() {
             </button>
           </div>
 
-          {/* Active Album Metadata + Minimal Streaming Links + Dots */}
-          <div className="flex flex-col items-center text-center -mt-2 px-4 relative z-20">
+          {/* Active Album Metadata + Signature 3D Platform Drum + Dots */}
+          <div className="flex flex-col items-center text-center -mt-3 px-4 relative z-20">
             <h3 className="text-base sm:text-lg font-bold text-white tracking-wide">
               {currentAlbum.title}
             </h3>
-            <p className="text-xs sm:text-[13px] text-white/45 mt-0.5">
+            <p className="text-xs sm:text-[13px] text-white/45 mt-0.5 mb-3">
               {currentAlbum.artist}
             </p>
 
-            {/* Clean minimal streaming links for the active release */}
-            <div className="flex items-center justify-center gap-2.5 mt-3.5">
-              <a
-                href={currentAlbum.spotify}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${currentAlbum.title} on Spotify`}
-                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#1DB954] hover:border-[#1DB954]/45 hover:bg-[#1DB954]/10 hover:scale-105 transition-all duration-200"
-              >
-                <SiSpotify className="w-4 h-4" aria-hidden="true" />
-              </a>
-              <a
-                href={currentAlbum.appleMusic}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${currentAlbum.title} on Apple Music`}
-                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#FA243C] hover:border-[#FA243C]/45 hover:bg-[#FA243C]/10 hover:scale-105 transition-all duration-200"
-              >
-                <SiApplemusic className="w-4 h-4" aria-hidden="true" />
-              </a>
-              {currentAlbum.youtubeMusic && (
-                <a
-                  href={currentAlbum.youtubeMusic}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${currentAlbum.title} on YouTube Music`}
-                  className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#FF0000] hover:border-[#FF0000]/45 hover:bg-[#FF0000]/10 hover:scale-105 transition-all duration-200"
-                >
-                  <SiYoutubemusic className="w-4 h-4" aria-hidden="true" />
-                </a>
-              )}
+            {/* Signature 3D Platform Perspective Drum */}
+            <div
+              className="pf-scene w-full"
+              onTouchStart={e => { pfTouchX.current = e.touches[0].clientX; }}
+              onTouchEnd={e => {
+                const dx = pfTouchX.current - e.changedTouches[0].clientX;
+                if (Math.abs(dx) > 32) goToPf(safeActivePf + (dx > 0 ? 1 : -1), albumPlatforms.length);
+              }}
+            >
+              {albumPlatforms.map(({ key, Icon, label }, i) => {
+                const offset = normalizeOffset(i - safeActivePf, albumPlatforms.length);
+                const pClass = offset === 0 ? 'pf-active' : offset < 0 ? 'pf-left' : 'pf-right';
+                const isActive = offset === 0;
+                return (
+                  <a
+                    key={key}
+                    href={currentAlbum[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`pf-card ${pClass}`}
+                    aria-label={`${currentAlbum.title} on ${label}`}
+                    onClick={e => { if (!isActive) { e.preventDefault(); goToPf(i, albumPlatforms.length); } }}
+                  >
+                    <Icon className="pf-icon" aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
 
             {/* Direct slide dots */}
-            <nav className="flex items-center justify-center gap-0.5 mt-3" aria-label="Choose a release">
+            <nav className="flex items-center justify-center gap-0.5 mt-2" aria-label="Choose a release">
               {discographyReleases.map((release, idx) => (
                 <button
                   key={release.id}
