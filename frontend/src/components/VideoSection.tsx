@@ -70,16 +70,6 @@ const discographyReleases: DiscographyRelease[] = [
     youtubeMusic: 'https://music.youtube.com/watch?v=FvcG59pg3XU',
   },
   {
-    id: 'shadow',
-    title: 'Shadow',
-    artist: 'Ariella Eve (feat. deVee)',
-    cover: '/covers/shadow.jpg',
-    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ef/84/04/ef8404e8-b0d3-0134-7f5f-06df7206c7fb/mzaf_12362409006454084223.plus.aac.p.m4a',
-    spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
-    appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
-    youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
-  },
-  {
     id: 'nikiti',
     title: 'ניקיתי את הלב',
     artist: 'Amit Ben David · Prod. deVee',
@@ -98,6 +88,16 @@ const discographyReleases: DiscographyRelease[] = [
     spotify: 'https://open.spotify.com/track/4AA6RpirW0hsRY8c4ioRi1?si=5mrAXNLrSXq88yd8BucN_Q',
     appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/1838307735?i=1838307740',
     youtubeMusic: 'https://music.youtube.com/watch?v=hRo2y0U-N_k',
+  },
+  {
+    id: 'shadow',
+    title: 'Shadow',
+    artist: 'Ariella Eve (feat. deVee)',
+    cover: '/covers/shadow.jpg',
+    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ef/84/04/ef8404e8-b0d3-0134-7f5f-06df7206c7fb/mzaf_12362409006454084223.plus.aac.p.m4a',
+    spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
+    appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
+    youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
   },
   {
     id: 'cash',
