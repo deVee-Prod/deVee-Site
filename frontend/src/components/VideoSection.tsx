@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, ElementType } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { SiSpotify, SiApplemusic, SiYoutubemusic } from 'react-icons/si';
 
 interface VideoTrack {
@@ -6,9 +6,6 @@ interface VideoTrack {
   videoId: string;
   title: string;
   thumbnail?: string;
-  spotify: string;
-  appleMusic: string;
-  youtubeMusic: string;
 }
 
 interface DiscographyRelease {
@@ -27,42 +24,27 @@ const videoTracks: VideoTrack[] = [
     id: 'track1',
     videoId: 'Hv6yD04iwe0',
     title: 'ניקיתי את הלב (Prod by. deVee)',
-    spotify: 'https://open.spotify.com/track/0IccXF4g1FcsgLEq82SioC?si=dqop7sCTSqCbQLxjkwWNIQ',
-    appleMusic: 'https://music.apple.com/il/album/%D7%A0%D7%99%D7%A7%D7%99%D7%AA%D7%99-%D7%90%D7%AA-%D7%94%D7%9C%D7%91/1794794200?i=1794794278',
-    youtubeMusic: 'https://music.youtube.com/watch?v=Hv6yD04iwe0',
   },
   {
     id: 'track2',
     videoId: 'hRo2y0U-N_k',
     title: 'YALi | יהלי - בראשית (Prod. by deVee)',
-    spotify: 'https://open.spotify.com/track/4AA6RpirW0hsRY8c4ioRi1?si=5mrAXNLrSXq88yd8BucN_Q',
-    appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/1838307735?i=1838307740',
-    youtubeMusic: 'https://music.youtube.com/watch?v=hRo2y0U-N_k',
   },
   {
     id: 'track3',
     videoId: 'RO1LiMKFBwA',
     title: 'קאש (Prod. by deVee)',
-    spotify: 'https://open.spotify.com/track/6ttuatidkb4BFvkYTOVHjc?si=6673b4f46fbf4902',
-    appleMusic: 'https://music.apple.com/il/album/%D7%A7%D7%90%D7%A9/1895594252?i=6764002846',
-    youtubeMusic: 'https://music.youtube.com/watch?v=RO1LiMKFBwA',
   },
   {
     id: 'track_error404',
     videoId: 'SlR3joHgCXs',
     title: 'Error 404 (feat. deVee)',
     thumbnail: 'https://img.youtube.com/vi/SlR3joHgCXs/hqdefault.jpg',
-    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
-    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
-    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
   },
   {
     id: 'track_coco_basa',
     videoId: 'kW8ZtkroSMc',
     title: 'COCO - באסה (Prod by. deVee)',
-    spotify: 'https://open.spotify.com/track/2q6uX9nyN4LPWjRBgGSzNx',
-    appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%90%D7%A1%D7%94/6798815627?i=6798816007',
-    youtubeMusic: 'https://music.youtube.com/watch?v=kW8ZtkroSMc',
   },
 ];
 
@@ -148,12 +130,6 @@ const discographyReleases: DiscographyRelease[] = [
   },
 ];
 
-const PLATFORMS: { key: 'spotify' | 'appleMusic' | 'youtubeMusic'; Icon: ElementType; label: string }[] = [
-  { key: 'spotify',      Icon: SiSpotify,      label: 'Spotify' },
-  { key: 'appleMusic',   Icon: SiApplemusic,   label: 'Apple Music' },
-  { key: 'youtubeMusic', Icon: SiYoutubemusic, label: 'YouTube Music' },
-];
-
 function normalizeOffset(raw: number, total: number): number {
   let o = raw % total;
   if (o > Math.floor(total / 2)) o -= total;
@@ -163,26 +139,17 @@ function normalizeOffset(raw: number, total: number): number {
 
 export function VideoSection() {
   // Top 3D Video CoverFlow state
-  const [active, setActive]     = useState(0);
-  const [activePf, setActivePf] = useState(0);
-  const [playing, setPlaying]   = useState<string | null>(null);
-  const touchX   = useRef(0);
-  const pfTouchX = useRef(0);
+  const [active, setActive]   = useState(0);
+  const [playing, setPlaying] = useState<string | null>(null);
+  const touchX = useRef(0);
 
-  // Bottom Square Cover-Art Discography Carousel state
-  const discogTrackRef = useRef<HTMLDivElement>(null);
-  const prevBtnRef     = useRef<HTMLButtonElement>(null);
-  const nextBtnRef     = useRef<HTMLButtonElement>(null);
-  const audioRef       = useRef<HTMLAudioElement | null>(null);
-  const pendingTargetRef = useRef<number | null>(null);
-  const settledIdxRef    = useRef<number>(0);
-
-  const [discogIndex, setDiscogIndex]       = useState(0);
-  const [canPrev, setCanPrev]               = useState(false);
-  const [canNext, setCanNext]               = useState(true);
-  const [statusAnnouncement, setStatusAnnouncement] = useState('');
+  // Bottom 3D Album CoverFlow & Vinyl state
+  const [albumIndex, setAlbumIndex]       = useState(0);
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
-  const [audioProgress, setAudioProgress]   = useState(0);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const [sleeveTilt, setSleeveTilt]       = useState({ rx: 0, ry: 0, sx: 50, sy: 50, active: false });
+  const albumTouchX = useRef(0);
+  const audioRef    = useRef<HTMLAudioElement | null>(null);
 
   const stopAudio = useCallback(() => {
     const audio = audioRef.current;
@@ -199,7 +166,6 @@ export function VideoSection() {
       stopAudio();
       return;
     }
-    // Pause any active YouTube iframe when starting an audio preview
     setPlaying(null);
 
     if (!audioRef.current) {
@@ -250,146 +216,31 @@ export function VideoSection() {
     setPlaying(null);
   }, []);
 
-  const goToPf = useCallback((index: number) => {
-    setActivePf(((index % PLATFORMS.length) + PLATFORMS.length) % PLATFORMS.length);
-  }, []);
-
-  // Measure nearest slide index from track scroll position
-  const getNearestSlideIndex = useCallback((track: HTMLDivElement): number => {
-    const slides = Array.from(track.children) as HTMLElement[];
-    if (!slides.length) return 0;
-    const scrollLeft = track.scrollLeft;
-    let bestIdx = 0;
-    let bestDist = Infinity;
-    for (let i = 0; i < slides.length; i++) {
-      const dist = Math.abs(slides[i].offsetLeft - scrollLeft);
-      if (dist < bestDist) {
-        bestDist = dist;
-        bestIdx = i;
-      }
+  const goToAlbum = useCallback((index: number) => {
+    const next = ((index % discographyReleases.length) + discographyReleases.length) % discographyReleases.length;
+    setAlbumIndex(next);
+    setSleeveTilt({ rx: 0, ry: 0, sx: 50, sy: 50, active: false });
+    if (playingAudioId && discographyReleases[next].id !== playingAudioId) {
+      stopAudio();
     }
-    return bestIdx;
-  }, []);
+  }, [playingAudioId, stopAudio]);
 
-  const syncScrollButtons = useCallback((track: HTMLDivElement) => {
-    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-    const nextCanPrev = track.scrollLeft > 4;
-    const nextCanNext = track.scrollLeft < maxScroll - 4;
-
-    setCanPrev(prev => {
-      if (prev && !nextCanPrev && document.activeElement === prevBtnRef.current) {
-        nextBtnRef.current?.focus();
-      }
-      return nextCanPrev;
-    });
-    setCanNext(prev => {
-      if (prev && !nextCanNext && document.activeElement === nextBtnRef.current) {
-        prevBtnRef.current?.focus();
-      }
-      return nextCanNext;
+  const handleSleeveMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setSleeveTilt({
+      rx: (0.5 - y) * 14,
+      ry: (x - 0.5) * 14,
+      sx: x * 100,
+      sy: y * 100,
+      active: true,
     });
   }, []);
 
-  const scrollDiscogToIndex = useCallback((targetIndex: number) => {
-    const track = discogTrackRef.current;
-    if (!track) return;
-    const clamped = Math.max(0, Math.min(discographyReleases.length - 1, targetIndex));
-    const slide = track.children[clamped] as HTMLElement | undefined;
-    if (!slide) return;
-
-    const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-    const targetLeft = Math.min(maxScroll, Math.max(0, slide.offsetLeft));
-    const delta = targetLeft - track.scrollLeft;
-    setDiscogIndex(clamped);
-    if (Math.abs(delta) < 1) {
-      pendingTargetRef.current = null;
-      return;
-    }
-
-    pendingTargetRef.current = clamped;
-    track.scrollBy({ left: delta });
+  const handleSleeveMouseLeave = useCallback(() => {
+    setSleeveTilt({ rx: 0, ry: 0, sx: 50, sy: 50, active: false });
   }, []);
-
-  const stepDiscog = useCallback((direction: -1 | 1) => {
-    const track = discogTrackRef.current;
-    if (!track) return;
-    const base = pendingTargetRef.current !== null ? pendingTargetRef.current : getNearestSlideIndex(track);
-    scrollDiscogToIndex(base + direction);
-  }, [getNearestSlideIndex, scrollDiscogToIndex]);
-
-  // Wire scroll tracking (rAF-throttled), scrollend (with debounced fallback), and IntersectionObserver fade fallback
-  useEffect(() => {
-    const track = discogTrackRef.current;
-    if (!track) return;
-
-    syncScrollButtons(track);
-
-    let rafId = 0;
-    let debounceTimer: number | null = null;
-    const hasScrollEnd = 'onscrollend' in window;
-
-    const handleSettled = () => {
-      const idx = getNearestSlideIndex(track);
-      pendingTargetRef.current = null;
-      setDiscogIndex(idx);
-      syncScrollButtons(track);
-      if (idx !== settledIdxRef.current) {
-        settledIdxRef.current = idx;
-        setStatusAnnouncement(`Release ${idx + 1} of ${discographyReleases.length}: ${discographyReleases[idx].title}`);
-      }
-    };
-
-    const onScroll = () => {
-      if (pendingTargetRef.current === null && !rafId) {
-        rafId = requestAnimationFrame(() => {
-          rafId = 0;
-          const idx = getNearestSlideIndex(track);
-          setDiscogIndex(prev => (prev === idx ? prev : idx));
-          syncScrollButtons(track);
-        });
-      }
-      if (!hasScrollEnd) {
-        if (debounceTimer !== null) window.clearTimeout(debounceTimer);
-        debounceTimer = window.setTimeout(handleSettled, 130);
-      }
-    };
-
-    track.addEventListener('scroll', onScroll, { passive: true });
-    if (hasScrollEnd) {
-      track.addEventListener('scrollend', handleSettled);
-    }
-
-    const onResize = () => syncScrollButtons(track);
-    window.addEventListener('resize', onResize);
-
-    // Fallback scrollability fade hints via IntersectionObserver where scroll-driven animations are unsupported
-    let observer: IntersectionObserver | null = null;
-    if (typeof CSS !== 'undefined' && !CSS.supports('animation-timeline', 'scroll()')) {
-      const first = track.firstElementChild;
-      const last = track.lastElementChild;
-      if (first && last) {
-        observer = new IntersectionObserver(
-          (entries) => {
-            for (const { target, intersectionRatio } of entries) {
-              track.classList.toggle(target === first ? 'more-start' : 'more-end', intersectionRatio < 1);
-            }
-          },
-          { root: track, threshold: 1, rootMargin: '1px' }
-        );
-        observer.observe(first);
-        observer.observe(last);
-      }
-    }
-
-    return () => {
-      track.removeEventListener('scroll', onScroll);
-      if (hasScrollEnd) track.removeEventListener('scrollend', handleSettled);
-      window.removeEventListener('resize', onResize);
-      if (rafId) cancelAnimationFrame(rafId);
-      if (debounceTimer !== null) window.clearTimeout(debounceTimer);
-      observer?.disconnect();
-    };
-  }, [getNearestSlideIndex, syncScrollButtons]);
 
   function posClass(i: number): string {
     const offset = normalizeOffset(i - active, videoTracks.length);
@@ -399,7 +250,18 @@ export function VideoSection() {
     return offset < 0  ? 'vcf-far-left' : 'vcf-far-right';
   }
 
-  const current = videoTracks[active];
+  function albumPosClass(i: number): string {
+    const offset = normalizeOffset(i - albumIndex, discographyReleases.length);
+    if (offset === 0)  return 'ac-active';
+    if (offset === -1) return 'ac-prev-1';
+    if (offset === 1)  return 'ac-next-1';
+    if (offset === -2) return 'ac-prev-2';
+    if (offset === 2)  return 'ac-next-2';
+    return offset < 0  ? 'ac-hidden-left' : 'ac-hidden-right';
+  }
+
+  const currentVideo = videoTracks[active];
+  const currentAlbum = discographyReleases[albumIndex];
 
   return (
     <section id="releases" className="relative pt-4 sm:pt-6 pb-8 sm:pb-12 z-20 overflow-hidden">
@@ -513,240 +375,254 @@ export function VideoSection() {
           </div>
         </div>
 
-        {/* Active video track title + platform drum */}
-        <div className="text-center mt-2 pb-4">
-          <p className="text-sm font-semibold text-white/70 mb-5 transition-all duration-500">
-            {current.title}
-          </p>
-          <div
-            className="pf-scene"
-            onTouchStart={e => { pfTouchX.current = e.touches[0].clientX; }}
-            onTouchEnd={e => {
-              const dx = pfTouchX.current - e.changedTouches[0].clientX;
-              if (Math.abs(dx) > 32) goToPf(activePf + (dx > 0 ? 1 : -1));
-            }}
-          >
-            {PLATFORMS.map(({ key, Icon, label }, i) => {
-              const offset = normalizeOffset(i - activePf, PLATFORMS.length);
-              const pClass = offset === 0 ? 'pf-active' : offset === -1 ? 'pf-left' : 'pf-right';
-              const isActive = offset === 0;
-              return (
-                <a
-                  key={key}
-                  href={current[key]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`pf-card ${pClass}`}
-                  aria-label={label}
-                  onClick={e => { if (!isActive) { e.preventDefault(); goToPf(i); } }}
-                >
-                  <Icon className="pf-icon" aria-hidden="true" />
-                </a>
-              );
-            })}
-          </div>
-        </div>
+        {/* Active video title only (clean & minimal) */}
+        <p className="text-center text-sm font-semibold text-white/65 -mt-1 mb-4 sm:mb-6 transition-all duration-500">
+          {currentVideo.title}
+        </p>
 
         {/* ─────────────────────────────────────────────────────────────── */}
-        {/* ALL RELEASES — Square Cover-Art Carousel with Built-In Previews */}
+        {/* 3D VINYL & ALBUM COVERFLOW SHOWCASE (All 8 Releases)            */}
         {/* ─────────────────────────────────────────────────────────────── */}
         <div
           role="region"
           aria-roledescription="carousel"
-          aria-label="All Releases"
-          className="mt-10 sm:mt-14 px-4 sm:px-0"
+          aria-label="Discography releases"
+          className="relative mt-4 sm:mt-8"
         >
-          {/* Header row + Prev/Next buttons before track in DOM order */}
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div className="flex items-center gap-3">
-              <span className="h-[1px] w-6 bg-orange-500/60 hidden sm:inline-block" aria-hidden="true" />
-              <h3 className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.28em] text-white/55">
-                All Releases
-              </h3>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                ref={prevBtnRef}
-                type="button"
-                disabled={!canPrev}
-                onClick={() => stepDiscog(-1)}
-                aria-label="Previous release"
-                className="w-9 h-9 rounded-full border border-white/15 bg-white/[0.04] flex items-center justify-center text-white/75 hover:text-white hover:border-orange-500/50 hover:bg-orange-500/10 disabled:opacity-25 disabled:pointer-events-none transition-all duration-200 touch-manipulation cursor-pointer"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                ref={nextBtnRef}
-                type="button"
-                disabled={!canNext}
-                onClick={() => stepDiscog(1)}
-                aria-label="Next release"
-                className="w-9 h-9 rounded-full border border-white/15 bg-white/[0.04] flex items-center justify-center text-white/75 hover:text-white hover:border-orange-500/50 hover:bg-orange-500/10 disabled:opacity-25 disabled:pointer-events-none transition-all duration-200 touch-manipulation cursor-pointer"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          {/* Horizontally scrollable square cover-art track */}
+          {/* Subtle ambient stage glow behind active 3D vinyl cover */}
           <div
-            ref={discogTrackRef}
-            className="discog-track"
-            tabIndex={0}
-            role="group"
-            aria-label="Release covers"
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] w-[260px] h-[260px] sm:w-[380px] sm:h-[300px] rounded-full blur-[95px] transition-opacity duration-500"
+            style={{
+              background: playingAudioId
+                ? 'radial-gradient(circle, rgba(249,115,22,0.22) 0%, rgba(234,88,12,0.06) 55%, transparent 75%)'
+                : 'radial-gradient(circle, rgba(249,115,22,0.11) 0%, transparent 70%)',
+            }}
+            aria-hidden="true"
+          />
+
+          <div
+            className="ac-scene"
+            onTouchStart={e => { albumTouchX.current = e.touches[0].clientX; }}
+            onTouchEnd={e => {
+              const dx = albumTouchX.current - e.changedTouches[0].clientX;
+              if (Math.abs(dx) > 42) goToAlbum(albumIndex + (dx > 0 ? 1 : -1));
+            }}
           >
-            {discographyReleases.map((release, idx) => {
-              const isPlayingThis = playingAudioId === release.id;
-              return (
-                <article
-                  key={release.id}
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${idx + 1} of ${discographyReleases.length}`}
-                  className="discog-slide group flex flex-col"
-                >
-                  {/* Square 1:1 Cover Art with Preview Play Button */}
+            <div className="ac-track">
+              {discographyReleases.map((release, i) => {
+                const isActive = i === albumIndex;
+                const isPlayingThis = playingAudioId === release.id;
+                return (
                   <div
-                    className={`relative aspect-square w-full rounded-[14px] overflow-hidden bg-[#0e0e10] border transition-all duration-300 ${
-                      isPlayingThis
-                        ? 'border-orange-500/60 shadow-[0_14px_34px_-10px_rgba(249,115,22,0.35)]'
-                        : 'border-white/10 group-hover:border-white/25 shadow-[0_14px_30px_-14px_rgba(0,0,0,0.85)]'
-                    }`}
+                    key={release.id}
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${i + 1} of ${discographyReleases.length}: ${release.title}`}
+                    className={`ac-card ${albumPosClass(i)}${isPlayingThis ? ' ac-is-playing' : ''}`}
+                    onClick={() => { if (!isActive) goToAlbum(i); }}
                   >
-                    <img
-                      src={release.cover}
-                      alt={`${release.title} — ${release.artist}`}
-                      width="480"
-                      height="480"
-                      loading="lazy"
-                      decoding="async"
-                      className={`w-full h-full object-cover transition-transform duration-500 ${
-                        isPlayingThis ? 'scale-[1.03]' : 'group-hover:scale-[1.04]'
-                      }`}
-                    />
-
-                    {/* Subtle dark bottom gradient for crisp control legibility */}
                     <div
-                      className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none"
-                      aria-hidden="true"
-                    />
-
-                    {/* Playing equalizer indicator (top-left) */}
-                    {isPlayingThis && (
-                      <div
-                        className="absolute top-2.5 left-2.5 px-2 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 flex items-end gap-[2.5px] h-6"
-                        aria-hidden="true"
-                      >
-                        <span className="discog-eq-bar w-[2.5px] h-3 rounded-full bg-orange-400" style={{ animationDelay: '0ms' }} />
-                        <span className="discog-eq-bar w-[2.5px] h-3.5 rounded-full bg-orange-400" style={{ animationDelay: '180ms' }} />
-                        <span className="discog-eq-bar w-[2.5px] h-2.5 rounded-full bg-orange-400" style={{ animationDelay: '340ms' }} />
-                      </div>
-                    )}
-
-                    {/* Preview Play / Pause button */}
-                    <button
-                      type="button"
-                      onClick={() => toggleAudioPreview(release)}
-                      aria-label={isPlayingThis ? `Pause preview of ${release.title}` : `Play preview of ${release.title}`}
-                      aria-pressed={isPlayingThis}
-                      className={`absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-200 cursor-pointer touch-manipulation ${
-                        isPlayingThis
-                          ? 'bg-orange-500 text-black border-orange-300/60 shadow-[0_0_20px_rgba(249,115,22,0.55)] scale-105'
-                          : 'bg-black/65 text-white border-white/25 hover:bg-white hover:text-black hover:border-white hover:scale-105'
-                      }`}
+                      className="ac-sleeve-wrap"
+                      onMouseMove={isActive ? handleSleeveMouseMove : undefined}
+                      onMouseLeave={isActive ? handleSleeveMouseLeave : undefined}
+                      style={
+                        isActive && sleeveTilt.active
+                          ? { transform: `rotateX(${sleeveTilt.rx}deg) rotateY(${sleeveTilt.ry}deg)` }
+                          : undefined
+                      }
                     >
-                      {isPlayingThis ? (
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
-                          <rect x="6" y="5" width="4" height="14" rx="1" />
-                          <rect x="14" y="5" width="4" height="14" rx="1" />
-                        </svg>
-                      ) : (
-                        <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 translate-x-[1px]" aria-hidden="true">
-                          <path d="M8 5.5v13l11-6.5z" />
-                        </svg>
-                      )}
-                    </button>
-
-                    {/* Ultra-thin preview progress line */}
-                    {isPlayingThis && (
-                      <div className="absolute inset-x-0 bottom-0 h-[3px] bg-white/15" aria-hidden="true">
-                        <div
-                          className="h-full bg-gradient-to-r from-orange-500 to-amber-300 transition-[width] duration-150 ease-linear"
-                          style={{ width: `${audioProgress}%` }}
-                        />
+                      {/* Realistic 3D Grooved Vinyl Disc peeking behind the sleeve */}
+                      <div className="ac-vinyl-slot" aria-hidden="true">
+                        <div className="ac-vinyl">
+                          <div className="ac-vinyl-label">
+                            <img
+                              src={release.cover}
+                              alt=""
+                              width="480"
+                              height="480"
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
 
-                  {/* Metadata + Clean Streaming Links */}
-                  <div className="mt-2.5 px-0.5 flex flex-col">
-                    <p className="text-[13px] sm:text-sm font-semibold text-white/90 truncate leading-snug">
-                      {release.title}
-                    </p>
-                    <p className="text-[11px] sm:text-xs text-white/45 truncate mt-0.5">
-                      {release.artist}
-                    </p>
-                    <div className="flex items-center gap-1 mt-2 -ml-1">
-                      <a
-                        href={release.spotify}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${release.title} on Spotify`}
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-white/45 hover:text-[#1DB954] hover:bg-white/[0.06] transition-colors"
+                      {/* Square 1:1 Album Sleeve */}
+                      <div
+                        className={`ac-sleeve${isActive ? ' cursor-pointer' : ''}`}
+                        onClick={isActive ? () => toggleAudioPreview(release) : undefined}
                       >
-                        <SiSpotify className="w-3.5 h-3.5" aria-hidden="true" />
-                      </a>
-                      <a
-                        href={release.appleMusic}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${release.title} on Apple Music`}
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-white/45 hover:text-[#FA243C] hover:bg-white/[0.06] transition-colors"
-                      >
-                        <SiApplemusic className="w-3.5 h-3.5" aria-hidden="true" />
-                      </a>
-                      {release.youtubeMusic && (
-                        <a
-                          href={release.youtubeMusic}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${release.title} on YouTube Music`}
-                          className="w-7 h-7 rounded-full flex items-center justify-center text-white/45 hover:text-[#FF0000] hover:bg-white/[0.06] transition-colors"
-                        >
-                          <SiYoutubemusic className="w-3.5 h-3.5" aria-hidden="true" />
-                        </a>
-                      )}
+                        <img
+                          src={release.cover}
+                          alt={`${release.title} — ${release.artist}`}
+                          width="480"
+                          height="480"
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover select-none"
+                        />
+
+                        {/* Interactive specular glass sheen on active sleeve hover */}
+                        {isActive && (
+                          <div
+                            className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+                            style={{
+                              opacity: sleeveTilt.active ? 1 : 0,
+                              background: `radial-gradient(220px circle at ${sleeveTilt.sx}% ${sleeveTilt.sy}%, rgba(255,255,255,0.18), transparent 65%)`,
+                            }}
+                            aria-hidden="true"
+                          />
+                        )}
+
+                        {/* Subtle bottom vignette on active sleeve */}
+                        {isActive && (
+                          <div
+                            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none"
+                            aria-hidden="true"
+                          />
+                        )}
+
+                        {/* Live Equalizer badge while playing */}
+                        {isPlayingThis && (
+                          <div
+                            className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 flex items-end gap-[2.5px] h-6"
+                            aria-hidden="true"
+                          >
+                            <span className="discog-eq-bar w-[2.5px] h-3 rounded-full bg-orange-400" style={{ animationDelay: '0ms' }} />
+                            <span className="discog-eq-bar w-[2.5px] h-3.5 rounded-full bg-orange-400" style={{ animationDelay: '180ms' }} />
+                            <span className="discog-eq-bar w-[2.5px] h-2.5 rounded-full bg-orange-400" style={{ animationDelay: '340ms' }} />
+                          </div>
+                        )}
+
+                        {/* Play / Pause preview button on active cover */}
+                        {isActive && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleAudioPreview(release);
+                            }}
+                            aria-label={isPlayingThis ? `Pause preview of ${release.title}` : `Play preview of ${release.title}`}
+                            aria-pressed={isPlayingThis}
+                            className={`absolute bottom-3 right-3 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-200 cursor-pointer touch-manipulation ${
+                              isPlayingThis
+                                ? 'bg-orange-500 text-black border-orange-300/70 shadow-[0_0_24px_rgba(249,115,22,0.6)] scale-105'
+                                : 'bg-black/65 text-white border-white/25 hover:bg-white hover:text-black hover:border-white hover:scale-110'
+                            }`}
+                          >
+                            {isPlayingThis ? (
+                              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                                <rect x="6" y="5" width="4" height="14" rx="1" />
+                                <rect x="14" y="5" width="4" height="14" rx="1" />
+                              </svg>
+                            ) : (
+                              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 translate-x-[1px]" aria-hidden="true">
+                                <path d="M8 5.5v13l11-6.5z" />
+                              </svg>
+                            )}
+                          </button>
+                        )}
+
+                        {/* Ultra-thin preview progress line */}
+                        {isPlayingThis && (
+                          <div className="absolute inset-x-0 bottom-0 h-[3px] bg-white/15" aria-hidden="true">
+                            <div
+                              className="h-full bg-gradient-to-r from-orange-500 to-amber-300 transition-[width] duration-150 ease-linear"
+                              style={{ width: `${audioProgress}%` }}
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </article>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            <div className="ac-fade-left"  aria-hidden="true" />
+            <div className="ac-fade-right" aria-hidden="true" />
+
+            {/* Desktop tall sleek 3D stage arrows matching the site's visual language */}
+            <button
+              type="button"
+              onClick={() => goToAlbum(albumIndex - 1)}
+              aria-label="Previous release"
+              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] left-2 md:left-6 z-20 p-2 text-white/35 hover:text-orange-400 hover:-translate-x-1.5 transition-all duration-300 cursor-pointer"
+            >
+              <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[22px] h-[64px] md:w-[28px] md:h-[74px] drop-shadow-[0_0_10px_currentColor]" aria-hidden="true">
+                <path d="M25 5 L5 40 L25 75" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => goToAlbum(albumIndex + 1)}
+              aria-label="Next release"
+              className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.1rem)] right-2 md:right-6 z-20 p-2 text-white/35 hover:text-orange-400 hover:translate-x-1.5 transition-all duration-300 cursor-pointer"
+            >
+              <svg viewBox="0 0 30 80" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[22px] h-[64px] md:w-[28px] md:h-[74px] drop-shadow-[0_0_10px_currentColor]" aria-hidden="true">
+                <path d="M5 5 L25 40 L5 75" />
+              </svg>
+            </button>
           </div>
 
-          {/* Polite live status region for screen readers */}
-          <p className="sr-only" role="status" aria-live="polite">
-            {statusAnnouncement}
-          </p>
+          {/* Active Album Metadata + Minimal Streaming Links + Dots */}
+          <div className="flex flex-col items-center text-center -mt-2 px-4 relative z-20">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-wide">
+              {currentAlbum.title}
+            </h3>
+            <p className="text-xs sm:text-[13px] text-white/45 mt-0.5">
+              {currentAlbum.artist}
+            </p>
 
-          {/* Direct slide markers */}
-          <nav className="flex items-center justify-center gap-0.5 mt-2" aria-label="Choose a release">
-            {discographyReleases.map((release, idx) => (
-              <button
-                key={release.id}
-                type="button"
-                className="discog-marker"
-                aria-label={`Go to ${release.title}`}
-                aria-current={idx === discogIndex ? 'true' : undefined}
-                onClick={() => scrollDiscogToIndex(idx)}
-              />
-            ))}
-          </nav>
+            {/* Clean minimal streaming links for the active release */}
+            <div className="flex items-center justify-center gap-2.5 mt-3.5">
+              <a
+                href={currentAlbum.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${currentAlbum.title} on Spotify`}
+                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#1DB954] hover:border-[#1DB954]/45 hover:bg-[#1DB954]/10 hover:scale-105 transition-all duration-200"
+              >
+                <SiSpotify className="w-4 h-4" aria-hidden="true" />
+              </a>
+              <a
+                href={currentAlbum.appleMusic}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${currentAlbum.title} on Apple Music`}
+                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#FA243C] hover:border-[#FA243C]/45 hover:bg-[#FA243C]/10 hover:scale-105 transition-all duration-200"
+              >
+                <SiApplemusic className="w-4 h-4" aria-hidden="true" />
+              </a>
+              {currentAlbum.youtubeMusic && (
+                <a
+                  href={currentAlbum.youtubeMusic}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${currentAlbum.title} on YouTube Music`}
+                  className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-white/60 hover:text-[#FF0000] hover:border-[#FF0000]/45 hover:bg-[#FF0000]/10 hover:scale-105 transition-all duration-200"
+                >
+                  <SiYoutubemusic className="w-4 h-4" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+
+            {/* Direct slide dots */}
+            <nav className="flex items-center justify-center gap-0.5 mt-3" aria-label="Choose a release">
+              {discographyReleases.map((release, idx) => (
+                <button
+                  key={release.id}
+                  type="button"
+                  className="ac-dot"
+                  aria-label={`Go to ${release.title}`}
+                  aria-current={idx === albumIndex ? 'true' : undefined}
+                  onClick={() => goToAlbum(idx)}
+                />
+              ))}
+            </nav>
+          </div>
         </div>
 
       </div>

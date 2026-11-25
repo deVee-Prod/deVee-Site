@@ -500,123 +500,267 @@ main#main-content:focus-visible {
   }
 }
 
-/* ── Discography Square Cover-Art Carousel (Scroll-Snap + Scroll-Driven Edge Fades) ── */
-@property --fade-start {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
+/* ── 3D Album CoverFlow & Spinning Vinyl Showcase ── */
+.ac-scene {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem 0 2.5rem;
+  overflow: visible;
 }
 
-@property --fade-end {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@keyframes discog-reveal-fade-start {
-  to {
-    --fade-start: var(--fade-size);
-  }
-}
-
-@keyframes discog-hide-fade-end {
-  from {
-    --fade-end: var(--fade-size);
-  }
-}
-
-.discog-track {
+.ac-track {
+  position: relative;
+  height: 310px;
+  perspective: 1300px;
+  perspective-origin: 50% 45%;
   display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  touch-action: manipulation;
-  --fade-size: 2.5rem;
-  --fade-dir: right;
-  --fade-start-pos: 0;
-  --fade-end-pos: 100%;
-  scroll-padding-inline: var(--fade-size);
-  padding: 0.35rem 0.25rem 0.75rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  mask:
-    linear-gradient(black, black) no-clip subtract,
-    linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
-    linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
-  -webkit-mask:
-    linear-gradient(black, black) no-clip subtract,
-    linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
-    linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
-  transition: --fade-start 0.2s ease, --fade-end 0.2s ease;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
 }
 
-.discog-track::-webkit-scrollbar {
-  display: none;
+.ac-card {
+  position: absolute;
+  width: 236px;
+  height: 236px;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition:
+    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease,
+    filter 0.55s ease;
+  will-change: transform, opacity;
 }
 
-.discog-track:dir(rtl) {
-  --fade-dir: left;
-  --fade-start-pos: 100%;
-  --fade-end-pos: 0;
+.ac-card.ac-active {
+  transform: translateX(0) rotateY(0deg) translateZ(46px) scale(1);
+  opacity: 1;
+  filter: brightness(1);
+  z-index: 6;
+  cursor: default;
 }
 
-@supports (animation-timeline: scroll()) {
-  .discog-track {
-    animation: discog-reveal-fade-start linear both, discog-hide-fade-end linear both;
-    animation-timeline: scroll(self inline);
-    animation-range: 0 var(--fade-size), calc(100% - var(--fade-size)) 100%;
-  }
+.ac-card.ac-active.ac-is-playing {
+  transform: translateX(-18%) rotateY(0deg) translateZ(56px) scale(1.02);
 }
 
-@supports not (animation-timeline: scroll()) {
-  .discog-track.more-start {
-    --fade-start: var(--fade-size);
-  }
-  .discog-track.more-end {
-    --fade-end: var(--fade-size);
-  }
+.ac-card.ac-prev-1 {
+  transform: translateX(-108%) rotateY(42deg) translateZ(-70px) scale(0.85);
+  opacity: 0.64;
+  filter: brightness(0.62);
+  z-index: 4;
+}
+
+.ac-card.ac-next-1 {
+  transform: translateX(108%) rotateY(-42deg) translateZ(-70px) scale(0.85);
+  opacity: 0.64;
+  filter: brightness(0.62);
+  z-index: 4;
+}
+
+.ac-card.ac-prev-1:hover,
+.ac-card.ac-next-1:hover {
+  opacity: 0.86;
+  filter: brightness(0.85);
+}
+
+.ac-card.ac-prev-2 {
+  transform: translateX(-184%) rotateY(56deg) translateZ(-175px) scale(0.7);
+  opacity: 0.28;
+  filter: brightness(0.38);
+  z-index: 2;
+}
+
+.ac-card.ac-next-2 {
+  transform: translateX(184%) rotateY(-56deg) translateZ(-175px) scale(0.7);
+  opacity: 0.28;
+  filter: brightness(0.38);
+  z-index: 2;
+}
+
+.ac-card.ac-prev-2:hover,
+.ac-card.ac-next-2:hover {
+  opacity: 0.48;
+  filter: brightness(0.55);
+}
+
+.ac-card.ac-hidden-left {
+  transform: translateX(-230%) rotateY(65deg) translateZ(-260px) scale(0.55);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ac-card.ac-hidden-right {
+  transform: translateX(230%) rotateY(-65deg) translateZ(-260px) scale(0.55);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Album sleeve with glossy studio floor reflection */
+.ac-sleeve-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.18s ease-out;
+}
+
+.ac-sleeve {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0b0d;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow:
+    0 26px 56px -14px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  -webkit-box-reflect: below 12px linear-gradient(transparent 62%, rgba(255, 255, 255, 0.16));
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.ac-active .ac-sleeve {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 34px 72px -14px rgba(0, 0, 0, 0.92),
+    0 0 42px -12px rgba(249, 115, 22, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.ac-active.ac-is-playing .ac-sleeve {
+  border-color: rgba(249, 115, 22, 0.48);
+  box-shadow:
+    0 36px 76px -14px rgba(0, 0, 0, 0.95),
+    0 0 54px -10px rgba(249, 115, 22, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* Realistic grooved 3D Vinyl Record peeking out behind active sleeve */
+.ac-vinyl-slot {
+  position: absolute;
+  inset: 3%;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateX(0) scale(0.92);
+  opacity: 0;
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+}
+
+.ac-active .ac-vinyl-slot {
+  transform: translateX(12%) scale(0.96);
+  opacity: 0.72;
+}
+
+.ac-active:hover .ac-vinyl-slot {
+  transform: translateX(18%) scale(0.97);
+  opacity: 0.9;
+}
+
+.ac-active.ac-is-playing .ac-vinyl-slot {
+  transform: translateX(46%) scale(0.99);
+  opacity: 1;
+}
+
+.ac-vinyl {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    conic-gradient(
+      from 28deg,
+      rgba(255, 255, 255, 0.14) 0deg,
+      rgba(255, 255, 255, 0.0) 34deg,
+      rgba(255, 255, 255, 0.0) 146deg,
+      rgba(255, 255, 255, 0.16) 180deg,
+      rgba(255, 255, 255, 0.0) 216deg,
+      rgba(255, 255, 255, 0.0) 324deg,
+      rgba(255, 255, 255, 0.14) 360deg
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      #0c0c0e 0px,
+      #0c0c0e 2px,
+      #1a1a1f 2.6px,
+      #0a0a0c 3.4px
+    );
+  box-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.88),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 0 18px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes ac-vinyl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .discog-track {
-    scroll-behavior: smooth;
+  .ac-is-playing .ac-vinyl {
+    animation: ac-vinyl-spin 5.5s linear infinite;
   }
 }
 
-.discog-slide {
-  flex: 0 0 164px;
-  scroll-snap-align: start;
+.ac-vinyl-label {
+  width: 36%;
+  height: 36%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-@media (min-width: 640px) {
-  .discog-slide {
-    flex: 0 0 190px;
-  }
+.ac-vinyl-label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #070709;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
 }
 
-@media (min-width: 1024px) {
-  .discog-slide {
-    flex: 0 0 202px;
-  }
+.ac-fade-left,
+.ac-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 2rem;
+  width: 13%;
+  pointer-events: none;
+  z-index: 8;
 }
 
-.discog-marker {
+.ac-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent); }
+.ac-fade-right { right: 0; background: linear-gradient(to left,  rgba(0, 0, 0, 0.9), transparent); }
+
+.ac-dot {
   box-sizing: border-box;
-  min-width: 24px;
+  width: 24px;
   height: 24px;
   padding: 9px 6px;
-  background: rgba(255, 255, 255, 0.22);
-  background-clip: content-box;
   border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  background-clip: content-box;
   border: none;
   cursor: pointer;
   touch-action: manipulation;
   transition: width 0.25s ease, background-color 0.25s ease, padding 0.25s ease;
-  width: 24px;
 }
 
-.discog-marker[aria-current="true"] {
+.ac-dot[aria-current="true"] {
   width: 34px;
   padding: 8.5px 5px;
   background-color: #f97316;
@@ -634,5 +778,42 @@ main#main-content:focus-visible {
 @media (prefers-reduced-motion: no-preference) {
   .discog-eq-bar {
     animation: discog-eq 0.75s ease-in-out infinite;
+  }
+}
+
+@media (max-width: 640px) {
+  .ac-scene {
+    padding: 0.25rem 0 1.5rem;
+  }
+  .ac-track {
+    height: 246px;
+    perspective: 620px;
+  }
+  .ac-card {
+    width: 184px;
+    height: 184px;
+  }
+  .ac-card.ac-active.ac-is-playing {
+    transform: translateX(-14%) rotateY(0deg) translateZ(40px) scale(1.01);
+  }
+  .ac-active.ac-is-playing .ac-vinyl-slot {
+    transform: translateX(36%) scale(0.96);
+  }
+  .ac-card.ac-prev-1 {
+    transform: translateX(-70%) rotateY(38deg) translateZ(-55px) scale(0.8);
+    opacity: 0.45;
+  }
+  .ac-card.ac-next-1 {
+    transform: translateX(70%) rotateY(-38deg) translateZ(-55px) scale(0.8);
+    opacity: 0.45;
+  }
+  .ac-card.ac-prev-2,
+  .ac-card.ac-next-2 {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .ac-fade-left,
+  .ac-fade-right {
+    display: none;
   }
 }
