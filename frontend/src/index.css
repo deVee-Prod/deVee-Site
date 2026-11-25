@@ -806,7 +806,7 @@ main#main-content:focus-visible {
   }
   .ac-track {
     height: 196px;
-    perspective: 560px;
+    perspective: 490px;
   }
   .ac-card {
     width: 144px;
@@ -816,21 +816,31 @@ main#main-content:focus-visible {
     transform: translateX(0) rotateY(0deg) translateZ(38px) scale(1);
   }
   .ac-card.ac-active.ac-is-playing {
-    transform: translateX(-14%) rotateY(0deg) translateZ(36px) scale(1.01);
+    transform: translateX(-14%) rotateY(0deg) translateZ(42px) scale(1.01);
   }
   .ac-active.ac-is-playing .ac-vinyl-slot {
     transform: translateX(38%) scale(0.96);
   }
   .ac-card.ac-prev-1 {
-    transform: translateX(-72%) rotateY(42deg) translateZ(-46px) scale(0.82);
-    opacity: 0.5;
+    transform: translateX(-60%) rotateY(54deg) translateZ(-32px) scale(0.88);
+    opacity: 0.72;
+    filter: brightness(0.68);
   }
   .ac-card.ac-next-1 {
-    transform: translateX(72%) rotateY(-42deg) translateZ(-46px) scale(0.82);
-    opacity: 0.5;
+    transform: translateX(60%) rotateY(-54deg) translateZ(-32px) scale(0.88);
+    opacity: 0.72;
+    filter: brightness(0.68);
   }
-  .ac-card.ac-prev-2,
-  .ac-card.ac-next-2,
+  .ac-card.ac-prev-2 {
+    transform: translateX(-98%) rotateY(64deg) translateZ(-100px) scale(0.76);
+    opacity: 0.36;
+    filter: brightness(0.42);
+  }
+  .ac-card.ac-next-2 {
+    transform: translateX(98%) rotateY(-64deg) translateZ(-100px) scale(0.76);
+    opacity: 0.36;
+    filter: brightness(0.42);
+  }
   .ac-card.ac-prev-3,
   .ac-card.ac-next-3 {
     opacity: 0;
