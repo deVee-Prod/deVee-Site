@@ -285,7 +285,7 @@ export function VideoSection() {
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
-        <div className="flex justify-center mb-[-25px] sm:-mb-4 md:-mb-10 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
+        <div className="flex justify-center mb-[-25px] sm:-mb-6 md:-mb-12 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.webp"
             alt="Latest Releases"
@@ -294,13 +294,13 @@ export function VideoSection() {
           />
         </div>
 
-        <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mt-4 sm:-mt-2 md:-mt-3 mb-1 sm:mb-0 relative z-30">
+        <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mt-4 sm:-mt-3 md:-mt-5 mb-1 sm:mb-0 relative z-30">
           Video Clips
         </p>
 
         {/* 3D Video CoverFlow (Official Music Videos) */}
         <div
-          className="vcf-scene"
+          className="vcf-scene sm:-mt-2 md:-mt-3"
           onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
           onTouchEnd={e => {
             const dx = touchX.current - e.changedTouches[0].clientX;
@@ -398,7 +398,7 @@ export function VideoSection() {
         </div>
 
         {/* Active video title only (clean & minimal) */}
-        <p className="text-center text-sm font-semibold text-white/65 -mt-1 sm:-mt-2 mb-6 sm:mb-20 md:mb-28 transition-all duration-500">
+        <p className="text-center text-sm font-semibold text-white/65 -mt-1 sm:-mt-2 mb-6 sm:mb-24 md:mb-32 transition-all duration-500">
           {currentVideo.title}
         </p>
 
@@ -409,7 +409,7 @@ export function VideoSection() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Discography releases"
-          className="relative mt-4 sm:mt-20 md:mt-28"
+          className="relative mt-4 sm:mt-24 md:mt-32"
         >
           <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mb-1 sm:mb-2 relative z-20">
             Discography
