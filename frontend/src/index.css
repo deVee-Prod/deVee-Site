@@ -290,15 +290,79 @@ html {
 }
 
 @media (max-width: 640px) {
-  .vcf-card { width: min(280px, 76vw); }
-  .vcf-track {
-    height: 230px;
-    perspective: 500px;
+  .vcf-scene {
+    padding: 0 0 3.75rem;
   }
-  .vcf-card.vcf-prev { transform: translateX(-42%) rotateY(38deg) translateZ(-45px); opacity: 0.45; }
-  .vcf-card.vcf-next { transform: translateX(42%) rotateY(-38deg) translateZ(-45px); opacity: 0.45; }
-  .vcf-card.vcf-far-left  { transform: translateX(-95%) rotateY(55deg) translateZ(-100px); opacity: 0.1; }
-  .vcf-card.vcf-far-right { transform: translateX(95%) rotateY(-55deg) translateZ(-100px); opacity: 0.1; }
+  .vcf-track {
+    height: 235px;
+    perspective: 480px;
+    perspective-origin: 50% 44%;
+  }
+  .vcf-card {
+    width: min(220px, 59vw);
+    border-radius: 13px;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.5s ease,
+                filter 0.5s ease,
+                box-shadow 0.45s ease,
+                border-color 0.45s ease;
+  }
+  .vcf-card-thumb,
+  .vcf-card-iframe {
+    aspect-ratio: 4 / 3;
+  }
+  .vcf-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 2;
+  }
+  .vcf-card.vcf-active {
+    transform: translateX(0) translateZ(42px) rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: brightness(1);
+    z-index: 5;
+    border-color: rgba(234, 88, 12, 0.45);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.9),
+                0 0 36px -8px rgba(234, 88, 12, 0.28);
+    -webkit-box-reflect: below 8px linear-gradient(transparent 64%, rgba(255, 255, 255, 0.16));
+  }
+  .vcf-card.vcf-prev {
+    transform: translateX(-60%) translateZ(-38px) rotateY(56deg) scale(0.86);
+    opacity: 0.74;
+    filter: brightness(0.72);
+    z-index: 3;
+  }
+  .vcf-card.vcf-next {
+    transform: translateX(60%) translateZ(-38px) rotateY(-56deg) scale(0.86);
+    opacity: 0.74;
+    filter: brightness(0.72);
+    z-index: 3;
+  }
+  .vcf-card.vcf-prev::after {
+    opacity: 1;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.55));
+  }
+  .vcf-card.vcf-next::after {
+    opacity: 1;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.55));
+  }
+  .vcf-card.vcf-far-left {
+    transform: translateX(-105%) translateZ(-115px) rotateY(64deg) scale(0.74);
+    opacity: 0.24;
+    filter: brightness(0.5);
+    z-index: 1;
+  }
+  .vcf-card.vcf-far-right {
+    transform: translateX(105%) translateZ(-115px) rotateY(-64deg) scale(0.74);
+    opacity: 0.24;
+    filter: brightness(0.5);
+    z-index: 1;
+  }
+  .vcf-dots { bottom: 0.75rem; }
   .vcf-fade-left, .vcf-fade-right { display: none; }
   .vcf-btn-prev { left: 0; }
   .vcf-btn-next { right: 0; }

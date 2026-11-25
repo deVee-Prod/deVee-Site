@@ -338,8 +338,8 @@ export function VideoSection() {
                         alt={track.title}
                       />
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-[68px] h-[48px] bg-red-600 rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform duration-300 group-hover:scale-110">
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-white">
+                        <div className="w-[48px] h-[34px] sm:w-[68px] sm:h-[48px] bg-red-600 rounded-[10px] sm:rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform duration-300 group-hover:scale-110">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-8 sm:h-8 text-white">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
