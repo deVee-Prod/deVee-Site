@@ -393,7 +393,7 @@ export function VideoSection() {
         </div>
 
         {/* Active video title only (clean & minimal) */}
-        <p className="text-center text-sm font-semibold text-white/65 -mt-4 mb-1 sm:mb-2 transition-all duration-500">
+        <p className="text-center text-sm font-semibold text-white/65 -mt-1 mb-6 sm:mb-8 transition-all duration-500">
           {currentVideo.title}
         </p>
 
@@ -404,7 +404,7 @@ export function VideoSection() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Discography releases"
-          className="relative mt-0 sm:mt-2"
+          className="relative mt-4 sm:mt-8"
         >
           {/* Subtle ambient stage glow behind active 3D vinyl cover */}
           <div
