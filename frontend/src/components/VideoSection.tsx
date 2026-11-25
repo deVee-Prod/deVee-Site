@@ -285,7 +285,7 @@ export function VideoSection() {
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
-        <div className="flex justify-center mb-[-25px] sm:mb-8 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
+        <div className="flex justify-center mb-[-25px] sm:mb-4 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.webp"
             alt="Latest Releases"
@@ -293,6 +293,10 @@ export function VideoSection() {
             className="w-[85%] max-w-[250px] md:max-w-[750px] h-auto object-contain mx-auto"
           />
         </div>
+
+        <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mt-4 sm:mt-1 mb-1 sm:mb-3 relative z-20">
+          Video Clips
+        </p>
 
         {/* 3D Video CoverFlow (Official Music Videos) */}
         <div
@@ -406,6 +410,9 @@ export function VideoSection() {
           aria-label="Discography releases"
           className="relative mt-4 sm:mt-10 md:mt-14"
         >
+          <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mb-1 sm:mb-2 relative z-20">
+            Discography
+          </p>
           {/* Subtle ambient stage glow behind active 3D vinyl cover */}
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] w-[260px] h-[260px] sm:w-[380px] sm:h-[300px] rounded-full blur-[95px] transition-opacity duration-500"

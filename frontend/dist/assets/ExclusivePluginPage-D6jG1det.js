@@ -1,4 +1,4 @@
-import{c as b,r as l,j as e,E as u}from"./main-0gx3JMuX.js";import{supabase as c}from"./supabaseClient-CN9YXYoe.js";import{D as g,a as j}from"./DownloadNoticeDialog-BvATclld.js";import{A as N}from"./arrow-left-Cpx3Rw1w.js";/**
+import{c as b,r as l,j as e,E as u}from"./main-B3xRwYVx.js";import{supabase as c}from"./supabaseClient-CN9YXYoe.js";import{D as g,a as j}from"./DownloadNoticeDialog-BaSYExqa.js";import{A as N}from"./arrow-left-BxHH-V4a.js";/**
  * @license lucide-react v0.344.0 - ISC
  *
  * This source code is licensed under the ISC license.
