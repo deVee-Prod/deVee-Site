@@ -285,7 +285,7 @@ export function VideoSection() {
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
-        <div className="flex justify-center mb-[-25px] sm:mb-4 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
+        <div className="flex justify-center mb-[-25px] sm:mb-0 md:-mb-3 mt-0 sm:mt-2 px-4 sm:px-0 relative z-30">
           <img
             src="/Gemini_Generated_Image_evzpamevzpamevzp 2.webp"
             alt="Latest Releases"
@@ -294,7 +294,7 @@ export function VideoSection() {
           />
         </div>
 
-        <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mt-4 sm:mt-1 mb-1 sm:mb-3 relative z-20">
+        <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mt-4 sm:mt-0 mb-1 sm:mb-1 relative z-20">
           Video Clips
         </p>
 
@@ -398,7 +398,7 @@ export function VideoSection() {
         </div>
 
         {/* Active video title only (clean & minimal) */}
-        <p className="text-center text-sm font-semibold text-white/65 -mt-1 mb-6 sm:mb-10 md:mb-14 transition-all duration-500">
+        <p className="text-center text-sm font-semibold text-white/65 -mt-1 mb-6 sm:mb-14 md:mb-20 transition-all duration-500">
           {currentVideo.title}
         </p>
 
@@ -409,7 +409,7 @@ export function VideoSection() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Discography releases"
-          className="relative mt-4 sm:mt-10 md:mt-14"
+          className="relative mt-4 sm:mt-14 md:mt-20"
         >
           <p className="text-center text-white/35 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] font-bold mb-1 sm:mb-2 relative z-20">
             Discography
