@@ -31,9 +31,9 @@ const videoTracks: VideoTrack[] = [
     title: 'YALi | יהלי - בראשית (Prod. by deVee)',
   },
   {
-    id: 'track3',
-    videoId: 'RO1LiMKFBwA',
-    title: 'קאש (Prod. by deVee)',
+    id: 'track_coco_basa',
+    videoId: 'kW8ZtkroSMc',
+    title: 'COCO - באסה (Prod by. deVee)',
   },
   {
     id: 'track_error404',
@@ -42,9 +42,9 @@ const videoTracks: VideoTrack[] = [
     thumbnail: 'https://img.youtube.com/vi/SlR3joHgCXs/hqdefault.jpg',
   },
   {
-    id: 'track_coco_basa',
-    videoId: 'kW8ZtkroSMc',
-    title: 'COCO - באסה (Prod by. deVee)',
+    id: 'track3',
+    videoId: 'RO1LiMKFBwA',
+    title: 'קאש (Prod. by deVee)',
   },
 ];
 
