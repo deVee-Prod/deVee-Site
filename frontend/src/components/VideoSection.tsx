@@ -77,6 +77,7 @@ const discographyReleases: DiscographyRelease[] = [
     previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7d/47/6d/7d476d5f-e0f0-dce0-53ba-bb1a33f581ca/mzaf_10502411134769986119.plus.aac.p.m4a',
     spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
     appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
+    youtubeMusic: 'https://music.youtube.com/watch?v=FvcG59pg3XU',
   },
   {
     id: 'nikiti',
