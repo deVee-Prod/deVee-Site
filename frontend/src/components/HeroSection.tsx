@@ -1,13 +1,64 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { HeroParticles } from './HeroParticles';
+
+const HERO_GREETING = 'Welcome to my world :)';
 
 export function HeroSection() {
   const imgWrapRef = useRef<HTMLDivElement>(null);
-  const canvasRef  = useRef<HTMLCanvasElement | null>(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, scale: 1 });
+  const [typedText, setTypedText] = useState('');
+  const [greetingState, setGreetingState] = useState<'idle' | 'typing' | 'done' | 'faded'>('idle');
 
   /* Capture the canvas ref once HeroParticles mounts */
   const heroRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      setTypedText(HERO_GREETING);
+      setGreetingState('done');
+      const fadeTimer = window.setTimeout(() => setGreetingState('faded'), 4500);
+      return () => window.clearTimeout(fadeTimer);
+    }
+
+    let cancelled = false;
+    let timerId: number | undefined;
+
+    const startTyping = () => {
+      if (cancelled) return;
+      setGreetingState('typing');
+      let i = 0;
+
+      const step = () => {
+        if (cancelled) return;
+        i += 1;
+        setTypedText(HERO_GREETING.slice(0, i));
+        if (i >= HERO_GREETING.length) {
+          setGreetingState('done');
+          timerId = window.setTimeout(() => {
+            if (!cancelled) setGreetingState('faded');
+          }, 4500);
+          return;
+        }
+        const ch = HERO_GREETING[i - 1];
+        let delay = 52 + Math.random() * 34;
+        if (HERO_GREETING.slice(i, i + 2) === ':)') delay = 280;
+        else if (ch === ' ') delay = 85;
+        timerId = window.setTimeout(step, delay);
+      };
+
+      timerId = window.setTimeout(step, 80);
+    };
+
+    timerId = window.setTimeout(startTyping, 420);
+    return () => {
+      cancelled = true;
+      if (timerId !== undefined) window.clearTimeout(timerId);
+    };
+  }, []);
 
   const notifyParticles = useCallback((hovering: boolean) => {
     /* find the canvas inside this section and call its exposed hook */
@@ -55,6 +106,21 @@ export function HeroSection() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
+          {/* Minimalist terminal greeting floating right above the portrait, fades out cleanly after 4.5s */}
+          <p
+            dir="ltr"
+            aria-label={HERO_GREETING}
+            className={`pointer-events-none absolute -top-7 sm:-top-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] sm:text-[11px] tracking-[0.16em] text-white/65 inline-flex items-center transition-opacity duration-[1200ms] ease-out ${
+              greetingState === 'idle' || greetingState === 'faded' ? 'opacity-0' : 'opacity-100'
+            }`}
+          >
+            <span className="text-orange-400/80 mr-1.5 select-none" aria-hidden="true">&gt;</span>
+            <span>{typedText}</span>
+            <span
+              aria-hidden="true"
+              className="hero-term-cursor inline-block w-[5px] h-[11px] bg-orange-500/90 rounded-[1px] ml-[3px] shadow-[0_0_8px_rgba(249,115,22,0.55)]"
+            />
+          </p>
           <div
             className="relative max-w-[14rem] sm:max-w-[22rem] md:max-w-[25rem] lg:max-w-[29rem]"
             style={{
