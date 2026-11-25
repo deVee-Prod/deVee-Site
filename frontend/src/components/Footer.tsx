@@ -58,38 +58,42 @@ export function Footer() {
             </a>
           </p>
           {/* הלינק עבור גוגל - שקוף כמעט ולא משנה את העיצוב */}
-          <div className="mt-2 flex items-center justify-center gap-4">
-            <a 
-              href="/privacy.html" 
-              className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
-            >
-              Privacy Policy
-            </a>
-            <a 
-              href="/nagishut.html" 
-              className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
-            >
-              Accessibility
-            </a>
-            <span className="text-white/10 text-[10px] select-none" aria-hidden="true">·</span>
-            <a
-              href="/plugins/360"
-              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
-            >
-              360°
-            </a>
-            <a
-              href="/plugins/slap"
-              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
-            >
-              Slap01
-            </a>
-            <a
-              href="/plugins/pitch"
-              className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
-            >
-              Pitcher
-            </a>
+          <div className="mt-3 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+            <div className="flex items-center justify-center gap-4">
+              <a 
+                href="/privacy.html" 
+                className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="/nagishut.html" 
+                className="text-white/10 hover:text-white/30 text-[10px] uppercase tracking-[0.2em]"
+              >
+                Accessibility
+              </a>
+            </div>
+            <span className="hidden sm:inline text-white/10 text-[10px] select-none" aria-hidden="true">·</span>
+            <div className="flex items-center justify-center gap-4">
+              <a
+                href="/plugins/360"
+                className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+              >
+                360°
+              </a>
+              <a
+                href="/plugins/slap"
+                className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+              >
+                Slap01
+              </a>
+              <a
+                href="/plugins/pitch"
+                className="text-white/15 hover:text-white/40 text-[10px] uppercase tracking-[0.2em]"
+              >
+                Pitcher
+              </a>
+            </div>
           </div>
         </div>
       </div>
