@@ -60,16 +60,6 @@ const discographyReleases: DiscographyRelease[] = [
     youtubeMusic: 'https://music.youtube.com/watch?v=yz2f2CO8Dg0',
   },
   {
-    id: 'shadow',
-    title: 'Shadow',
-    artist: 'Ariella Eve (feat. deVee)',
-    cover: '/covers/shadow.jpg',
-    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ef/84/04/ef8404e8-b0d3-0134-7f5f-06df7206c7fb/mzaf_12362409006454084223.plus.aac.p.m4a',
-    spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
-    appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
-    youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
-  },
-  {
     id: 'gondola',
     title: 'Gondola',
     artist: 'Ariella Eve (feat. deVee)',
@@ -78,6 +68,16 @@ const discographyReleases: DiscographyRelease[] = [
     spotify: 'https://open.spotify.com/track/2Efb65EXekAuodCjyUP0rL?si=40f2915527e9442e',
     appleMusic: 'https://music.apple.com/us/song/gondola-feat-devee/1877252295',
     youtubeMusic: 'https://music.youtube.com/watch?v=FvcG59pg3XU',
+  },
+  {
+    id: 'shadow',
+    title: 'Shadow',
+    artist: 'Ariella Eve (feat. deVee)',
+    cover: '/covers/shadow.jpg',
+    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ef/84/04/ef8404e8-b0d3-0134-7f5f-06df7206c7fb/mzaf_12362409006454084223.plus.aac.p.m4a',
+    spotify: 'https://open.spotify.com/track/2uJEAjl6JGDApaEWuyHKRN?si=fa3d0f8c262c44fb',
+    appleMusic: 'https://music.apple.com/il/album/shadow-feat-devee/1894485767?i=1894485768',
+    youtubeMusic: 'https://music.youtube.com/watch?v=eR4GRRwIJVc',
   },
   {
     id: 'nikiti',
@@ -110,16 +110,6 @@ const discographyReleases: DiscographyRelease[] = [
     youtubeMusic: 'https://music.youtube.com/watch?v=RO1LiMKFBwA',
   },
   {
-    id: 'error-404',
-    title: 'Error 404',
-    artist: 'ZOHAR (feat. deVee)',
-    cover: '/covers/error-404.jpg',
-    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b7/a2/73/b7a27377-2a8b-9c78-f59f-b5ca29d6b2fe/mzaf_741526906900583953.plus.aac.p.m4a',
-    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
-    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
-    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
-  },
-  {
     id: 'basa',
     title: 'באסה',
     artist: 'COCO · Prod. deVee',
@@ -128,6 +118,16 @@ const discographyReleases: DiscographyRelease[] = [
     spotify: 'https://open.spotify.com/track/2q6uX9nyN4LPWjRBgGSzNx',
     appleMusic: 'https://music.apple.com/il/album/%D7%91%D7%90%D7%A1%D7%94/6798815627?i=6798816007',
     youtubeMusic: 'https://music.youtube.com/watch?v=kW8ZtkroSMc',
+  },
+  {
+    id: 'error-404',
+    title: 'Error 404',
+    artist: 'ZOHAR (feat. deVee)',
+    cover: '/covers/error-404.jpg',
+    previewUrl: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b7/a2/73/b7a27377-2a8b-9c78-f59f-b5ca29d6b2fe/mzaf_741526906900583953.plus.aac.p.m4a',
+    spotify: 'https://open.spotify.com/track/0fliGJrBSDwYfneUMQcH89?si=b5e1d39d5b044124',
+    appleMusic: 'https://music.apple.com/il/album/error-404-feat-devee/6783765372?i=6783765373',
+    youtubeMusic: 'https://music.youtube.com/watch?v=SlR3joHgCXs',
   },
 ];
 
