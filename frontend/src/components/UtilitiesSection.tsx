@@ -597,11 +597,11 @@ function MobileTools3D() {
 export function UtilitiesSection() {
   const decorativeRef = useNoTabStop<HTMLDivElement>();
   return (
-    <section className="pt-0 pb-12 sm:py-12" id="utilities">
+    <section className="pt-0 pb-12" id="utilities">
       <div className="container mx-auto px-4">
         
         {/* Title */}
-        <div className="flex flex-col items-center relative z-10 mb-0 sm:mb-0">
+        <div className="flex flex-col items-center relative z-10 -mt-2 sm:-mt-6 mb-0">
           <img src="/tools for artists.webp" alt="Tools for Artists" className="w-[85%] max-w-[250px] md:max-w-[600px] h-auto object-contain mx-auto" />
         </div>
 

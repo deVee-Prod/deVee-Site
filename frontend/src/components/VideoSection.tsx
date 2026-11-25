@@ -280,7 +280,7 @@ export function VideoSection() {
   }, []);
 
   return (
-    <section id="releases" className="relative pt-4 sm:pt-6 pb-2 sm:pb-6 z-20 overflow-hidden">
+    <section id="releases" className="relative pt-4 sm:pt-6 pb-0 z-20 overflow-hidden">
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
