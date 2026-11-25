@@ -110,7 +110,7 @@ export function HeroSection() {
           <p
             dir="ltr"
             aria-label={HERO_GREETING}
-            className={`pointer-events-none absolute -top-7 sm:-top-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] sm:text-[11px] tracking-[0.16em] text-white/65 inline-flex items-center transition-opacity duration-[1200ms] ease-out ${
+            className={`pointer-events-none absolute -top-7 sm:-top-8 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] sm:text-[11px] tracking-[0.16em] text-white/65 inline-flex items-center transition-opacity duration-1000 ease-out ${
               greetingState === 'idle' || greetingState === 'faded' ? 'opacity-0' : 'opacity-100'
             }`}
           >
