@@ -280,7 +280,7 @@ export function VideoSection() {
   }, []);
 
   return (
-    <section id="releases" className="relative pt-4 sm:pt-6 pb-8 sm:pb-12 z-20 overflow-hidden">
+    <section id="releases" className="relative pt-4 sm:pt-6 pb-2 sm:pb-6 z-20 overflow-hidden">
       <div className="container mx-auto max-w-6xl px-0 sm:px-6">
 
         {/* Header image */}
@@ -392,7 +392,7 @@ export function VideoSection() {
         </div>
 
         {/* Active video title only (clean & minimal) */}
-        <p className="text-center text-sm font-semibold text-white/65 -mt-1 mb-4 sm:mb-6 transition-all duration-500">
+        <p className="text-center text-sm font-semibold text-white/65 -mt-4 mb-1 sm:mb-2 transition-all duration-500">
           {currentVideo.title}
         </p>
 
@@ -403,7 +403,7 @@ export function VideoSection() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Discography releases"
-          className="relative mt-4 sm:mt-8"
+          className="relative mt-0 sm:mt-2"
         >
           {/* Subtle ambient stage glow behind active 3D vinyl cover */}
           <div
@@ -620,20 +620,6 @@ export function VideoSection() {
                 );
               })}
             </div>
-
-            {/* Direct slide dots */}
-            <nav className="flex items-center justify-center gap-0.5 mt-2" aria-label="Choose a release">
-              {discographyReleases.map((release, idx) => (
-                <button
-                  key={release.id}
-                  type="button"
-                  className="ac-dot"
-                  aria-label={`Go to ${release.title}`}
-                  aria-current={idx === albumIndex ? 'true' : undefined}
-                  onClick={() => goToAlbum(idx)}
-                />
-              ))}
-            </nav>
           </div>
         </div>
 
