@@ -802,32 +802,32 @@ main#main-content:focus-visible {
 
 @media (max-width: 640px) {
   .ac-scene {
-    padding: 0.25rem 0 1.5rem;
+    padding: 0.25rem 0 1rem;
   }
   .ac-track {
-    height: 246px;
-    perspective: 620px;
+    height: 196px;
+    perspective: 560px;
   }
   .ac-card {
-    width: 184px;
-    height: 184px;
+    width: 144px;
+    height: 144px;
   }
   .ac-card.ac-active {
-    transform: translateX(0) rotateY(0deg) translateZ(46px) scale(1);
+    transform: translateX(0) rotateY(0deg) translateZ(38px) scale(1);
   }
   .ac-card.ac-active.ac-is-playing {
-    transform: translateX(-14%) rotateY(0deg) translateZ(40px) scale(1.01);
+    transform: translateX(-14%) rotateY(0deg) translateZ(36px) scale(1.01);
   }
   .ac-active.ac-is-playing .ac-vinyl-slot {
-    transform: translateX(36%) scale(0.96);
+    transform: translateX(38%) scale(0.96);
   }
   .ac-card.ac-prev-1 {
-    transform: translateX(-70%) rotateY(38deg) translateZ(-55px) scale(0.8);
-    opacity: 0.45;
+    transform: translateX(-72%) rotateY(42deg) translateZ(-46px) scale(0.82);
+    opacity: 0.5;
   }
   .ac-card.ac-next-1 {
-    transform: translateX(70%) rotateY(-38deg) translateZ(-55px) scale(0.8);
-    opacity: 0.45;
+    transform: translateX(72%) rotateY(-42deg) translateZ(-46px) scale(0.82);
+    opacity: 0.5;
   }
   .ac-card.ac-prev-2,
   .ac-card.ac-next-2,

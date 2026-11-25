@@ -522,7 +522,7 @@ export function VideoSection() {
                             }}
                             aria-label={isPlayingThis ? `Pause preview of ${release.title}` : `Play preview of ${release.title}`}
                             aria-pressed={isPlayingThis}
-                            className={`absolute bottom-3 right-3 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-200 cursor-pointer touch-manipulation ${
+                            className={`absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-200 cursor-pointer touch-manipulation ${
                               isPlayingThis
                                 ? 'bg-orange-500 text-black border-orange-300/70 shadow-[0_0_24px_rgba(249,115,22,0.6)] scale-105'
                                 : 'bg-black/65 text-white border-white/25 hover:bg-white hover:text-black hover:border-white hover:scale-110'
