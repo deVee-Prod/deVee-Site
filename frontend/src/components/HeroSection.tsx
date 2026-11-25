@@ -20,7 +20,7 @@ export function HeroSection() {
     if (prefersReduced) {
       setTypedText(HERO_GREETING);
       setGreetingState('done');
-      const fadeTimer = window.setTimeout(() => setGreetingState('faded'), 4500);
+      const fadeTimer = window.setTimeout(() => setGreetingState('faded'), 30000);
       return () => window.clearTimeout(fadeTimer);
     }
 
@@ -40,7 +40,7 @@ export function HeroSection() {
           setGreetingState('done');
           timerId = window.setTimeout(() => {
             if (!cancelled) setGreetingState('faded');
-          }, 4500);
+          }, 30000);
           return;
         }
         const ch = HERO_GREETING[i - 1];
