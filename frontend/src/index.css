@@ -147,15 +147,15 @@ html {
 /* ── Video CoverFlow ── */
 .vcf-scene {
   position: relative;
-  padding: 0 0 4.5rem;
+  padding: 0 0 2.5rem;
   overflow: hidden;
 }
 
 .vcf-track {
   position: relative;
-  height: 310px;
-  perspective: 1400px;
-  perspective-origin: 50% 38%;
+  height: 300px;
+  perspective: 960px;
+  perspective-origin: 50% 45%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,17 +163,38 @@ html {
 
 .vcf-card {
   position: absolute;
-  width: min(480px, 82vw);
-  border-radius: 14px;
+  width: min(430px, 76vw);
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: #0a0a0c;
   cursor: pointer;
-  transition: transform 0.62s cubic-bezier(0.4,0,0.2,1),
-              opacity   0.62s ease,
-              box-shadow 0.62s ease,
-              border-color 0.62s ease;
+  transition: transform 0.58s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity   0.52s ease,
+              filter    0.52s ease,
+              box-shadow 0.48s ease,
+              border-color 0.48s ease;
   will-change: transform, opacity;
+}
+
+.vcf-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.vcf-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  z-index: 2;
 }
 
 .vcf-card-iframe {
@@ -191,60 +212,77 @@ html {
 }
 
 .vcf-card.vcf-active {
-  transform: translateX(0) rotateY(0deg) translateZ(0) scale(1);
+  transform: translateX(0) translateZ(52px) rotateY(0deg) scale(1);
   opacity: 1;
-  z-index: 3;
-  border-color: rgba(234,88,12,0.35);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.7),
-              0 0 0 1px rgba(234,88,12,0.12),
-              0 0 80px rgba(234,88,12,0.1);
+  filter: brightness(1);
+  z-index: 5;
+  border-color: rgba(234,88,12,0.42);
+  box-shadow: 0 32px 72px -12px rgba(0,0,0,0.92),
+              0 0 46px -10px rgba(234,88,12,0.24);
+  -webkit-box-reflect: below 10px linear-gradient(transparent 62%, rgba(255,255,255,0.15));
   cursor: default;
 }
 
+.vcf-card.vcf-active::before {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
 .vcf-card.vcf-prev {
-  transform: translateX(-67%) rotateY(44deg) translateZ(-60px);
-  opacity: 0.55;
-  z-index: 2;
+  transform: translateX(-68%) translateZ(-48px) rotateY(48deg) scale(0.86);
+  opacity: 0.74;
+  filter: brightness(0.7);
+  z-index: 3;
 }
 
 .vcf-card.vcf-next {
-  transform: translateX(67%) rotateY(-44deg) translateZ(-60px);
-  opacity: 0.55;
-  z-index: 2;
+  transform: translateX(68%) translateZ(-48px) rotateY(-48deg) scale(0.86);
+  opacity: 0.74;
+  filter: brightness(0.7);
+  z-index: 3;
 }
 
 .vcf-card.vcf-prev:hover,
-.vcf-card.vcf-next:hover { opacity: 0.78; }
+.vcf-card.vcf-next:hover {
+  opacity: 0.92;
+  filter: brightness(0.88);
+}
 
 .vcf-card.vcf-far-left {
-  transform: translateX(-94%) rotateY(58deg) translateZ(-180px);
-  opacity: 0.12;
+  transform: translateX(-112%) translateZ(-135px) rotateY(56deg) scale(0.74);
+  opacity: 0.36;
+  filter: brightness(0.42);
   z-index: 1;
-  pointer-events: none;
 }
 
 .vcf-card.vcf-far-right {
-  transform: translateX(94%) rotateY(-58deg) translateZ(-180px);
-  opacity: 0.12;
+  transform: translateX(112%) translateZ(-135px) rotateY(-56deg) scale(0.74);
+  opacity: 0.36;
+  filter: brightness(0.42);
   z-index: 1;
-  pointer-events: none;
 }
 
-.vcf-fade-left,
-.vcf-fade-right {
-  position: absolute;
-  top: 0; bottom: 4.5rem;
-  width: 14%;
-  pointer-events: none;
-  z-index: 5;
+.vcf-card.vcf-far-left:hover,
+.vcf-card.vcf-far-right:hover {
+  opacity: 0.56;
+  filter: brightness(0.6);
 }
-.vcf-fade-left  { left: 0;  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent); }
-.vcf-fade-right { right: 0; background: linear-gradient(to left,  rgba(0,0,0,0.9), transparent); }
+
+.vcf-card.vcf-prev::after,
+.vcf-card.vcf-far-left::after {
+  opacity: 1;
+  background: linear-gradient(to left, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.14) 38%, rgba(0,0,0,0.6) 100%);
+}
+
+.vcf-card.vcf-next::after,
+.vcf-card.vcf-far-right::after {
+  opacity: 1;
+  background: linear-gradient(to right, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.14) 38%, rgba(0,0,0,0.6) 100%);
+}
 
 .vcf-nav {
   position: absolute;
   top: 50%;
-  transform: translateY(calc(-50% - 2.25rem));
+  transform: translateY(calc(-50% - 1.25rem));
   width: 40px; height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.1);
@@ -262,14 +300,15 @@ html {
   border-color: rgba(234,88,12,0.55);
   color: #fff;
 }
-.vcf-btn-prev { left:  max(0.5rem, calc(50% - min(268px, 44vw))); }
-.vcf-btn-next { right: max(0.5rem, calc(50% - min(268px, 44vw))); }
+.vcf-btn-prev { left:  max(0.5rem, calc(50% - min(535px, 48vw))); }
+.vcf-btn-next { right: max(0.5rem, calc(50% - min(535px, 48vw))); }
 
 .vcf-dots {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0.75rem;
   left: 50%; transform: translateX(-50%);
-  display: flex; gap: 0;
+  display: none;
+  gap: 0;
   z-index: 10;
 }
 /* 24x24 tap target (WCAG 2.5.8); the visible dot stays 8px via padding + content-box background */
@@ -362,8 +401,7 @@ html {
     filter: brightness(0.5);
     z-index: 1;
   }
-  .vcf-dots { bottom: 0.75rem; }
-  .vcf-fade-left, .vcf-fade-right { display: none; }
+  .vcf-dots { display: flex; bottom: 0.75rem; }
   .vcf-btn-prev { left: 0; }
   .vcf-btn-next { right: 0; }
   .vcf-nav { width: 30px; height: 30px; }

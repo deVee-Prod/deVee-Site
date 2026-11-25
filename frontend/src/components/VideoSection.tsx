@@ -332,14 +332,18 @@ export function VideoSection() {
                       }}
                     >
                       <img
-                        className="vcf-card-thumb group-hover:opacity-90 transition-opacity"
+                        className="vcf-card-thumb group-hover:scale-[1.02] transition-transform duration-500"
                         loading="lazy"
                         src={track.thumbnail || `https://img.youtube.com/vi/${track.videoId}/maxresdefault.jpg`}
                         alt={track.title}
                       />
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none"
+                        aria-hidden="true"
+                      />
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-[48px] h-[34px] sm:w-[68px] sm:h-[48px] bg-red-600 rounded-[10px] sm:rounded-[14px] flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform duration-300 group-hover:scale-110">
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-8 sm:h-8 text-white">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black/45 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-[0_12px_32px_rgba(0,0,0,0.65),0_0_24px_rgba(234,88,12,0.18)] transition-all duration-300 group-hover:scale-110 group-hover:bg-orange-500/25 group-hover:border-orange-400/70 group-hover:shadow-[0_14px_36px_rgba(0,0,0,0.7),0_0_32px_rgba(249,115,22,0.45)]">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-7 sm:h-7 text-white translate-x-[1.5px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
@@ -358,12 +362,9 @@ export function VideoSection() {
             ))}
           </div>
 
-          <div className="vcf-fade-left"  aria-hidden="true" />
-          <div className="vcf-fade-right" aria-hidden="true" />
-
           <button
             type="button"
-            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
+            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.25rem)] vcf-btn-prev z-20 p-2 text-white/40 hover:text-orange-400 hover:-translate-x-2 transition-all duration-300"
             aria-label="הקודם"
             onClick={() => goTo(active - 1)}
           >
@@ -374,7 +375,7 @@ export function VideoSection() {
 
           <button
             type="button"
-            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+2.25rem)] vcf-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
+            className="hidden sm:block absolute top-1/2 -translate-y-[calc(50%+1.25rem)] vcf-btn-next z-20 p-2 text-white/40 hover:text-orange-400 hover:translate-x-2 transition-all duration-300"
             aria-label="הבא"
             onClick={() => goTo(active + 1)}
           >
@@ -383,7 +384,7 @@ export function VideoSection() {
             </svg>
           </button>
 
-          <div className="vcf-dots">
+          <div className="vcf-dots sm:hidden">
             {videoTracks.map((_, i) => (
               <button
                 type="button"
