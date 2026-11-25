@@ -822,24 +822,24 @@ main#main-content:focus-visible {
     transform: translateX(38%) scale(0.96);
   }
   .ac-card.ac-prev-1 {
-    transform: translateX(-60%) rotateY(54deg) translateZ(-32px) scale(0.88);
+    transform: translateX(-62%) translateZ(-36px) rotateY(54deg) scale(0.88);
     opacity: 0.72;
     filter: brightness(0.68);
   }
   .ac-card.ac-next-1 {
-    transform: translateX(60%) rotateY(-54deg) translateZ(-32px) scale(0.88);
+    transform: translateX(62%) translateZ(-36px) rotateY(-54deg) scale(0.88);
     opacity: 0.72;
     filter: brightness(0.68);
   }
   .ac-card.ac-prev-2 {
-    transform: translateX(-98%) rotateY(64deg) translateZ(-100px) scale(0.76);
-    opacity: 0.36;
-    filter: brightness(0.42);
+    transform: translateX(-102%) translateZ(-96px) rotateY(62deg) scale(0.78);
+    opacity: 0.38;
+    filter: brightness(0.45);
   }
   .ac-card.ac-next-2 {
-    transform: translateX(98%) rotateY(-64deg) translateZ(-100px) scale(0.76);
-    opacity: 0.36;
-    filter: brightness(0.42);
+    transform: translateX(102%) translateZ(-96px) rotateY(-62deg) scale(0.78);
+    opacity: 0.38;
+    filter: brightness(0.45);
   }
   .ac-card.ac-prev-3,
   .ac-card.ac-next-3 {
