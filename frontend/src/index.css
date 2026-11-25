@@ -499,3 +499,140 @@ main#main-content:focus-visible {
     block-size: 0;
   }
 }
+
+/* ── Discography Square Cover-Art Carousel (Scroll-Snap + Scroll-Driven Edge Fades) ── */
+@property --fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes discog-reveal-fade-start {
+  to {
+    --fade-start: var(--fade-size);
+  }
+}
+
+@keyframes discog-hide-fade-end {
+  from {
+    --fade-end: var(--fade-size);
+  }
+}
+
+.discog-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  touch-action: manipulation;
+  --fade-size: 2.5rem;
+  --fade-dir: right;
+  --fade-start-pos: 0;
+  --fade-end-pos: 100%;
+  scroll-padding-inline: var(--fade-size);
+  padding: 0.35rem 0.25rem 0.75rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  mask:
+    linear-gradient(black, black) no-clip subtract,
+    linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
+    linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
+  -webkit-mask:
+    linear-gradient(black, black) no-clip subtract,
+    linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
+    linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
+  transition: --fade-start 0.2s ease, --fade-end 0.2s ease;
+}
+
+.discog-track::-webkit-scrollbar {
+  display: none;
+}
+
+.discog-track:dir(rtl) {
+  --fade-dir: left;
+  --fade-start-pos: 100%;
+  --fade-end-pos: 0;
+}
+
+@supports (animation-timeline: scroll()) {
+  .discog-track {
+    animation: discog-reveal-fade-start linear both, discog-hide-fade-end linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 var(--fade-size), calc(100% - var(--fade-size)) 100%;
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .discog-track.more-start {
+    --fade-start: var(--fade-size);
+  }
+  .discog-track.more-end {
+    --fade-end: var(--fade-size);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .discog-track {
+    scroll-behavior: smooth;
+  }
+}
+
+.discog-slide {
+  flex: 0 0 164px;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 640px) {
+  .discog-slide {
+    flex: 0 0 190px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .discog-slide {
+    flex: 0 0 202px;
+  }
+}
+
+.discog-marker {
+  box-sizing: border-box;
+  min-width: 24px;
+  height: 24px;
+  padding: 9px 6px;
+  background: rgba(255, 255, 255, 0.22);
+  background-clip: content-box;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: width 0.25s ease, background-color 0.25s ease, padding 0.25s ease;
+  width: 24px;
+}
+
+.discog-marker[aria-current="true"] {
+  width: 34px;
+  padding: 8.5px 5px;
+  background-color: #f97316;
+}
+
+@keyframes discog-eq {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+.discog-eq-bar {
+  transform-origin: bottom;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .discog-eq-bar {
+    animation: discog-eq 0.75s ease-in-out infinite;
+  }
+}
