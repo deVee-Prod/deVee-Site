@@ -30,11 +30,21 @@ export function Header() {
       <div className="container mx-auto md:max-w-none px-4 sm:px-6 pt-4 sm:pt-6 pb-1 sm:pb-2 flex justify-between items-center">
         {/* Left Side - Avatar (when signed in) or Logo (when signed out) */}
         {avatarUrl ? (
-          <img
-            src={avatarUrl}
-            alt="Profile"
-            className="w-8 h-8 sm:h-10 sm:w-10 rounded-full border border-white/20 object-cover flex-shrink-0"
-          />
+          <div
+            className="p-[2.5px] rounded-full flex-shrink-0"
+            style={{
+              background: 'linear-gradient(135deg, #ea580c 0%, #f97316 48%, #fbbf24 100%)',
+              boxShadow: '0 0 14px rgba(249, 115, 22, 0.55), 0 0 26px rgba(234, 88, 12, 0.28)',
+            }}
+          >
+            <div className="p-[2px] rounded-full bg-[#070709]">
+              <img
+                src={avatarUrl}
+                alt="Profile"
+                className="w-8 h-8 sm:h-10 sm:w-10 rounded-full object-cover block"
+              />
+            </div>
+          </div>
         ) : (
           <img
             src="/deVee-logo.webp"
